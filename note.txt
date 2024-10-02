@@ -1,0 +1,24 @@
+CREATE TABLE Actividades (
+    ID INT PRIMARY KEY,
+    Nombre VARCHAR(100),
+    Fecha DATE,
+    Descripcion TEXT
+);
+
+CREATE TABLE Asistencias (
+    ID INT PRIMARY KEY,
+    EstudianteID INT,
+    Fecha DATE,
+    Estado VARCHAR(50),
+    Justificacion TEXT,
+    FOREIGN KEY (EstudianteID) REFERENCES Estudiantes(ID)
+);
+
+CREATE TABLE Notas (
+    ID INT PRIMARY KEY,
+    EstudianteID INT,
+    Materia VARCHAR(50),
+    Nota DECIMAL(5, 2),
+    Fecha DATE,
+    FOREIGN KEY (EstudianteID) REFERENCES Estudiantes(ID)
+);
