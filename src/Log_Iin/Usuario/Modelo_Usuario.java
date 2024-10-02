@@ -18,13 +18,13 @@ public class Modelo_Usuario {
     private PreparedStatement pstm;
 
 //lado escritorio
-    private int NIE;
-    private int iD_Grado;
-    private int id_Materia;
-    private int id_Rol;
+    private int id;
     private String Nombres;
     private String Apellidos;
     private String Contraseña;
+    private int id_Rol;
+    
+
 
     public Connection getConexionDB() {
         return conexionDB;
@@ -58,30 +58,15 @@ public class Modelo_Usuario {
         this.pstm = pstm;
     }
 
-    public int getNIE() {
-        return NIE;
+    public int getId() {
+        return id;
     }
 
-    public void setNIE(int NIE) {
-        this.NIE = NIE;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getiD_Grado() {
-        return iD_Grado;
-    }
-
-    public void setiD_Grado(int iD_Grado) {
-        this.iD_Grado = iD_Grado;
-    }
-
-    public int getId_Materia() {
-        return id_Materia;
-    }
-
-    public void setId_Materia(int id_Materia) {
-        this.id_Materia = id_Materia;
-    }
-
+    
     public int getId_Rol() {
         return id_Rol;
     }
@@ -114,15 +99,13 @@ public class Modelo_Usuario {
         this.Contraseña = Contraseña;
     }
 
-    public Modelo_Usuario(Connection conexionDB, Statement statement, ClaseConexion claseConectar, PreparedStatement pstm, int NIE, int iD_Grado, int id_Materia, int id_Rol, String Nombres, String Apellidos, String Contraseña) {
+    public Modelo_Usuario(Connection conexionDB, Statement statement, ClaseConexion claseConectar, PreparedStatement pstm, int id, int id_Rol, String Nombres, String Apellidos, String Contraseña) {
         this.conexionDB = conexionDB;
         this.statement = statement;
         this.claseConectar = new ClaseConexion();
         this.pstm = pstm;
 
-        this.NIE = NIE;
-        this.iD_Grado = iD_Grado;
-        this.id_Materia = id_Materia;
+        this.id = id;
         this.id_Rol = id_Rol;
         this.Nombres = Nombres;
         this.Apellidos = Apellidos;
@@ -134,39 +117,36 @@ public class Modelo_Usuario {
     }
 
     /**
-     * @param Pass
-     * @param NIE
+     * @param user
+     * @param pass
      * @return
      * *******************************************************************************************************************
      */
-    public Modelo_Usuario Validar_Usuario(String Pass, int NIE) {
+    public Modelo_Usuario Validar_Usuario(String user, String pass) {
         try {
             conexionDB = claseConectar.iniciarConexion(); // Iniciamos una conexión
             String sql = """
-            SELECT "NIE", "Nombres", "Apellidos", "Rol_id", "Grado_id", "Materia_id"
-            FROM public."Tbl_Personal" WHERE "NIE" = ? AND "Contraseña" = ? ;""";
+                SELECT "id_Usuario", "Nombres", "Apellidos", "Contrasena", "Rol_id"
+            	FROM public."Tbl_Usuario"
+            	WHERE "Nombres" = ? AND "Contrasena" = ? ;""";
 
             pstm = conexionDB.prepareStatement(sql);
-            pstm.setInt(1, NIE);
-            pstm.setString(2, Pass);
+            pstm.setString(1, pass);
+            pstm.setString(2, user);
 
             ResultSet consulta = pstm.executeQuery(); // Ejecutamos la consulta
 
             Modelo_Usuario Usuario = new Modelo_Usuario();
 
             while (consulta.next()) {
-                Usuario.setNIE(consulta.getInt("NIE"));
-                Usuario.setId_Rol(consulta.getInt("Rol_id"));
-                Usuario.setiD_Grado(consulta.getInt("Grado_id"));
-                Usuario.setId_Materia(consulta.getInt("Materia_id"));
-
+                Usuario.setId(consulta.getInt("id_Usuario"));
                 Usuario.setNombres(consulta.getString("Nombres"));
                 Usuario.setApellidos(consulta.getString("Apellidos"));
+                Usuario.setId_Rol(consulta.getInt("Rol_id"));
             }
-            System.out.println("NIE: " + Usuario.getNIE());
+            
+            System.out.println("ID: " + Usuario.getId());
             System.out.println("Rol ID: " + Usuario.getId_Rol());
-            System.out.println("Grado ID: " + Usuario.getiD_Grado());
-            System.out.println("Materia ID: " + Usuario.getId_Materia());
             System.out.println("Nombres: " + Usuario.getNombres());
             System.out.println("Apellidos: " + Usuario.getApellidos());
 

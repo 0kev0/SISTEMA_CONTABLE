@@ -5,7 +5,7 @@ import static Funciones.Funciones.EnterMouse;
 import static Funciones.Funciones.LeftMouse;
 import java.awt.Color;
 import static Funciones.Funciones.CentrarFrames;
-import Log_Iin.log_in1;
+import Log_Iin.Usuario.log_in1;
 import Vista_Panel_Director.Opciones.Gestion_Transacciones;
 import Vista_Panel_Docente.Opciones.Asignacion_Notas;
 import Vista_Panel_Docente.Opciones.Gestion_Voleta_Notas;

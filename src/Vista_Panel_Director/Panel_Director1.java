@@ -3,7 +3,7 @@ package Vista_Panel_Director;
 import Vista_Panel_Director.Opciones.Gestion_Transacciones;
 import static Funciones.Funciones.EnterMouse;
 import static Funciones.Funciones.LeftMouse;
-import Log_Iin.log_in1;
+import Log_Iin.Usuario.log_in1;
 import java.awt.Color;
 import Modelo.Director.Salmos1;
 import Vista_Panel_Director.Opciones.Gestion_Matriculas;
