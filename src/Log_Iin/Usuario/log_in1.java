@@ -5,8 +5,8 @@ import static Funciones.Funciones.LeftMouse;
 import static Funciones.Funciones.VaciarCampos;
 import static Funciones.Funciones.validarCampos;
 import Log_Iin.Usuario.Modelo_Usuario;
-import Vista_Panel_Docente.Panel_Docente;
-import Vista_Panel_Secretaria.Panel_Secretaria;
+import Vista_Panel_Admin.Panel_Admin;
+import Vista_Panel_Contador.Panel_Contador;
 import javax.swing.JOptionPane;
 
 public class log_in1 extends javax.swing.JFrame {
@@ -369,14 +369,14 @@ public class log_in1 extends javax.swing.JFrame {
 
                         //ADMIN
 
-                        Panel_Docente docente = new Panel_Docente();
-                        docente.setVisible(true);
+                        Panel_Contador Contador = new Panel_Contador();
+                        Contador.setVisible(true);
                         dispose();
                     }
                     case 2 -> {
                         //CONTADOR
-                        Panel_Secretaria Secretaria = new Panel_Secretaria();
-                        Secretaria.setVisible(true);
+                        Panel_Admin admin = new Panel_Admin();
+                        admin.setVisible(true);
                         dispose();
                     }
 
