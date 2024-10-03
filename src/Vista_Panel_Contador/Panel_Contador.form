@@ -93,9 +93,9 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="354" max="32767" attributes="0"/>
-                      <Component id="Lb_Bienvenida" min="-2" pref="786" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="273" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="214" max="-2" attributes="0"/>
+                      <Component id="Lb_Bienvenida" min="-2" pref="954" max="-2" attributes="0"/>
+                      <EmptySpace pref="245" max="32767" attributes="0"/>
                       <Component id="Btn_EXIT3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -169,7 +169,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="d1" green="f4" red="f2" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="SISTEMA CONTABLE CONTADOR"/>
+                <Property name="text" type="java.lang.String" value="SISTEMA CONTABLE CONTADOR (demo)"/>
               </Properties>
             </Component>
           </SubComponents>

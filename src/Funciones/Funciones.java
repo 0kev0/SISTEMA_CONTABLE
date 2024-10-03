@@ -7,6 +7,10 @@ import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import static java.lang.System.out;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -44,11 +48,38 @@ public class Funciones {
     }
 
     public static String obtenerFechaHoraActual() {
-        // Obtener la fecha y hora actual
         LocalDateTime ahora = LocalDateTime.now();
-        // Formatear la fecha, hora y minutos como string
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
         return ahora.format(formato);
+    }
+
+    public static String Registro_Log(String LogData) {
+        String Hora = "[" + obtenerFechaHoraActual() + "] ";
+        String Log_Info = Hora + LogData;
+
+        System.out.println(Log_Info);
+        
+        return Log_Info;
+
+    }
+
+    public static void escribirEnArchivo(String RutaArchivo, String texto) {
+        File archivo = new File(RutaArchivo);
+        boolean archivoExiste = archivo.exists(); 
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {
+            if (archivoExiste) {
+                bw.write(texto);
+                bw.newLine(); 
+            } else {
+                bw.write(texto);
+                bw.newLine();
+            }
+            System.out.println("El log se ha guardado correctamente.");
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error al escribir en el archivo: " + e.getMessage());
+        }
     }
 
     public static void Menu_Item_Mouse_Action(JMenu JMenu_1, String color) throws NumberFormatException {

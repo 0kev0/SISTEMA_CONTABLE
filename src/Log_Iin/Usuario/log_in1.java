@@ -1,5 +1,6 @@
 package Log_Iin.Usuario;
 
+import Funciones.Funciones;
 import static Funciones.Funciones.EnterMouse;
 import static Funciones.Funciones.LeftMouse;
 import static Funciones.Funciones.VaciarCampos;
@@ -351,7 +352,7 @@ public class log_in1 extends javax.swing.JFrame {
     private void Btn_ReservarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ReservarMouseClicked
         String User = TxbCorreo.getText();
         String PASS = TxbContraseña.getText();
-        String loginfo = "[" + Funciones.Funciones.obtenerFechaHoraActual();
+        String loginfo = "[" + Funciones.obtenerFechaHoraActual();
 
         if (validarCampos(jp_Main)) {
 
@@ -362,7 +363,7 @@ public class log_in1 extends javax.swing.JFrame {
 
                 System.out.println("\tINICIO SATISFACTORIO");
 
-                Funciones.Funciones.showMessageDialog("BIENVENIDO", "Bienvenido\n " + USER.getApellidos() + " " + USER.getNombres());
+                Funciones.showMessageDialog("BIENVENIDO", "Bienvenido\n " + USER.getApellidos() + " " + USER.getNombres());
 
                 int rol = USER.getId_Rol();
 
@@ -373,7 +374,7 @@ public class log_in1 extends javax.swing.JFrame {
 
                         //ADMIN
                         loginfo += "] LOG in: " + USER.getNombres() + ", " + USER.getApellidos() + " Rol: " + USER.getRol();
-                        System.out.println( loginfo);
+                        System.out.println(loginfo);
 
                         Panel_Contador Contador = new Panel_Contador();
                         Contador.setVisible(true);
@@ -381,9 +382,12 @@ public class log_in1 extends javax.swing.JFrame {
                     }
                     case 2 -> {
                         //CONTADOR
-                        loginfo += "] LOG in: " + USER.getNombres() + ", " + USER.getApellidos() + " Rol: " + USER.getRol();
+                        loginfo += " LOG in: " + USER.getNombres() + ", " + USER.getApellidos() + " Rol: " + USER.getRol();
 
                         System.out.println(loginfo + " ]");
+
+                        String Log = Funciones.Registro_Log(loginfo);
+                        Funciones.escribirEnArchivo("/home/kev/Documents/GIT_HUB/PORYECTO SIS/SISTEMA_CONTABLE/src/RegistroLogs/log.txt", Log);
 
                         Panel_Admin admin = new Panel_Admin();
                         admin.setVisible(true);
@@ -395,8 +399,8 @@ public class log_in1 extends javax.swing.JFrame {
                 }
 
             } else {
-                loginfo += "] Intento de LOG in por : " + User + ", " + PASS ;
-                System.out.println( loginfo);
+                loginfo += "] Intento de LOG in por : " + User + ", " + PASS;
+                System.out.println(loginfo);
                 JOptionPane.showMessageDialog(rootPane, "CREDENCIALES INCORRECTAS\n INTENTE NUEVAMENTE ");
                 VaciarCampos(jp_Main);
             }

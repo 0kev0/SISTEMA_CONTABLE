@@ -12,9 +12,6 @@ public class ClaseConexion {
     private Connection conexion;
 
     public ClaseConexion() {
-//        this.usuario = "testeo_owner";
-//        this.pass = "zgYOavhK9w6U";
-//        this.url = "jdbc:postgresql://ep-young-moon-a53deizt.us-east-2.aws.neon.tech/testeo?user=testeo_owner&password=zgYOavhK9w6U&sslmode=require";
 
         this.usuario = "postgres";
         this.pass = "1234";
@@ -36,3 +33,7 @@ public class ClaseConexion {
     }
 
 }
+
+//        this.usuario = "testeo_owner";
+//        this.pass = "zgYOavhK9w6U";
+//        this.url = "jdbc:postgresql://ep-young-moon-a53deizt.us-east-2.aws.neon.tech/testeo?user=testeo_owner&password=zgYOavhK9w6U&sslmode=require";
