@@ -10,7 +10,8 @@ import Log_Iin.Usuario.log_in1;
 import Modelos.Contador.Modelo_Catalogo;
 import Modelos.Contador.Modelo_TipoCuenta;
 import Modelos.Contador.Modelo_TipoDocumento;
-
+import Vista_Panel_Admin.Opciones.Gestion_CatalogoTest;
+import Vista_Panel_Admin.Opciones.Vista_CatalogoTest;
 
 public class Panel_Contador extends javax.swing.JFrame {
 
@@ -26,7 +27,7 @@ public class Panel_Contador extends javax.swing.JFrame {
         initComponents();
         this.Modelo_Usuario = User;
 
-       // Lb_Nombre.setText("Bienvenido: " + Modelo_Usuario.getApellidos() + " " + Modelo_Usuario.getNombres() + " GUia grado: " + Modelo_Usuario.getId());
+        // Lb_Nombre.setText("Bienvenido: " + Modelo_Usuario.getApellidos() + " " + Modelo_Usuario.getNombres() + " GUia grado: " + Modelo_Usuario.getId());
     }
 
     @SuppressWarnings("unchecked")
@@ -35,12 +36,6 @@ public class Panel_Contador extends javax.swing.JFrame {
 
         Panel_bg = new javax.swing.JPanel();
         Desk = new javax.swing.JDesktopPane();
-        Btn_LibroDiario4 = new Customizacion.Custom_Buttons();
-        Lb_Inventario4 = new javax.swing.JLabel();
-        Btn_LibroDiario5 = new Customizacion.Custom_Buttons();
-        Lb_Inventario5 = new javax.swing.JLabel();
-        Btn_LibroDiario6 = new Customizacion.Custom_Buttons();
-        Lb_Inventario6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         Btn_EXIT3 = new javax.swing.JPanel();
         Lb_X3 = new javax.swing.JLabel();
@@ -57,6 +52,12 @@ public class Panel_Contador extends javax.swing.JFrame {
         Lb_Inventario = new javax.swing.JLabel();
         Btn_Regresar1 = new javax.swing.JPanel();
         Lb_Ordenar1 = new javax.swing.JLabel();
+        Btn_LibroDiario4 = new Customizacion.Custom_Buttons();
+        Lb_Inventario4 = new javax.swing.JLabel();
+        Btn_LibroDiario5 = new Customizacion.Custom_Buttons();
+        Lb_Inventario5 = new javax.swing.JLabel();
+        Btn_LibroDiario6 = new Customizacion.Custom_Buttons();
+        Lb_Inventario6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -67,101 +68,18 @@ public class Panel_Contador extends javax.swing.JFrame {
 
         Desk.setBackground(new java.awt.Color(178, 211, 190));
 
-        Btn_LibroDiario4.setBackground(new java.awt.Color(137, 163, 178));
-        Btn_LibroDiario4.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
-        Btn_LibroDiario4.setPreferredSize(new java.awt.Dimension(180, 60));
-        Btn_LibroDiario4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario4MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario4MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario4MouseExited(evt);
-            }
-        });
-        Btn_LibroDiario4.setLayout(new java.awt.GridBagLayout());
-
-        Lb_Inventario4.setBackground(new java.awt.Color(7, 3, 26));
-        Lb_Inventario4.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Lb_Inventario4.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_Inventario4.setText("Ver catalogo");
-        Btn_LibroDiario4.add(Lb_Inventario4, new java.awt.GridBagConstraints());
-
-        Btn_LibroDiario5.setBackground(new java.awt.Color(137, 163, 178));
-        Btn_LibroDiario5.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
-        Btn_LibroDiario5.setPreferredSize(new java.awt.Dimension(180, 60));
-        Btn_LibroDiario5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario5MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario5MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario5MouseExited(evt);
-            }
-        });
-        Btn_LibroDiario5.setLayout(new java.awt.GridBagLayout());
-
-        Lb_Inventario5.setBackground(new java.awt.Color(7, 3, 26));
-        Lb_Inventario5.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Lb_Inventario5.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_Inventario5.setText("Ver tipo documentos");
-        Btn_LibroDiario5.add(Lb_Inventario5, new java.awt.GridBagConstraints());
-
-        Btn_LibroDiario6.setBackground(new java.awt.Color(137, 163, 178));
-        Btn_LibroDiario6.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
-        Btn_LibroDiario6.setPreferredSize(new java.awt.Dimension(180, 60));
-        Btn_LibroDiario6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario6MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario6MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario6MouseExited(evt);
-            }
-        });
-        Btn_LibroDiario6.setLayout(new java.awt.GridBagLayout());
-
-        Lb_Inventario6.setBackground(new java.awt.Color(7, 3, 26));
-        Lb_Inventario6.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Lb_Inventario6.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_Inventario6.setText("Ver tipo cuentas");
-        Btn_LibroDiario6.add(Lb_Inventario6, new java.awt.GridBagConstraints());
-
-        Desk.setLayer(Btn_LibroDiario4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        Desk.setLayer(Btn_LibroDiario5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        Desk.setLayer(Btn_LibroDiario6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
         javax.swing.GroupLayout DeskLayout = new javax.swing.GroupLayout(Desk);
         Desk.setLayout(DeskLayout);
         DeskLayout.setHorizontalGroup(
             DeskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DeskLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(Btn_LibroDiario4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Btn_LibroDiario5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Btn_LibroDiario6, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                .addGap(435, 435, 435))
+            .addGap(0, 1180, Short.MAX_VALUE)
         );
         DeskLayout.setVerticalGroup(
             DeskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DeskLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(DeskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Btn_LibroDiario6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_LibroDiario5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_LibroDiario4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(484, Short.MAX_VALUE))
+            .addGap(0, 630, Short.MAX_VALUE)
         );
 
-        Panel_bg.add(Desk, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, 1100, 570));
+        Panel_bg.add(Desk, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, 1180, 630));
 
         jPanel5.setBackground(new java.awt.Color(94, 96, 115));
 
@@ -208,7 +126,7 @@ public class Panel_Contador extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(284, Short.MAX_VALUE)
+                .addContainerGap(354, Short.MAX_VALUE)
                 .addComponent(Lb_Bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 786, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(273, 273, 273)
                 .addComponent(Btn_EXIT3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -224,7 +142,7 @@ public class Panel_Contador extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        Panel_bg.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1380, -1));
+        Panel_bg.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1450, -1));
 
         jPanel6.setBackground(new java.awt.Color(94, 96, 115));
 
@@ -232,14 +150,14 @@ public class Panel_Contador extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1380, Short.MAX_VALUE)
+            .addGap(0, 1450, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 40, Short.MAX_VALUE)
         );
 
-        Panel_bg.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 1380, -1));
+        Panel_bg.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 730, 1450, -1));
 
         jPanel1.setBackground(new java.awt.Color(254, 244, 209));
 
@@ -342,34 +260,112 @@ public class Panel_Contador extends javax.swing.JFrame {
         Lb_Ordenar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Btn_Regresar1.add(Lb_Ordenar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 130, 30));
 
+        Btn_LibroDiario4.setBackground(new java.awt.Color(137, 163, 178));
+        Btn_LibroDiario4.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
+        Btn_LibroDiario4.setPreferredSize(new java.awt.Dimension(180, 60));
+        Btn_LibroDiario4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_LibroDiario4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Btn_LibroDiario4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Btn_LibroDiario4MouseExited(evt);
+            }
+        });
+        Btn_LibroDiario4.setLayout(new java.awt.GridBagLayout());
+
+        Lb_Inventario4.setBackground(new java.awt.Color(7, 3, 26));
+        Lb_Inventario4.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Lb_Inventario4.setForeground(new java.awt.Color(242, 244, 209));
+        Lb_Inventario4.setText("Ver catalogo");
+        Btn_LibroDiario4.add(Lb_Inventario4, new java.awt.GridBagConstraints());
+
+        Btn_LibroDiario5.setBackground(new java.awt.Color(137, 163, 178));
+        Btn_LibroDiario5.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
+        Btn_LibroDiario5.setPreferredSize(new java.awt.Dimension(180, 60));
+        Btn_LibroDiario5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_LibroDiario5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Btn_LibroDiario5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Btn_LibroDiario5MouseExited(evt);
+            }
+        });
+        Btn_LibroDiario5.setLayout(new java.awt.GridBagLayout());
+
+        Lb_Inventario5.setBackground(new java.awt.Color(7, 3, 26));
+        Lb_Inventario5.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Lb_Inventario5.setForeground(new java.awt.Color(242, 244, 209));
+        Lb_Inventario5.setText("Ver tipo documentos");
+        Btn_LibroDiario5.add(Lb_Inventario5, new java.awt.GridBagConstraints());
+
+        Btn_LibroDiario6.setBackground(new java.awt.Color(137, 163, 178));
+        Btn_LibroDiario6.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
+        Btn_LibroDiario6.setPreferredSize(new java.awt.Dimension(180, 60));
+        Btn_LibroDiario6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_LibroDiario6MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Btn_LibroDiario6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Btn_LibroDiario6MouseExited(evt);
+            }
+        });
+        Btn_LibroDiario6.setLayout(new java.awt.GridBagLayout());
+
+        Lb_Inventario6.setBackground(new java.awt.Color(7, 3, 26));
+        Lb_Inventario6.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Lb_Inventario6.setForeground(new java.awt.Color(242, 244, 209));
+        Lb_Inventario6.setText("Ver tipo cuentas");
+        Btn_LibroDiario6.add(Lb_Inventario6, new java.awt.GridBagConstraints());
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Btn_LibroDiario2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_LibroDiario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_LibroDiario3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_LibroDiario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_Regresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Btn_LibroDiario2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_LibroDiario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_LibroDiario3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_LibroDiario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_Regresar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_LibroDiario4, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Btn_LibroDiario5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Btn_LibroDiario6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(Btn_LibroDiario6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Btn_LibroDiario5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Btn_LibroDiario4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Btn_LibroDiario2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Btn_LibroDiario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Btn_LibroDiario3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Btn_LibroDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Btn_Regresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addGap(17, 17, 17))
         );
 
         Panel_bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 250, 570));
@@ -378,11 +374,11 @@ public class Panel_Contador extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Panel_bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(Panel_bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Panel_bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Panel_bg, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
         );
 
         pack();
@@ -460,6 +456,15 @@ public class Panel_Contador extends javax.swing.JFrame {
     private void Btn_LibroDiario4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario4MouseClicked
         Modelo_Catalogo test = new Modelo_Catalogo();
         test.Get_Catalogo();
+
+        Gestion_CatalogoTest gest = new Gestion_CatalogoTest();
+
+        gest.setResizable(false);
+        gest.setBounds(0, 0, Desk.getWidth(), Desk.getHeight());
+        gest.setVisible(true);
+        CentrarFrames(Desk, gest);
+        Desk.add(gest);
+        gest.show();
 
     }//GEN-LAST:event_Btn_LibroDiario4MouseClicked
 

@@ -1,0 +1,1255 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 17.0 (Ubuntu 17.0-1.pgdg24.04+1)
+-- Dumped by pg_dump version 17.0 (Ubuntu 17.0-1.pgdg24.04+1)
+
+-- Started on 2024-10-02 21:40:40 CST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 240 (class 1259 OID 16541)
+-- Name: Tbl_BalanceComprobacion; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_BalanceComprobacion" (
+    "id_Balance_general" integer NOT NULL,
+    "Periodo_contable_id" integer NOT NULL,
+    "Fecha" date NOT NULL,
+    "Total_activos" numeric(12,2) NOT NULL,
+    "Total_pasivos" numeric(12,2) NOT NULL,
+    "Total_capital" numeric(12,2) NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_BalanceComprobacion" OWNER TO postgres;
+
+--
+-- TOC entry 239 (class 1259 OID 16540)
+-- Name: Tbl_BalanceComprobacion_id_Balance_general_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_BalanceComprobacion_id_Balance_general_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_BalanceComprobacion_id_Balance_general_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3589 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: Tbl_BalanceComprobacion_id_Balance_general_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_BalanceComprobacion_id_Balance_general_seq" OWNED BY public."Tbl_BalanceComprobacion"."id_Balance_general";
+
+
+--
+-- TOC entry 242 (class 1259 OID 16553)
+-- Name: Tbl_BalanceGeneral; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_BalanceGeneral" (
+    "id_Balance_general" integer NOT NULL,
+    "Periodo_contable_id" integer NOT NULL,
+    "Total_activos" numeric(12,2) NOT NULL,
+    "Total_pasivos" numeric(12,2) NOT NULL,
+    "Total_capital" numeric(12,2) NOT NULL,
+    "Fecha" date NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_BalanceGeneral" OWNER TO postgres;
+
+--
+-- TOC entry 241 (class 1259 OID 16552)
+-- Name: Tbl_BalanceGeneral_id_Balance_general_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_BalanceGeneral_id_Balance_general_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_BalanceGeneral_id_Balance_general_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3590 (class 0 OID 0)
+-- Dependencies: 241
+-- Name: Tbl_BalanceGeneral_id_Balance_general_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_BalanceGeneral_id_Balance_general_seq" OWNED BY public."Tbl_BalanceGeneral"."id_Balance_general";
+
+
+--
+-- TOC entry 234 (class 1259 OID 16509)
+-- Name: Tbl_CapitalContable; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_CapitalContable" (
+    "id_Capital_contable" integer NOT NULL,
+    "Retiros" numeric(12,2) NOT NULL,
+    "Ingresos" numeric(12,2) NOT NULL,
+    "Utilidad" numeric(12,2) NOT NULL,
+    "Total" numeric(12,2) NOT NULL,
+    "Periodo_contable_id" integer NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_CapitalContable" OWNER TO postgres;
+
+--
+-- TOC entry 233 (class 1259 OID 16508)
+-- Name: Tbl_CapitalContable_id_Capital_contable_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_CapitalContable_id_Capital_contable_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_CapitalContable_id_Capital_contable_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3591 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: Tbl_CapitalContable_id_Capital_contable_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_CapitalContable_id_Capital_contable_seq" OWNED BY public."Tbl_CapitalContable"."id_Capital_contable";
+
+
+--
+-- TOC entry 228 (class 1259 OID 16429)
+-- Name: Tbl_Catalogo; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_Catalogo" (
+    "id_Cuenta" integer NOT NULL,
+    "Nombre_cuenta" character varying(100) NOT NULL,
+    "Tipo_cuenta_id" integer NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_Catalogo" OWNER TO postgres;
+
+--
+-- TOC entry 227 (class 1259 OID 16428)
+-- Name: Tbl_Catalogo_id_Cuenta_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_Catalogo_id_Cuenta_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_Catalogo_id_Cuenta_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3592 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: Tbl_Catalogo_id_Cuenta_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_Catalogo_id_Cuenta_seq" OWNED BY public."Tbl_Catalogo"."id_Cuenta";
+
+
+--
+-- TOC entry 238 (class 1259 OID 16529)
+-- Name: Tbl_EstadoResultado; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_EstadoResultado" (
+    "id_Estado_resultado" integer NOT NULL,
+    "Periodo_contable_id" integer NOT NULL,
+    "Total_ingresos" numeric(12,2) NOT NULL,
+    "Total_gastos" numeric(12,2) NOT NULL,
+    "Total_utilidad" numeric(12,2) NOT NULL,
+    "Fecha" date NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_EstadoResultado" OWNER TO postgres;
+
+--
+-- TOC entry 237 (class 1259 OID 16528)
+-- Name: Tbl_EstadoResultado_id_Estado_resultado_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_EstadoResultado_id_Estado_resultado_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_EstadoResultado_id_Estado_resultado_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3593 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: Tbl_EstadoResultado_id_Estado_resultado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_EstadoResultado_id_Estado_resultado_seq" OWNED BY public."Tbl_EstadoResultado"."id_Estado_resultado";
+
+
+--
+-- TOC entry 244 (class 1259 OID 16565)
+-- Name: Tbl_LibroDiario; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_LibroDiario" (
+    id_partida integer NOT NULL,
+    "Transaccion_id" integer,
+    "Cuenta_id" integer NOT NULL,
+    "Tipo_saldo_id" integer NOT NULL,
+    "Saldo" numeric(12,2) NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_LibroDiario" OWNER TO postgres;
+
+--
+-- TOC entry 243 (class 1259 OID 16564)
+-- Name: Tbl_LibroDiario_id_partida_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_LibroDiario_id_partida_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_LibroDiario_id_partida_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3594 (class 0 OID 0)
+-- Dependencies: 243
+-- Name: Tbl_LibroDiario_id_partida_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_LibroDiario_id_partida_seq" OWNED BY public."Tbl_LibroDiario".id_partida;
+
+
+--
+-- TOC entry 230 (class 1259 OID 16441)
+-- Name: Tbl_LibroMayor; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_LibroMayor" (
+    "id_Libro_mayor" integer NOT NULL,
+    "Cuenta_id" integer NOT NULL,
+    "Concepto" character varying(200) NOT NULL,
+    "Saldo_inicial" numeric(12,2) NOT NULL,
+    "Saldo_final" numeric(12,2) NOT NULL,
+    "Fecha" date NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_LibroMayor" OWNER TO postgres;
+
+--
+-- TOC entry 229 (class 1259 OID 16440)
+-- Name: Tbl_LibroMayor_id_Libro_mayor_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_LibroMayor_id_Libro_mayor_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_LibroMayor_id_Libro_mayor_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3595 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: Tbl_LibroMayor_id_Libro_mayor_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_LibroMayor_id_Libro_mayor_seq" OWNED BY public."Tbl_LibroMayor"."id_Libro_mayor";
+
+
+--
+-- TOC entry 236 (class 1259 OID 16517)
+-- Name: Tbl_PeriodosContables; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_PeriodosContables" (
+    "id_Periodo" integer NOT NULL,
+    "Fecha_inicial" date NOT NULL,
+    "Fecha_final" date NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_PeriodosContables" OWNER TO postgres;
+
+--
+-- TOC entry 235 (class 1259 OID 16516)
+-- Name: Tbl_PeriodosContables_id_Periodo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_PeriodosContables_id_Periodo_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_PeriodosContables_id_Periodo_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3596 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: Tbl_PeriodosContables_id_Periodo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_PeriodosContables_id_Periodo_seq" OWNED BY public."Tbl_PeriodosContables"."id_Periodo";
+
+
+--
+-- TOC entry 224 (class 1259 OID 16410)
+-- Name: Tbl_Roles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_Roles" (
+    "id_Rol" integer NOT NULL,
+    "Nombre_rol" character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_Roles" OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 16409)
+-- Name: Tbl_Roles_id_Rol_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_Roles_id_Rol_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_Roles_id_Rol_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3597 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: Tbl_Roles_id_Rol_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_Roles_id_Rol_seq" OWNED BY public."Tbl_Roles"."id_Rol";
+
+
+--
+-- TOC entry 222 (class 1259 OID 16403)
+-- Name: Tbl_TipoCuenta; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_TipoCuenta" (
+    "id_Tipo_cuenta" integer NOT NULL,
+    "Tipo_cuenta" character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_TipoCuenta" OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1259 OID 16402)
+-- Name: Tbl_TipoCuenta_id_Tipo_cuenta_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_TipoCuenta_id_Tipo_cuenta_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_TipoCuenta_id_Tipo_cuenta_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3598 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: Tbl_TipoCuenta_id_Tipo_cuenta_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_TipoCuenta_id_Tipo_cuenta_seq" OWNED BY public."Tbl_TipoCuenta"."id_Tipo_cuenta";
+
+
+--
+-- TOC entry 220 (class 1259 OID 16396)
+-- Name: Tbl_TipoDocumento; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_TipoDocumento" (
+    "id_TipoDoc" integer NOT NULL,
+    "Tipo_documento" character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_TipoDocumento" OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 16395)
+-- Name: Tbl_TipoDocumento_id_TipoDoc_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_TipoDocumento_id_TipoDoc_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_TipoDocumento_id_TipoDoc_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3599 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: Tbl_TipoDocumento_id_TipoDoc_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_TipoDocumento_id_TipoDoc_seq" OWNED BY public."Tbl_TipoDocumento"."id_TipoDoc";
+
+
+--
+-- TOC entry 218 (class 1259 OID 16389)
+-- Name: Tbl_TipoSaldo; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_TipoSaldo" (
+    "id_Tipo_saldo" integer NOT NULL,
+    "Tipo_saldo" character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_TipoSaldo" OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 16388)
+-- Name: Tbl_TipoSaldo_id_Tipo_saldo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_TipoSaldo_id_Tipo_saldo_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_TipoSaldo_id_Tipo_saldo_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3600 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: Tbl_TipoSaldo_id_Tipo_saldo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_TipoSaldo_id_Tipo_saldo_seq" OWNED BY public."Tbl_TipoSaldo"."id_Tipo_saldo";
+
+
+--
+-- TOC entry 232 (class 1259 OID 16470)
+-- Name: Tbl_Transacciones; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_Transacciones" (
+    "id_Transaccion" integer NOT NULL,
+    "Cuenta_id" integer NOT NULL,
+    "Tipo_saldo_id" integer NOT NULL,
+    "Tipo_documento_id" integer NOT NULL,
+    "Monto" numeric(12,2) NOT NULL,
+    "Fecha" date NOT NULL,
+    "Partida_id" integer NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_Transacciones" OWNER TO postgres;
+
+--
+-- TOC entry 231 (class 1259 OID 16469)
+-- Name: Tbl_Transacciones_id_Transaccion_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_Transacciones_id_Transaccion_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_Transacciones_id_Transaccion_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3601 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: Tbl_Transacciones_id_Transaccion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_Transacciones_id_Transaccion_seq" OWNED BY public."Tbl_Transacciones"."id_Transaccion";
+
+
+--
+-- TOC entry 226 (class 1259 OID 16417)
+-- Name: Tbl_Usuario; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Tbl_Usuario" (
+    "id_Usuario" integer NOT NULL,
+    "Nombres" character varying(150) NOT NULL,
+    "Apellidos" character varying(150) NOT NULL,
+    "Contrasena" character varying(150) NOT NULL,
+    "Rol_id" integer NOT NULL
+);
+
+
+ALTER TABLE public."Tbl_Usuario" OWNER TO postgres;
+
+--
+-- TOC entry 225 (class 1259 OID 16416)
+-- Name: Tbl_Usuario_id_Usuario_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tbl_Usuario_id_Usuario_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public."Tbl_Usuario_id_Usuario_seq" OWNER TO postgres;
+
+--
+-- TOC entry 3602 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: Tbl_Usuario_id_Usuario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tbl_Usuario_id_Usuario_seq" OWNED BY public."Tbl_Usuario"."id_Usuario";
+
+
+--
+-- TOC entry 3366 (class 2604 OID 16544)
+-- Name: Tbl_BalanceComprobacion id_Balance_general; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_BalanceComprobacion" ALTER COLUMN "id_Balance_general" SET DEFAULT nextval('public."Tbl_BalanceComprobacion_id_Balance_general_seq"'::regclass);
+
+
+--
+-- TOC entry 3367 (class 2604 OID 16556)
+-- Name: Tbl_BalanceGeneral id_Balance_general; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_BalanceGeneral" ALTER COLUMN "id_Balance_general" SET DEFAULT nextval('public."Tbl_BalanceGeneral_id_Balance_general_seq"'::regclass);
+
+
+--
+-- TOC entry 3363 (class 2604 OID 16512)
+-- Name: Tbl_CapitalContable id_Capital_contable; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_CapitalContable" ALTER COLUMN "id_Capital_contable" SET DEFAULT nextval('public."Tbl_CapitalContable_id_Capital_contable_seq"'::regclass);
+
+
+--
+-- TOC entry 3360 (class 2604 OID 16432)
+-- Name: Tbl_Catalogo id_Cuenta; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Catalogo" ALTER COLUMN "id_Cuenta" SET DEFAULT nextval('public."Tbl_Catalogo_id_Cuenta_seq"'::regclass);
+
+
+--
+-- TOC entry 3365 (class 2604 OID 16532)
+-- Name: Tbl_EstadoResultado id_Estado_resultado; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_EstadoResultado" ALTER COLUMN "id_Estado_resultado" SET DEFAULT nextval('public."Tbl_EstadoResultado_id_Estado_resultado_seq"'::regclass);
+
+
+--
+-- TOC entry 3368 (class 2604 OID 16568)
+-- Name: Tbl_LibroDiario id_partida; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_LibroDiario" ALTER COLUMN id_partida SET DEFAULT nextval('public."Tbl_LibroDiario_id_partida_seq"'::regclass);
+
+
+--
+-- TOC entry 3361 (class 2604 OID 16444)
+-- Name: Tbl_LibroMayor id_Libro_mayor; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_LibroMayor" ALTER COLUMN "id_Libro_mayor" SET DEFAULT nextval('public."Tbl_LibroMayor_id_Libro_mayor_seq"'::regclass);
+
+
+--
+-- TOC entry 3364 (class 2604 OID 16520)
+-- Name: Tbl_PeriodosContables id_Periodo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_PeriodosContables" ALTER COLUMN "id_Periodo" SET DEFAULT nextval('public."Tbl_PeriodosContables_id_Periodo_seq"'::regclass);
+
+
+--
+-- TOC entry 3358 (class 2604 OID 16413)
+-- Name: Tbl_Roles id_Rol; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Roles" ALTER COLUMN "id_Rol" SET DEFAULT nextval('public."Tbl_Roles_id_Rol_seq"'::regclass);
+
+
+--
+-- TOC entry 3357 (class 2604 OID 16406)
+-- Name: Tbl_TipoCuenta id_Tipo_cuenta; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_TipoCuenta" ALTER COLUMN "id_Tipo_cuenta" SET DEFAULT nextval('public."Tbl_TipoCuenta_id_Tipo_cuenta_seq"'::regclass);
+
+
+--
+-- TOC entry 3356 (class 2604 OID 16399)
+-- Name: Tbl_TipoDocumento id_TipoDoc; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_TipoDocumento" ALTER COLUMN "id_TipoDoc" SET DEFAULT nextval('public."Tbl_TipoDocumento_id_TipoDoc_seq"'::regclass);
+
+
+--
+-- TOC entry 3355 (class 2604 OID 16392)
+-- Name: Tbl_TipoSaldo id_Tipo_saldo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_TipoSaldo" ALTER COLUMN "id_Tipo_saldo" SET DEFAULT nextval('public."Tbl_TipoSaldo_id_Tipo_saldo_seq"'::regclass);
+
+
+--
+-- TOC entry 3362 (class 2604 OID 16473)
+-- Name: Tbl_Transacciones id_Transaccion; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Transacciones" ALTER COLUMN "id_Transaccion" SET DEFAULT nextval('public."Tbl_Transacciones_id_Transaccion_seq"'::regclass);
+
+
+--
+-- TOC entry 3359 (class 2604 OID 16420)
+-- Name: Tbl_Usuario id_Usuario; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Usuario" ALTER COLUMN "id_Usuario" SET DEFAULT nextval('public."Tbl_Usuario_id_Usuario_seq"'::regclass);
+
+
+--
+-- TOC entry 3579 (class 0 OID 16541)
+-- Dependencies: 240
+-- Data for Name: Tbl_BalanceComprobacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3581 (class 0 OID 16553)
+-- Dependencies: 242
+-- Data for Name: Tbl_BalanceGeneral; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3573 (class 0 OID 16509)
+-- Dependencies: 234
+-- Data for Name: Tbl_CapitalContable; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3567 (class 0 OID 16429)
+-- Dependencies: 228
+-- Data for Name: Tbl_Catalogo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public."Tbl_Catalogo" VALUES (1, 'Caja', 1);
+INSERT INTO public."Tbl_Catalogo" VALUES (2, 'Bancos', 1);
+INSERT INTO public."Tbl_Catalogo" VALUES (3, 'Cuentas por Cobrar', 1);
+INSERT INTO public."Tbl_Catalogo" VALUES (4, 'Inventario', 1);
+INSERT INTO public."Tbl_Catalogo" VALUES (5, 'Terrenos', 1);
+INSERT INTO public."Tbl_Catalogo" VALUES (6, 'Cuentas por Pagar', 2);
+INSERT INTO public."Tbl_Catalogo" VALUES (7, 'Préstamos Bancarios', 2);
+INSERT INTO public."Tbl_Catalogo" VALUES (8, 'Proveedores', 2);
+INSERT INTO public."Tbl_Catalogo" VALUES (9, 'Documentos por Pagar', 2);
+INSERT INTO public."Tbl_Catalogo" VALUES (10, 'Impuestos por Pagar', 2);
+INSERT INTO public."Tbl_Catalogo" VALUES (11, 'Capital Social', 3);
+INSERT INTO public."Tbl_Catalogo" VALUES (12, 'Reserva Legal', 3);
+INSERT INTO public."Tbl_Catalogo" VALUES (13, 'Utilidades Retenidas', 3);
+INSERT INTO public."Tbl_Catalogo" VALUES (14, 'Aportes de Socios', 3);
+INSERT INTO public."Tbl_Catalogo" VALUES (15, 'Resultados Acumulados', 3);
+INSERT INTO public."Tbl_Catalogo" VALUES (16, 'Ventas de Mercancías', 4);
+INSERT INTO public."Tbl_Catalogo" VALUES (17, 'Servicios Prestados', 4);
+INSERT INTO public."Tbl_Catalogo" VALUES (18, 'Intereses Ganados', 4);
+INSERT INTO public."Tbl_Catalogo" VALUES (19, 'Comisiones Recibidas', 4);
+INSERT INTO public."Tbl_Catalogo" VALUES (20, 'Otros Ingresos', 4);
+INSERT INTO public."Tbl_Catalogo" VALUES (21, 'Sueldos y Salarios', 5);
+INSERT INTO public."Tbl_Catalogo" VALUES (22, 'Alquileres Pagados', 5);
+INSERT INTO public."Tbl_Catalogo" VALUES (23, 'Servicios Públicos', 5);
+INSERT INTO public."Tbl_Catalogo" VALUES (24, 'Gastos de Publicidad', 5);
+INSERT INTO public."Tbl_Catalogo" VALUES (25, 'Gastos de Mantenimiento', 5);
+
+
+--
+-- TOC entry 3577 (class 0 OID 16529)
+-- Dependencies: 238
+-- Data for Name: Tbl_EstadoResultado; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3583 (class 0 OID 16565)
+-- Dependencies: 244
+-- Data for Name: Tbl_LibroDiario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3569 (class 0 OID 16441)
+-- Dependencies: 230
+-- Data for Name: Tbl_LibroMayor; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3575 (class 0 OID 16517)
+-- Dependencies: 236
+-- Data for Name: Tbl_PeriodosContables; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3563 (class 0 OID 16410)
+-- Dependencies: 224
+-- Data for Name: Tbl_Roles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public."Tbl_Roles" VALUES (1, 'Admin');
+INSERT INTO public."Tbl_Roles" VALUES (2, 'Contador');
+
+
+--
+-- TOC entry 3561 (class 0 OID 16403)
+-- Dependencies: 222
+-- Data for Name: Tbl_TipoCuenta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public."Tbl_TipoCuenta" VALUES (1, 'Activo');
+INSERT INTO public."Tbl_TipoCuenta" VALUES (2, 'Pasivo');
+INSERT INTO public."Tbl_TipoCuenta" VALUES (3, 'Patrimonio');
+INSERT INTO public."Tbl_TipoCuenta" VALUES (4, 'Ingresos');
+INSERT INTO public."Tbl_TipoCuenta" VALUES (5, 'Gastos');
+INSERT INTO public."Tbl_TipoCuenta" VALUES (6, 'Cuentas de orden');
+INSERT INTO public."Tbl_TipoCuenta" VALUES (7, 'Activo Corriente');
+INSERT INTO public."Tbl_TipoCuenta" VALUES (8, 'Activo No Corriente');
+INSERT INTO public."Tbl_TipoCuenta" VALUES (9, 'Pasivo Corriente');
+INSERT INTO public."Tbl_TipoCuenta" VALUES (10, 'Pasivo No Corriente');
+INSERT INTO public."Tbl_TipoCuenta" VALUES (0, 'Todos');
+
+
+--
+-- TOC entry 3559 (class 0 OID 16396)
+-- Dependencies: 220
+-- Data for Name: Tbl_TipoDocumento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public."Tbl_TipoDocumento" VALUES (1, 'Factura de Venta');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (2, 'Factura de Compra');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (3, 'Nota de Crédito');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (4, 'Nota de Débito');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (5, 'Recibo');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (6, 'Cheque');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (7, 'Transferencia Bancaria');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (8, 'Letra de Cambio');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (9, 'Comprobante de Pago');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (10, 'Orden de Compra');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (11, 'Boleta de Venta');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (12, 'Nota de Remisión');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (13, 'Vale de Caja');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (14, 'Nota de Ingreso');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (15, 'Nota de Egreso');
+
+
+--
+-- TOC entry 3557 (class 0 OID 16389)
+-- Dependencies: 218
+-- Data for Name: Tbl_TipoSaldo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public."Tbl_TipoSaldo" VALUES (1, 'Deudor');
+INSERT INTO public."Tbl_TipoSaldo" VALUES (2, 'Acreedor');
+
+
+--
+-- TOC entry 3571 (class 0 OID 16470)
+-- Dependencies: 232
+-- Data for Name: Tbl_Transacciones; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3565 (class 0 OID 16417)
+-- Dependencies: 226
+-- Data for Name: Tbl_Usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public."Tbl_Usuario" VALUES (1, 'a', 'a', 'a', 1);
+INSERT INTO public."Tbl_Usuario" VALUES (2, 'b', 'b', 'b', 2);
+
+
+--
+-- TOC entry 3603 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: Tbl_BalanceComprobacion_id_Balance_general_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_BalanceComprobacion_id_Balance_general_seq"', 1, false);
+
+
+--
+-- TOC entry 3604 (class 0 OID 0)
+-- Dependencies: 241
+-- Name: Tbl_BalanceGeneral_id_Balance_general_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_BalanceGeneral_id_Balance_general_seq"', 1, false);
+
+
+--
+-- TOC entry 3605 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: Tbl_CapitalContable_id_Capital_contable_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_CapitalContable_id_Capital_contable_seq"', 1, false);
+
+
+--
+-- TOC entry 3606 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: Tbl_Catalogo_id_Cuenta_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_Catalogo_id_Cuenta_seq"', 25, true);
+
+
+--
+-- TOC entry 3607 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: Tbl_EstadoResultado_id_Estado_resultado_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_EstadoResultado_id_Estado_resultado_seq"', 1, false);
+
+
+--
+-- TOC entry 3608 (class 0 OID 0)
+-- Dependencies: 243
+-- Name: Tbl_LibroDiario_id_partida_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_LibroDiario_id_partida_seq"', 1, false);
+
+
+--
+-- TOC entry 3609 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: Tbl_LibroMayor_id_Libro_mayor_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_LibroMayor_id_Libro_mayor_seq"', 1, false);
+
+
+--
+-- TOC entry 3610 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: Tbl_PeriodosContables_id_Periodo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_PeriodosContables_id_Periodo_seq"', 1, false);
+
+
+--
+-- TOC entry 3611 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: Tbl_Roles_id_Rol_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_Roles_id_Rol_seq"', 2, true);
+
+
+--
+-- TOC entry 3612 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: Tbl_TipoCuenta_id_Tipo_cuenta_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_TipoCuenta_id_Tipo_cuenta_seq"', 10, true);
+
+
+--
+-- TOC entry 3613 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: Tbl_TipoDocumento_id_TipoDoc_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_TipoDocumento_id_TipoDoc_seq"', 15, true);
+
+
+--
+-- TOC entry 3614 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: Tbl_TipoSaldo_id_Tipo_saldo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_TipoSaldo_id_Tipo_saldo_seq"', 2, true);
+
+
+--
+-- TOC entry 3615 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: Tbl_Transacciones_id_Transaccion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_Transacciones_id_Transaccion_seq"', 1, false);
+
+
+--
+-- TOC entry 3616 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: Tbl_Usuario_id_Usuario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tbl_Usuario_id_Usuario_seq"', 2, true);
+
+
+--
+-- TOC entry 3392 (class 2606 OID 16546)
+-- Name: Tbl_BalanceComprobacion Tbl_BalanceComprobacion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_BalanceComprobacion"
+    ADD CONSTRAINT "Tbl_BalanceComprobacion_pkey" PRIMARY KEY ("id_Balance_general");
+
+
+--
+-- TOC entry 3394 (class 2606 OID 16558)
+-- Name: Tbl_BalanceGeneral Tbl_BalanceGeneral_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_BalanceGeneral"
+    ADD CONSTRAINT "Tbl_BalanceGeneral_pkey" PRIMARY KEY ("id_Balance_general");
+
+
+--
+-- TOC entry 3386 (class 2606 OID 16514)
+-- Name: Tbl_CapitalContable Tbl_CapitalContable_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_CapitalContable"
+    ADD CONSTRAINT "Tbl_CapitalContable_pkey" PRIMARY KEY ("id_Capital_contable");
+
+
+--
+-- TOC entry 3380 (class 2606 OID 16434)
+-- Name: Tbl_Catalogo Tbl_Catalogo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Catalogo"
+    ADD CONSTRAINT "Tbl_Catalogo_pkey" PRIMARY KEY ("id_Cuenta");
+
+
+--
+-- TOC entry 3390 (class 2606 OID 16534)
+-- Name: Tbl_EstadoResultado Tbl_EstadoResultado_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_EstadoResultado"
+    ADD CONSTRAINT "Tbl_EstadoResultado_pkey" PRIMARY KEY ("id_Estado_resultado");
+
+
+--
+-- TOC entry 3396 (class 2606 OID 16570)
+-- Name: Tbl_LibroDiario Tbl_LibroDiario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_LibroDiario"
+    ADD CONSTRAINT "Tbl_LibroDiario_pkey" PRIMARY KEY (id_partida);
+
+
+--
+-- TOC entry 3382 (class 2606 OID 16451)
+-- Name: Tbl_LibroMayor Tbl_LibroMayor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_LibroMayor"
+    ADD CONSTRAINT "Tbl_LibroMayor_pkey" PRIMARY KEY ("id_Libro_mayor");
+
+
+--
+-- TOC entry 3388 (class 2606 OID 16522)
+-- Name: Tbl_PeriodosContables Tbl_PeriodosContables_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_PeriodosContables"
+    ADD CONSTRAINT "Tbl_PeriodosContables_pkey" PRIMARY KEY ("id_Periodo");
+
+
+--
+-- TOC entry 3376 (class 2606 OID 16415)
+-- Name: Tbl_Roles Tbl_Roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Roles"
+    ADD CONSTRAINT "Tbl_Roles_pkey" PRIMARY KEY ("id_Rol");
+
+
+--
+-- TOC entry 3374 (class 2606 OID 16408)
+-- Name: Tbl_TipoCuenta Tbl_TipoCuenta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_TipoCuenta"
+    ADD CONSTRAINT "Tbl_TipoCuenta_pkey" PRIMARY KEY ("id_Tipo_cuenta");
+
+
+--
+-- TOC entry 3372 (class 2606 OID 16401)
+-- Name: Tbl_TipoDocumento Tbl_TipoDocumento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_TipoDocumento"
+    ADD CONSTRAINT "Tbl_TipoDocumento_pkey" PRIMARY KEY ("id_TipoDoc");
+
+
+--
+-- TOC entry 3370 (class 2606 OID 16394)
+-- Name: Tbl_TipoSaldo Tbl_TipoSaldo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_TipoSaldo"
+    ADD CONSTRAINT "Tbl_TipoSaldo_pkey" PRIMARY KEY ("id_Tipo_saldo");
+
+
+--
+-- TOC entry 3384 (class 2606 OID 16475)
+-- Name: Tbl_Transacciones Tbl_Transacciones_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Transacciones"
+    ADD CONSTRAINT "Tbl_Transacciones_pkey" PRIMARY KEY ("id_Transaccion");
+
+
+--
+-- TOC entry 3378 (class 2606 OID 16422)
+-- Name: Tbl_Usuario Tbl_Usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Usuario"
+    ADD CONSTRAINT "Tbl_Usuario_pkey" PRIMARY KEY ("id_Usuario");
+
+
+--
+-- TOC entry 3399 (class 2606 OID 16445)
+-- Name: Tbl_LibroMayor Cuenta_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_LibroMayor"
+    ADD CONSTRAINT "Cuenta_id" FOREIGN KEY ("Cuenta_id") REFERENCES public."Tbl_Catalogo"("id_Cuenta");
+
+
+--
+-- TOC entry 3400 (class 2606 OID 16476)
+-- Name: Tbl_Transacciones Cuenta_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Transacciones"
+    ADD CONSTRAINT "Cuenta_id" FOREIGN KEY ("Cuenta_id") REFERENCES public."Tbl_Catalogo"("id_Cuenta");
+
+
+--
+-- TOC entry 3408 (class 2606 OID 16576)
+-- Name: Tbl_LibroDiario Cuenta_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_LibroDiario"
+    ADD CONSTRAINT "Cuenta_id" FOREIGN KEY ("Cuenta_id") REFERENCES public."Tbl_Catalogo"("id_Cuenta");
+
+
+--
+-- TOC entry 3401 (class 2606 OID 16586)
+-- Name: Tbl_Transacciones Partida_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Transacciones"
+    ADD CONSTRAINT "Partida_id" FOREIGN KEY ("Partida_id") REFERENCES public."Tbl_LibroDiario"(id_partida) NOT VALID;
+
+
+--
+-- TOC entry 3404 (class 2606 OID 16523)
+-- Name: Tbl_CapitalContable Periodo_contable_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_CapitalContable"
+    ADD CONSTRAINT "Periodo_contable_id" FOREIGN KEY ("Periodo_contable_id") REFERENCES public."Tbl_PeriodosContables"("id_Periodo") NOT VALID;
+
+
+--
+-- TOC entry 3405 (class 2606 OID 16535)
+-- Name: Tbl_EstadoResultado Periodo_contable_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_EstadoResultado"
+    ADD CONSTRAINT "Periodo_contable_id" FOREIGN KEY ("Periodo_contable_id") REFERENCES public."Tbl_PeriodosContables"("id_Periodo");
+
+
+--
+-- TOC entry 3406 (class 2606 OID 16547)
+-- Name: Tbl_BalanceComprobacion Periodo_contable_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_BalanceComprobacion"
+    ADD CONSTRAINT "Periodo_contable_id" FOREIGN KEY ("Periodo_contable_id") REFERENCES public."Tbl_PeriodosContables"("id_Periodo");
+
+
+--
+-- TOC entry 3407 (class 2606 OID 16559)
+-- Name: Tbl_BalanceGeneral Periodo_contable_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_BalanceGeneral"
+    ADD CONSTRAINT "Periodo_contable_id" FOREIGN KEY ("Periodo_contable_id") REFERENCES public."Tbl_PeriodosContables"("id_Periodo");
+
+
+--
+-- TOC entry 3397 (class 2606 OID 16423)
+-- Name: Tbl_Usuario Rol_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Usuario"
+    ADD CONSTRAINT "Rol_id" FOREIGN KEY ("Rol_id") REFERENCES public."Tbl_Roles"("id_Rol");
+
+
+--
+-- TOC entry 3398 (class 2606 OID 16435)
+-- Name: Tbl_Catalogo Tipo_cuenta_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Catalogo"
+    ADD CONSTRAINT "Tipo_cuenta_id" FOREIGN KEY ("Tipo_cuenta_id") REFERENCES public."Tbl_TipoCuenta"("id_Tipo_cuenta");
+
+
+--
+-- TOC entry 3402 (class 2606 OID 16486)
+-- Name: Tbl_Transacciones Tipo_documento_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Transacciones"
+    ADD CONSTRAINT "Tipo_documento_id" FOREIGN KEY ("Tipo_documento_id") REFERENCES public."Tbl_TipoDocumento"("id_TipoDoc");
+
+
+--
+-- TOC entry 3403 (class 2606 OID 16481)
+-- Name: Tbl_Transacciones Tipo_saldo_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_Transacciones"
+    ADD CONSTRAINT "Tipo_saldo_id" FOREIGN KEY ("Tipo_saldo_id") REFERENCES public."Tbl_TipoSaldo"("id_Tipo_saldo");
+
+
+--
+-- TOC entry 3409 (class 2606 OID 16581)
+-- Name: Tbl_LibroDiario Tipo_saldo_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_LibroDiario"
+    ADD CONSTRAINT "Tipo_saldo_id" FOREIGN KEY ("Tipo_saldo_id") REFERENCES public."Tbl_TipoSaldo"("id_Tipo_saldo");
+
+
+--
+-- TOC entry 3410 (class 2606 OID 16571)
+-- Name: Tbl_LibroDiario Transaccion_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Tbl_LibroDiario"
+    ADD CONSTRAINT "Transaccion_id" FOREIGN KEY ("Transaccion_id") REFERENCES public."Tbl_Transacciones"("id_Transaccion");
+
+
+-- Completed on 2024-10-02 21:40:40 CST
+
+--
+-- PostgreSQL database dump complete
+--
+

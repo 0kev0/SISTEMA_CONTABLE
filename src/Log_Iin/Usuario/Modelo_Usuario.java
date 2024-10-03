@@ -22,9 +22,8 @@ public class Modelo_Usuario {
     private String Nombres;
     private String Apellidos;
     private String Contraseña;
+    private String Rol;
     private int id_Rol;
-    
-
 
     public Connection getConexionDB() {
         return conexionDB;
@@ -66,15 +65,6 @@ public class Modelo_Usuario {
         this.id = id;
     }
 
-    
-    public int getId_Rol() {
-        return id_Rol;
-    }
-
-    public void setId_Rol(int id_Rol) {
-        this.id_Rol = id_Rol;
-    }
-
     public String getNombres() {
         return Nombres;
     }
@@ -99,17 +89,34 @@ public class Modelo_Usuario {
         this.Contraseña = Contraseña;
     }
 
-    public Modelo_Usuario(Connection conexionDB, Statement statement, ClaseConexion claseConectar, PreparedStatement pstm, int id, int id_Rol, String Nombres, String Apellidos, String Contraseña) {
+    public String getRol() {
+        return Rol;
+    }
+
+    public void setRol(String Rol) {
+        this.Rol = Rol;
+    }
+
+    public int getId_Rol() {
+        return id_Rol;
+    }
+
+    public void setId_Rol(int id_Rol) {
+        this.id_Rol = id_Rol;
+    }
+
+    public Modelo_Usuario(Connection conexionDB, Statement statement, ClaseConexion claseConectar, PreparedStatement pstm, int id, String Nombres, String Apellidos, String Contraseña, String Rol, int id_Rol) {
         this.conexionDB = conexionDB;
         this.statement = statement;
         this.claseConectar = new ClaseConexion();
         this.pstm = pstm;
 
         this.id = id;
-        this.id_Rol = id_Rol;
         this.Nombres = Nombres;
         this.Apellidos = Apellidos;
         this.Contraseña = Contraseña;
+        this.Rol = Rol;
+        this.id_Rol = id_Rol;
     }
 
     public Modelo_Usuario() {
@@ -126,8 +133,9 @@ public class Modelo_Usuario {
         try {
             conexionDB = claseConectar.iniciarConexion(); // Iniciamos una conexión
             String sql = """
-                SELECT "id_Usuario", "Nombres", "Apellidos", "Contrasena", "Rol_id"
-            	FROM public."Tbl_Usuario"
+                SELECT "id_Usuario", "Nombres", "Apellidos", "Contrasena", "Rol_id",TBL_R."Nombre_rol"
+                FROM public."Tbl_Usuario" AS TBL_U
+                INNER JOIN "Tbl_Roles" AS TBL_R ON TBL_R."id_Rol" = TBL_U."Rol_id"
             	WHERE "Nombres" = ? AND "Contrasena" = ? ;""";
 
             pstm = conexionDB.prepareStatement(sql);
@@ -143,12 +151,15 @@ public class Modelo_Usuario {
                 Usuario.setNombres(consulta.getString("Nombres"));
                 Usuario.setApellidos(consulta.getString("Apellidos"));
                 Usuario.setId_Rol(consulta.getInt("Rol_id"));
+                Usuario.setRol(consulta.getString("Nombre_rol"));
+
             }
-            
-            System.out.println("ID: " + Usuario.getId());
-            System.out.println("Rol ID: " + Usuario.getId_Rol());
-            System.out.println("Nombres: " + Usuario.getNombres());
-            System.out.println("Apellidos: " + Usuario.getApellidos());
+
+//            System.out.println("ID: " + Usuario.getId());
+//            System.out.println("Rol ID: " + Usuario.getId_Rol());
+//            System.out.println("Rol : " + Usuario.getRol());
+//            System.out.println("Nombres: " + Usuario.getNombres());
+//            System.out.println("Apellidos: " + Usuario.getApellidos());
 
             conexionDB.close();
             return Usuario;

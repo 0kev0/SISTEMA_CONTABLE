@@ -67,7 +67,7 @@ public class Modelo_TipoCuenta {
         this.id_TipoCuenta = id_TipoCuenta;
     }
 
-    public String getTipoCuenta() {
+    public String getNombreTipoCuenta() {
         return TipoCuenta;
     }
 

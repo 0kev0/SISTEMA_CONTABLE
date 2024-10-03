@@ -9,6 +9,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.lang.System.out;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -26,9 +28,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Funciones {
-    
-    
-    
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -42,6 +41,14 @@ public class Funciones {
         long elapsedTimeInNanoseconds = endTime - startTime;
 
         System.out.println("Tiempo de ejecucion : " + elapsedTimeInNanoseconds + " ns");
+    }
+
+    public static String obtenerFechaHoraActual() {
+        // Obtener la fecha y hora actual
+        LocalDateTime ahora = LocalDateTime.now();
+        // Formatear la fecha, hora y minutos como string
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return ahora.format(formato);
     }
 
     public static void Menu_Item_Mouse_Action(JMenu JMenu_1, String color) throws NumberFormatException {
@@ -106,12 +113,12 @@ public class Funciones {
         return mesActual;
     }
 
-        public static int Get_DIA_Actual() {
+    public static int Get_DIA_Actual() {
         // Obtener el mes actual
-        int mesActual = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) ;
+        int mesActual = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         return mesActual;
     }
-        
+
     public static String obtenerFechaActual() {
         // Obtener la fecha y hora actual
         Date fecha = new Date();

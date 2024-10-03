@@ -131,16 +131,14 @@ public class Modelo_Catalogo {
                 Cuenta.setNombreCuenta(consulta.getString("Nombre_cuenta"));
                 Cuenta.setTipoCuenta(consulta.getString("Tipo_cuenta"));
                 Cuenta.setid_TipoCuenta(consulta.getInt("Tipo_cuenta_id"));
-                
-                 System.out.println("ID Cuenta: " + Cuenta.getId_Cuenta() +
-                       ", Nombre: " + Cuenta.getNombreCuenta() +
-                       ", Tipo: " + Cuenta.getTipoCuenta() +
-                       ", Tipo Cuenta ID: " + Cuenta.getid_TipoCuenta());
-                 
+
+                System.out.println("ID Cuenta: " + Cuenta.getId_Cuenta()
+                        + ", Nombre: " + Cuenta.getNombreCuenta()
+                        + ", Tipo: " + Cuenta.getTipoCuenta()
+                        + ", Tipo Cuenta ID: " + Cuenta.getid_TipoCuenta());
 
                 Catalogo.add(Cuenta);
             }
-            
 
             conexionDB.close();
             return Catalogo;
@@ -174,11 +172,46 @@ public class Modelo_Catalogo {
                 Cuenta.setid_TipoCuenta(consulta.getInt("Tipo_cuenta_id"));
 
             }
-            
-            
 
             conexionDB.close();
             return Cuenta;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Modelo_Catalogo.class.getName()).log(Level.SEVERE, "Error al obtener el listado", ex);
+        }
+
+        return null;
+    }
+
+    public ArrayList<Modelo_Catalogo> Get_CatalogoFiltrado(int id_Tipocuenta) {
+        try {
+            conexionDB = claseConectar.iniciarConexion(); // Iniciamos una conexión
+            String sql = """
+                SELECT "id_Cuenta", "Nombre_cuenta", TBL_TC."Tipo_cuenta"
+                FROM public."Tbl_Catalogo" AS TBL_C
+                INNER JOIN "Tbl_TipoCuenta" AS TBL_TC ON TBL_TC."id_Tipo_cuenta" = TBL_C."Tipo_cuenta_id"
+                WHERE TBL_TC."id_Tipo_cuenta" = ? ;""";
+
+            pstm = conexionDB.prepareStatement(sql);
+            pstm.setInt(1, id_Tipocuenta);
+
+            ResultSet consulta = pstm.executeQuery(); // Ejecutamos la consulta
+
+            ArrayList<Modelo_Catalogo> Catalogo = new ArrayList<>();
+
+            while (consulta.next()) {
+                Modelo_Catalogo Cuenta = new Modelo_Catalogo();
+
+                Cuenta.setId_Cuenta(consulta.getInt("id_Cuenta"));
+                Cuenta.setNombreCuenta(consulta.getString("Nombre_cuenta"));
+                Cuenta.setTipoCuenta(consulta.getString("Tipo_cuenta"));
+
+                Catalogo.add(Cuenta);
+
+            }
+
+            conexionDB.close();
+            return Catalogo;
 
         } catch (SQLException ex) {
             Logger.getLogger(Modelo_Catalogo.class.getName()).log(Level.SEVERE, "Error al obtener el listado", ex);

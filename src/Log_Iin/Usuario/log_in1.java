@@ -120,7 +120,7 @@ public class log_in1 extends javax.swing.JFrame {
         TxbCorreo.setBackground(new java.awt.Color(5, 89, 91));
         TxbCorreo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         TxbCorreo.setForeground(new java.awt.Color(255, 255, 255));
-        TxbCorreo.setText("9876");
+        TxbCorreo.setText("a");
         TxbCorreo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Correo", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Sylfaen", 1, 18), new java.awt.Color(242, 244, 209))); // NOI18N
         TxbCorreo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -136,7 +136,7 @@ public class log_in1 extends javax.swing.JFrame {
         TxbContraseña.setBackground(new java.awt.Color(5, 89, 91));
         TxbContraseña.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         TxbContraseña.setForeground(new java.awt.Color(255, 255, 255));
-        TxbContraseña.setText("0");
+        TxbContraseña.setText("a");
         TxbContraseña.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contraseña ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Sylfaen", 1, 18), new java.awt.Color(242, 244, 209))); // NOI18N
         TxbContraseña.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -351,6 +351,7 @@ public class log_in1 extends javax.swing.JFrame {
     private void Btn_ReservarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ReservarMouseClicked
         String User = TxbCorreo.getText();
         String PASS = TxbContraseña.getText();
+        String loginfo = "[" + Funciones.Funciones.obtenerFechaHoraActual();
 
         if (validarCampos(jp_Main)) {
 
@@ -358,16 +359,21 @@ public class log_in1 extends javax.swing.JFrame {
             USER = USER.Validar_Usuario(User, PASS);
 
             if (USER.getNombres() != null) {
+
                 System.out.println("\tINICIO SATISFACTORIO");
+
                 Funciones.Funciones.showMessageDialog("BIENVENIDO", "Bienvenido\n " + USER.getApellidos() + " " + USER.getNombres());
 
                 int rol = USER.getId_Rol();
+
                 System.out.println("rol " + USER.getId_Rol());
                 switch (rol) {
                     case 1 -> {
-                       int id = USER.getId();
+                        int id = USER.getId();
 
                         //ADMIN
+                        loginfo += "] LOG in: " + USER.getNombres() + ", " + USER.getApellidos() + " Rol: " + USER.getRol();
+                        System.out.println( loginfo);
 
                         Panel_Contador Contador = new Panel_Contador();
                         Contador.setVisible(true);
@@ -375,6 +381,10 @@ public class log_in1 extends javax.swing.JFrame {
                     }
                     case 2 -> {
                         //CONTADOR
+                        loginfo += "] LOG in: " + USER.getNombres() + ", " + USER.getApellidos() + " Rol: " + USER.getRol();
+
+                        System.out.println(loginfo + " ]");
+
                         Panel_Admin admin = new Panel_Admin();
                         admin.setVisible(true);
                         dispose();
@@ -385,6 +395,8 @@ public class log_in1 extends javax.swing.JFrame {
                 }
 
             } else {
+                loginfo += "] Intento de LOG in por : " + User + ", " + PASS ;
+                System.out.println( loginfo);
                 JOptionPane.showMessageDialog(rootPane, "CREDENCIALES INCORRECTAS\n INTENTE NUEVAMENTE ");
                 VaciarCampos(jp_Main);
             }
