@@ -14,8 +14,8 @@ public class ClaseConexion {
     public ClaseConexion() {
 
         this.usuario = "postgres";
-        this.pass = "1234";
-        this.url = "jdbc:postgresql://localhost:5432/postgres";
+        this.pass = "Ally.2203";
+        this.url = "jdbc:postgresql://localhost:5432/contables";
 
     }
 
