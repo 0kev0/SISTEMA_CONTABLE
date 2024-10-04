@@ -1,6 +1,7 @@
 package Log_Iin.Usuario;
 
 import Conexion.ClaseConexion;
+import Funciones.Funciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -146,6 +147,10 @@ public class Modelo_Usuario {
 
             Modelo_Usuario Usuario = new Modelo_Usuario();
 
+            String loginfo = " Intento de inicio de secion por usuario ***";
+            String Log = Funciones.Registro_Log(loginfo);
+            Funciones.escribirEnArchivo(Log);
+
             while (consulta.next()) {
                 Usuario.setId(consulta.getInt("id_Usuario"));
                 Usuario.setNombres(consulta.getString("Nombres"));
@@ -160,7 +165,6 @@ public class Modelo_Usuario {
 //            System.out.println("Rol : " + Usuario.getRol());
 //            System.out.println("Nombres: " + Usuario.getNombres());
 //            System.out.println("Apellidos: " + Usuario.getApellidos());
-
             conexionDB.close();
             return Usuario;
 

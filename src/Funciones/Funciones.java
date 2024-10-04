@@ -49,7 +49,7 @@ public class Funciones {
 
     public static String obtenerFechaHoraActual() {
         LocalDateTime ahora = LocalDateTime.now();
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         return ahora.format(formato);
     }
@@ -76,7 +76,7 @@ public class Funciones {
                 bw.write(texto);
                 bw.newLine();
             }
-            System.out.println("El log se ha guardado correctamente.");
+           // System.out.println("El log se ha guardado correctamente.");
         } catch (IOException e) {
             System.out.println("Ocurrió un error al escribir en el archivo: " + e.getMessage());
         }

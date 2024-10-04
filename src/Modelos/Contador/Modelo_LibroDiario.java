@@ -164,9 +164,8 @@ public class Modelo_LibroDiario {
 
         pstm = conexionDB.prepareStatement(sql);
 
-        ResultSet consulta = pstm.executeQuery(); // Ejecutamos la consulta
+        ResultSet consulta = pstm.executeQuery();
 
-        // Diccionario que agrupa los periodos por Partida_id
         Map<Integer, ArrayList<Modelo_LibroDiario>> periodosPorPartida = new HashMap<>();
 
         while (consulta.next()) {
@@ -178,59 +177,49 @@ public class Modelo_LibroDiario {
             Periodo.setTipo_saldo(consulta.getString("Tipo_saldo"));
             Periodo.setSaldo(consulta.getDouble("Monto"));
 
-            // Obtener el Partida_id de la fila actual
-            int partidaId = consulta.getInt("id_Partida");
+            int NumeroPartida = consulta.getInt("LibroDiario_id");
 
-            // Si no existe una lista para este Partida_id, la creamos
-            periodosPorPartida.putIfAbsent(partidaId, new ArrayList<>());
+            periodosPorPartida.putIfAbsent(NumeroPartida, new ArrayList<>());
 
-            // Agregamos el objeto a la lista correspondiente
-            periodosPorPartida.get(partidaId).add(Periodo);
+            periodosPorPartida.get(NumeroPartida).add(Periodo);
         }
 
         for (Map.Entry<Integer, ArrayList<Modelo_LibroDiario>> entrada : periodosPorPartida.entrySet()) {
             int partidaId = entrada.getKey();
             ArrayList<Modelo_LibroDiario> periodos = entrada.getValue();
 
-            System.out.println("Partida ID: " + partidaId);
-            System.out.println("---------------------------------------------------------");
-            System.out.println("Fecha         | Cuenta                   | Debe     | Haber   ");
-            System.out.println("---------------------------------------------------------");
+            System.out.println("\nPartida número : " + partidaId);
+            System.out.println("+----------------------------------------------------------------+");
+            System.out.printf("| %-13s | %-24s | %-8s | %-8s |\n", "Fecha", "Cuenta", "Debe", "Haber");
+            System.out.println("+----------------------------------------------------------------+");
 
             double totalDebe = 0;
             double totalHaber = 0;
-            double SaldoFinal = 0;
 
-            // Iteramos sobre cada periodo en la partida actual
             for (Modelo_LibroDiario periodo : periodos) {
                 String fecha = periodo.getFecha().toString();
                 String nombreCuenta = periodo.getNombre_cuenta();
                 String tipoSaldo = periodo.getTipo_saldo();
                 double saldo = periodo.getSaldo();
 
-                // Variables para imprimir el saldo en la columna correcta
                 String debe = "";
                 String haber = "";
 
                 if (tipoSaldo.equalsIgnoreCase("Deudor")) {
-                    debe = String.format("%.2f", saldo);  // Formato de dos decimales
-                    totalDebe += saldo;  // Acumular total Debe
+                    debe = String.format("%.2f", saldo);
+                    totalDebe += saldo;
                 } else if (tipoSaldo.equalsIgnoreCase("Acreedor")) {
-                    haber = String.format("%.2f", saldo); // Formato de dos decimales
-                    totalHaber += saldo;  // Acumular total Haber
+                    haber = String.format("%.2f", saldo);
+                    totalHaber += saldo;
                 }
-                
 
-                // Imprimimos en el formato adecuado
-                System.out.printf("%-13s | %-24s | %-8s | %-8s \n", fecha, nombreCuenta, debe, haber);
+                System.out.printf("| %-13s | %-24s | %-8s | %-8s |\n", fecha, nombreCuenta, debe, haber);
             }
 
-            // Imprimir los totales
-            System.out.println("---------------------------------------------------------");
-            System.out.printf("TOTAL         | %-24s | %-8s | %-8s \n", "", String.format("%.2f", totalDebe), String.format("%.2f", totalHaber));
-            System.out.println("---------------------------------------------------------\n");
+            System.out.println("+----------------------------------------------------------------+");
+            System.out.printf("| %-13s | %-24s | %-8s | %-8s |\n", "SUBTOTALES ", "", String.format("%.2f", totalDebe), String.format("%.2f", totalHaber));
+            System.out.println("+----------------------------------------------------------------+\n");
         }
-        System.out.println("---------------------------------------------------------\n");
 
         conexionDB.close();
         return periodosPorPartida;

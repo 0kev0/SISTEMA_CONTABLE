@@ -101,18 +101,27 @@ public class Modelo_TipoDocumento {
             ResultSet consulta = pstm.executeQuery(); // Ejecutamos la consulta
 
             ArrayList<Modelo_TipoDocumento> TipoDocumentos_Listado = new ArrayList<>();
-            
+
             while (consulta.next()) {
                 Modelo_TipoDocumento TipoDocumento = new Modelo_TipoDocumento();
 
                 TipoDocumento.setId_TipoDocumento(consulta.getInt("id_TipoDoc"));
                 TipoDocumento.setTipoDocumento(consulta.getString("Tipo_documento"));
 
-                System.out.println("ID Tipo Documento: " + TipoDocumento.getId_TipoDocumento() +
-                       ", Tipo Documento: " + TipoDocumento.getTipoDocumento());
+                if (consulta.isFirst()) {
+                    System.out.println("\n\n+--------------------+-----------------------------+");
+                    System.out.println("| ID Tipo Documento  | Tipo de Documento           |");
+                    System.out.println("+--------------------+-----------------------------+");
+                }
+
+                System.out.println(String.format("| %-18d | %-27s |",
+                        consulta.getInt("id_TipoDoc"),
+                        consulta.getString("Tipo_documento")));
 
                 TipoDocumentos_Listado.add(TipoDocumento);
             }
+
+            System.out.println("+--------------------+-----------------------------+\n");
 
             conexionDB.close();
             return TipoDocumentos_Listado;

@@ -1,5 +1,6 @@
 package Conexion;
 
+import Funciones.Funciones;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,11 +21,18 @@ public class ClaseConexion {
     }
 
     public Connection iniciarConexion() {
+
+        String loginfo = " Intento de coneccion a la base de datos... ";
+        String Log = Funciones.Registro_Log(loginfo);
+        Funciones.escribirEnArchivo(Log);
         try {
             Class.forName("org.postgresql.Driver");
             conexion = DriverManager.getConnection(url, usuario, pass);
             boolean estado = conexion.isValid(50000);
-            System.out.println(estado ? "Conexión exitosa\n" : "ERROR al conectar\n");
+            loginfo = (estado ? "Conexión exitosa" : "ERROR al conectar");
+            Log = Funciones.Registro_Log(loginfo);
+            Funciones.escribirEnArchivo(Log);
+            
             return conexion;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ClaseConexion.class.getName()).log(Level.SEVERE, null, ex);

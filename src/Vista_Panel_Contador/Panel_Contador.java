@@ -14,7 +14,6 @@ import Modelos.Contador.Modelo_TipoCuenta;
 import Modelos.Contador.Modelo_TipoDocumento;
 import Vista_Panel_Admin.Opciones.Gestion_CatalogoTest;
 import Vista_Panel_Admin.Opciones.Vista_CatalogoTest;
-import Vista_Panel_Admin.Panel_Admin;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +28,6 @@ public class Panel_Contador extends javax.swing.JFrame {
     private Modelo_Usuario Modelo_Usuario;
 
     public Panel_Contador(Modelo_Usuario User) {
-        getContentPane().setBackground(new Color(250, 250, 250));
         initComponents();
         this.Modelo_Usuario = User;
 
@@ -48,22 +46,22 @@ public class Panel_Contador extends javax.swing.JFrame {
         Lb_Bienvenida = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        Btn_LibroDiario2 = new Customizacion.Custom_Buttons();
-        Lb_Inventario2 = new javax.swing.JLabel();
-        Btn_LibroDiario1 = new Customizacion.Custom_Buttons();
-        Lb_Inventario1 = new javax.swing.JLabel();
-        Btn_LibroDiario3 = new Customizacion.Custom_Buttons();
-        Lb_Inventario3 = new javax.swing.JLabel();
-        Btn_LibroDiario = new Customizacion.Custom_Buttons();
-        Lb_Inventario = new javax.swing.JLabel();
+        Btn_Libro_Diario = new Customizacion.Custom_Buttons();
+        Lb_LibroDiario = new javax.swing.JLabel();
+        Btn_LibroMayor = new Customizacion.Custom_Buttons();
+        Lb_LibroMayor = new javax.swing.JLabel();
+        Btn_EstadosFinancieros = new Customizacion.Custom_Buttons();
+        Lb_EstadosFinancieros = new javax.swing.JLabel();
+        Btn_VerRegistros = new Customizacion.Custom_Buttons();
+        Lb_VerRegistros = new javax.swing.JLabel();
         Btn_Regresar1 = new javax.swing.JPanel();
-        Lb_Ordenar1 = new javax.swing.JLabel();
-        Btn_LibroDiario4 = new Customizacion.Custom_Buttons();
-        Lb_Inventario4 = new javax.swing.JLabel();
-        Btn_LibroDiario5 = new Customizacion.Custom_Buttons();
-        Lb_Inventario5 = new javax.swing.JLabel();
-        Btn_LibroDiario6 = new Customizacion.Custom_Buttons();
-        Lb_Inventario6 = new javax.swing.JLabel();
+        Lb_Regresar = new javax.swing.JLabel();
+        Btn_VerCatalogo = new Customizacion.Custom_Buttons();
+        Lb_VerCatalogo = new javax.swing.JLabel();
+        Btn_TipoDocumentos = new Customizacion.Custom_Buttons();
+        Lb_TipoDocs = new javax.swing.JLabel();
+        Btn_TipoCuentas = new Customizacion.Custom_Buttons();
+        Lb_TipoCuentas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -167,84 +165,90 @@ public class Panel_Contador extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(254, 244, 209));
 
-        Btn_LibroDiario2.setBackground(new java.awt.Color(137, 163, 178));
-        Btn_LibroDiario2.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
-        Btn_LibroDiario2.setPreferredSize(new java.awt.Dimension(180, 60));
-        Btn_LibroDiario2.addMouseListener(new java.awt.event.MouseAdapter() {
+        Btn_Libro_Diario.setBackground(new java.awt.Color(137, 163, 178));
+        Btn_Libro_Diario.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
+        Btn_Libro_Diario.setPreferredSize(new java.awt.Dimension(180, 60));
+        Btn_Libro_Diario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario2MouseClicked(evt);
+                Btn_Libro_DiarioMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario2MouseEntered(evt);
+                Btn_Libro_DiarioMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario2MouseExited(evt);
+                Btn_Libro_DiarioMouseExited(evt);
             }
         });
-        Btn_LibroDiario2.setLayout(new java.awt.GridBagLayout());
+        Btn_Libro_Diario.setLayout(new java.awt.GridBagLayout());
 
-        Lb_Inventario2.setBackground(new java.awt.Color(7, 3, 26));
-        Lb_Inventario2.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Lb_Inventario2.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_Inventario2.setText("Libro Diario");
-        Btn_LibroDiario2.add(Lb_Inventario2, new java.awt.GridBagConstraints());
+        Lb_LibroDiario.setBackground(new java.awt.Color(7, 3, 26));
+        Lb_LibroDiario.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Lb_LibroDiario.setForeground(new java.awt.Color(242, 244, 209));
+        Lb_LibroDiario.setText("Libro Diario");
+        Btn_Libro_Diario.add(Lb_LibroDiario, new java.awt.GridBagConstraints());
 
-        Btn_LibroDiario1.setBackground(new java.awt.Color(137, 163, 178));
-        Btn_LibroDiario1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
-        Btn_LibroDiario1.setPreferredSize(new java.awt.Dimension(180, 60));
-        Btn_LibroDiario1.addMouseListener(new java.awt.event.MouseAdapter() {
+        Btn_LibroMayor.setBackground(new java.awt.Color(137, 163, 178));
+        Btn_LibroMayor.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
+        Btn_LibroMayor.setPreferredSize(new java.awt.Dimension(180, 60));
+        Btn_LibroMayor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_LibroMayorMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario1MouseEntered(evt);
+                Btn_LibroMayorMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario1MouseExited(evt);
+                Btn_LibroMayorMouseExited(evt);
             }
         });
-        Btn_LibroDiario1.setLayout(new java.awt.GridBagLayout());
+        Btn_LibroMayor.setLayout(new java.awt.GridBagLayout());
 
-        Lb_Inventario1.setBackground(new java.awt.Color(7, 3, 26));
-        Lb_Inventario1.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Lb_Inventario1.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_Inventario1.setText("Libro Mayor");
-        Btn_LibroDiario1.add(Lb_Inventario1, new java.awt.GridBagConstraints());
+        Lb_LibroMayor.setBackground(new java.awt.Color(7, 3, 26));
+        Lb_LibroMayor.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Lb_LibroMayor.setForeground(new java.awt.Color(242, 244, 209));
+        Lb_LibroMayor.setText("Libro Mayor");
+        Btn_LibroMayor.add(Lb_LibroMayor, new java.awt.GridBagConstraints());
 
-        Btn_LibroDiario3.setBackground(new java.awt.Color(137, 163, 178));
-        Btn_LibroDiario3.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
-        Btn_LibroDiario3.setPreferredSize(new java.awt.Dimension(180, 60));
-        Btn_LibroDiario3.addMouseListener(new java.awt.event.MouseAdapter() {
+        Btn_EstadosFinancieros.setBackground(new java.awt.Color(137, 163, 178));
+        Btn_EstadosFinancieros.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
+        Btn_EstadosFinancieros.setPreferredSize(new java.awt.Dimension(180, 60));
+        Btn_EstadosFinancieros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_EstadosFinancierosMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario3MouseEntered(evt);
+                Btn_EstadosFinancierosMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario3MouseExited(evt);
+                Btn_EstadosFinancierosMouseExited(evt);
             }
         });
-        Btn_LibroDiario3.setLayout(new java.awt.GridBagLayout());
+        Btn_EstadosFinancieros.setLayout(new java.awt.GridBagLayout());
 
-        Lb_Inventario3.setBackground(new java.awt.Color(7, 3, 26));
-        Lb_Inventario3.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Lb_Inventario3.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_Inventario3.setText("Estados Financieros");
-        Btn_LibroDiario3.add(Lb_Inventario3, new java.awt.GridBagConstraints());
+        Lb_EstadosFinancieros.setBackground(new java.awt.Color(7, 3, 26));
+        Lb_EstadosFinancieros.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Lb_EstadosFinancieros.setForeground(new java.awt.Color(242, 244, 209));
+        Lb_EstadosFinancieros.setText("Estados Financieros");
+        Btn_EstadosFinancieros.add(Lb_EstadosFinancieros, new java.awt.GridBagConstraints());
 
-        Btn_LibroDiario.setBackground(new java.awt.Color(137, 163, 178));
-        Btn_LibroDiario.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
-        Btn_LibroDiario.setPreferredSize(new java.awt.Dimension(180, 60));
-        Btn_LibroDiario.addMouseListener(new java.awt.event.MouseAdapter() {
+        Btn_VerRegistros.setBackground(new java.awt.Color(137, 163, 178));
+        Btn_VerRegistros.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
+        Btn_VerRegistros.setPreferredSize(new java.awt.Dimension(180, 60));
+        Btn_VerRegistros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiarioMouseEntered(evt);
+                Btn_VerRegistrosMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiarioMouseExited(evt);
+                Btn_VerRegistrosMouseExited(evt);
             }
         });
-        Btn_LibroDiario.setLayout(new java.awt.GridBagLayout());
+        Btn_VerRegistros.setLayout(new java.awt.GridBagLayout());
 
-        Lb_Inventario.setBackground(new java.awt.Color(7, 3, 26));
-        Lb_Inventario.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Lb_Inventario.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_Inventario.setText("Ver Registros");
-        Btn_LibroDiario.add(Lb_Inventario, new java.awt.GridBagConstraints());
+        Lb_VerRegistros.setBackground(new java.awt.Color(7, 3, 26));
+        Lb_VerRegistros.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Lb_VerRegistros.setForeground(new java.awt.Color(242, 244, 209));
+        Lb_VerRegistros.setText("Ver Registros");
+        Btn_VerRegistros.add(Lb_VerRegistros, new java.awt.GridBagConstraints());
 
         Btn_Regresar1.setBackground(new java.awt.Color(152, 5, 5));
         Btn_Regresar1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 10, 0, new java.awt.Color(247, 17, 17)));
@@ -263,77 +267,77 @@ public class Panel_Contador extends javax.swing.JFrame {
         });
         Btn_Regresar1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Lb_Ordenar1.setFont(new java.awt.Font("Segoe UI Black", 1, 20)); // NOI18N
-        Lb_Ordenar1.setForeground(new java.awt.Color(255, 255, 255));
-        Lb_Ordenar1.setText("Regresar");
-        Lb_Ordenar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Btn_Regresar1.add(Lb_Ordenar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 130, 30));
+        Lb_Regresar.setFont(new java.awt.Font("Segoe UI Black", 1, 20)); // NOI18N
+        Lb_Regresar.setForeground(new java.awt.Color(255, 255, 255));
+        Lb_Regresar.setText("Regresar");
+        Lb_Regresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Btn_Regresar1.add(Lb_Regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 130, 30));
 
-        Btn_LibroDiario4.setBackground(new java.awt.Color(137, 163, 178));
-        Btn_LibroDiario4.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
-        Btn_LibroDiario4.setPreferredSize(new java.awt.Dimension(180, 60));
-        Btn_LibroDiario4.addMouseListener(new java.awt.event.MouseAdapter() {
+        Btn_VerCatalogo.setBackground(new java.awt.Color(137, 163, 178));
+        Btn_VerCatalogo.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
+        Btn_VerCatalogo.setPreferredSize(new java.awt.Dimension(180, 60));
+        Btn_VerCatalogo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario4MouseClicked(evt);
+                Btn_VerCatalogoMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario4MouseEntered(evt);
+                Btn_VerCatalogoMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario4MouseExited(evt);
+                Btn_VerCatalogoMouseExited(evt);
             }
         });
-        Btn_LibroDiario4.setLayout(new java.awt.GridBagLayout());
+        Btn_VerCatalogo.setLayout(new java.awt.GridBagLayout());
 
-        Lb_Inventario4.setBackground(new java.awt.Color(7, 3, 26));
-        Lb_Inventario4.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Lb_Inventario4.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_Inventario4.setText("Ver catalogo");
-        Btn_LibroDiario4.add(Lb_Inventario4, new java.awt.GridBagConstraints());
+        Lb_VerCatalogo.setBackground(new java.awt.Color(7, 3, 26));
+        Lb_VerCatalogo.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Lb_VerCatalogo.setForeground(new java.awt.Color(242, 244, 209));
+        Lb_VerCatalogo.setText("Ver catalogo");
+        Btn_VerCatalogo.add(Lb_VerCatalogo, new java.awt.GridBagConstraints());
 
-        Btn_LibroDiario5.setBackground(new java.awt.Color(137, 163, 178));
-        Btn_LibroDiario5.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
-        Btn_LibroDiario5.setPreferredSize(new java.awt.Dimension(180, 60));
-        Btn_LibroDiario5.addMouseListener(new java.awt.event.MouseAdapter() {
+        Btn_TipoDocumentos.setBackground(new java.awt.Color(137, 163, 178));
+        Btn_TipoDocumentos.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
+        Btn_TipoDocumentos.setPreferredSize(new java.awt.Dimension(180, 60));
+        Btn_TipoDocumentos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario5MouseClicked(evt);
+                Btn_TipoDocumentosMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario5MouseEntered(evt);
+                Btn_TipoDocumentosMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario5MouseExited(evt);
+                Btn_TipoDocumentosMouseExited(evt);
             }
         });
-        Btn_LibroDiario5.setLayout(new java.awt.GridBagLayout());
+        Btn_TipoDocumentos.setLayout(new java.awt.GridBagLayout());
 
-        Lb_Inventario5.setBackground(new java.awt.Color(7, 3, 26));
-        Lb_Inventario5.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Lb_Inventario5.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_Inventario5.setText("Ver tipo documentos");
-        Btn_LibroDiario5.add(Lb_Inventario5, new java.awt.GridBagConstraints());
+        Lb_TipoDocs.setBackground(new java.awt.Color(7, 3, 26));
+        Lb_TipoDocs.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Lb_TipoDocs.setForeground(new java.awt.Color(242, 244, 209));
+        Lb_TipoDocs.setText("Ver tipo documentos");
+        Btn_TipoDocumentos.add(Lb_TipoDocs, new java.awt.GridBagConstraints());
 
-        Btn_LibroDiario6.setBackground(new java.awt.Color(137, 163, 178));
-        Btn_LibroDiario6.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
-        Btn_LibroDiario6.setPreferredSize(new java.awt.Dimension(180, 60));
-        Btn_LibroDiario6.addMouseListener(new java.awt.event.MouseAdapter() {
+        Btn_TipoCuentas.setBackground(new java.awt.Color(137, 163, 178));
+        Btn_TipoCuentas.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
+        Btn_TipoCuentas.setPreferredSize(new java.awt.Dimension(180, 60));
+        Btn_TipoCuentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario6MouseClicked(evt);
+                Btn_TipoCuentasMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario6MouseEntered(evt);
+                Btn_TipoCuentasMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Btn_LibroDiario6MouseExited(evt);
+                Btn_TipoCuentasMouseExited(evt);
             }
         });
-        Btn_LibroDiario6.setLayout(new java.awt.GridBagLayout());
+        Btn_TipoCuentas.setLayout(new java.awt.GridBagLayout());
 
-        Lb_Inventario6.setBackground(new java.awt.Color(7, 3, 26));
-        Lb_Inventario6.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
-        Lb_Inventario6.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_Inventario6.setText("Ver tipo cuentas");
-        Btn_LibroDiario6.add(Lb_Inventario6, new java.awt.GridBagConstraints());
+        Lb_TipoCuentas.setBackground(new java.awt.Color(7, 3, 26));
+        Lb_TipoCuentas.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Lb_TipoCuentas.setForeground(new java.awt.Color(242, 244, 209));
+        Lb_TipoCuentas.setText("Ver tipo cuentas");
+        Btn_TipoCuentas.add(Lb_TipoCuentas, new java.awt.GridBagConstraints());
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -345,33 +349,33 @@ public class Panel_Contador extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Btn_LibroDiario2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Btn_LibroDiario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Btn_LibroDiario3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Btn_LibroDiario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_Libro_Diario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_LibroMayor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_EstadosFinancieros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_VerRegistros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Btn_Regresar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Btn_LibroDiario4, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(Btn_LibroDiario5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_LibroDiario6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(Btn_VerCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Btn_TipoDocumentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Btn_TipoCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(19, Short.MAX_VALUE)
-                .addComponent(Btn_LibroDiario6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Btn_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Btn_LibroDiario5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Btn_TipoDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Btn_LibroDiario4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Btn_VerCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Btn_LibroDiario2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Btn_Libro_Diario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Btn_LibroDiario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Btn_LibroMayor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Btn_LibroDiario3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Btn_EstadosFinancieros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Btn_LibroDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Btn_VerRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Btn_Regresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
@@ -395,7 +399,7 @@ public class Panel_Contador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Btn_Regresar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_Regresar1MouseClicked
-        String loginfo = " Cerro sesion el usuario ***";
+        String loginfo = " Cerro sesion el usuario " + Modelo_Usuario.getNombres() + " ***";
         String Log = Funciones.Registro_Log(loginfo);
         Funciones.escribirEnArchivo(Log);
 
@@ -405,20 +409,22 @@ public class Panel_Contador extends javax.swing.JFrame {
     }//GEN-LAST:event_Btn_Regresar1MouseClicked
 
     private void Btn_Regresar1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_Regresar1MouseEntered
-        EnterMouse(Btn_Regresar1, Lb_Ordenar1, "#FFF099", "#FF9900");
+        EnterMouse(Btn_Regresar1, Lb_Regresar, "#F71111", "#FFFFFF");
     }//GEN-LAST:event_Btn_Regresar1MouseEntered
 
     private void Btn_Regresar1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_Regresar1MouseExited
-        // TODO add your handling code here:
+        // TODO add your handling code here:980505
+        LeftMouse(Btn_Regresar1, Lb_Regresar, "#980505", "#F2F4D1");
+
     }//GEN-LAST:event_Btn_Regresar1MouseExited
 
-    private void Btn_LibroDiarioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiarioMouseEntered
-        EnterMouse(Btn_LibroDiario, Lb_Inventario, "#ABBEC8", "#FFFFFF");
-    }//GEN-LAST:event_Btn_LibroDiarioMouseEntered
+    private void Btn_VerRegistrosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_VerRegistrosMouseEntered
+        EnterMouse(Btn_VerRegistros, Lb_VerRegistros, "#ABBEC8", "#FFFFFF");
+    }//GEN-LAST:event_Btn_VerRegistrosMouseEntered
 
-    private void Btn_LibroDiarioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiarioMouseExited
-        LeftMouse(Btn_LibroDiario, Lb_Inventario, "#89A3B2", "#F2F4D1");
-    }//GEN-LAST:event_Btn_LibroDiarioMouseExited
+    private void Btn_VerRegistrosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_VerRegistrosMouseExited
+        LeftMouse(Btn_VerRegistros, Lb_VerRegistros, "#89A3B2", "#F2F4D1");
+    }//GEN-LAST:event_Btn_VerRegistrosMouseExited
 
     private void Btn_EXIT3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_EXIT3MouseClicked
         dispose();
@@ -434,39 +440,43 @@ public class Panel_Contador extends javax.swing.JFrame {
         //        LeftMouse(Btn_EXIT, Lb_X, "#F96D00", "#FFFFFF");
     }//GEN-LAST:event_Btn_EXIT3MouseExited
 
-    private void Btn_LibroDiario1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_LibroDiario1MouseEntered
+    private void Btn_LibroMayorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroMayorMouseEntered
+        EnterMouse(Btn_LibroMayor, Lb_LibroMayor, "#ABBEC8", "#FFFFFF");
+    }//GEN-LAST:event_Btn_LibroMayorMouseEntered
 
-    private void Btn_LibroDiario1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_LibroDiario1MouseExited
+    private void Btn_LibroMayorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroMayorMouseExited
+        LeftMouse(Btn_LibroMayor, Lb_LibroMayor, "#89A3B2", "#F2F4D1");
+    }//GEN-LAST:event_Btn_LibroMayorMouseExited
 
-    private void Btn_LibroDiario2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario2MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_LibroDiario2MouseEntered
+    private void Btn_Libro_DiarioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_Libro_DiarioMouseEntered
+        EnterMouse(Btn_Libro_Diario, Lb_LibroDiario, "#ABBEC8", "#FFFFFF");
+    }//GEN-LAST:event_Btn_Libro_DiarioMouseEntered
 
-    private void Btn_LibroDiario2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario2MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_LibroDiario2MouseExited
+    private void Btn_Libro_DiarioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_Libro_DiarioMouseExited
+        LeftMouse(Btn_Libro_Diario, Lb_LibroDiario, "#89A3B2", "#F2F4D1");
+    }//GEN-LAST:event_Btn_Libro_DiarioMouseExited
 
-    private void Btn_LibroDiario3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario3MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_LibroDiario3MouseEntered
+    private void Btn_EstadosFinancierosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_EstadosFinancierosMouseEntered
+        EnterMouse(Btn_EstadosFinancieros, Lb_EstadosFinancieros, "#ABBEC8", "#FFFFFF");
+    }//GEN-LAST:event_Btn_EstadosFinancierosMouseEntered
 
-    private void Btn_LibroDiario3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario3MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_LibroDiario3MouseExited
+    private void Btn_EstadosFinancierosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_EstadosFinancierosMouseExited
+        LeftMouse(Btn_EstadosFinancieros, Lb_EstadosFinancieros, "#89A3B2", "#F2F4D1");
+    }//GEN-LAST:event_Btn_EstadosFinancierosMouseExited
 
-    private void Btn_LibroDiario4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario4MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_LibroDiario4MouseEntered
+    private void Btn_VerCatalogoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_VerCatalogoMouseEntered
+        EnterMouse(Btn_VerCatalogo, Lb_VerCatalogo, "#ABBEC8", "#FFFFFF");
+    }//GEN-LAST:event_Btn_VerCatalogoMouseEntered
 
-    private void Btn_LibroDiario4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario4MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_LibroDiario4MouseExited
+    private void Btn_VerCatalogoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_VerCatalogoMouseExited
+        LeftMouse(Btn_VerCatalogo, Lb_VerCatalogo, "#89A3B2", "#F2F4D1");
+    }//GEN-LAST:event_Btn_VerCatalogoMouseExited
 
-    private void Btn_LibroDiario4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario4MouseClicked
+    private void Btn_VerCatalogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_VerCatalogoMouseClicked
+        String loginfo = " Usuario : " + Modelo_Usuario.getNombres() + " Mostrando vista catalogo de cuentas...";
+        String Log = Funciones.Registro_Log(loginfo);
+        Funciones.escribirEnArchivo(Log);
+
         Modelo_Catalogo test = new Modelo_Catalogo();
         test.Get_Catalogo();
 
@@ -479,48 +489,74 @@ public class Panel_Contador extends javax.swing.JFrame {
         Desk.add(gest);
         gest.show();
 
-    }//GEN-LAST:event_Btn_LibroDiario4MouseClicked
+    }//GEN-LAST:event_Btn_VerCatalogoMouseClicked
 
-    private void Btn_LibroDiario5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario5MouseClicked
+    private void Btn_TipoDocumentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_TipoDocumentosMouseClicked
+        String loginfo = " Usuario : " + Modelo_Usuario.getNombres() + " Mostrando lista de tipos de Documentos...";
+        String Log = Funciones.Registro_Log(loginfo);
+        Funciones.escribirEnArchivo(Log);
+
         Modelo_TipoDocumento test = new Modelo_TipoDocumento();
         test.Get_TiposDocumentos();
 
-    }//GEN-LAST:event_Btn_LibroDiario5MouseClicked
+    }//GEN-LAST:event_Btn_TipoDocumentosMouseClicked
 
-    private void Btn_LibroDiario5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario5MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_LibroDiario5MouseEntered
+    private void Btn_TipoDocumentosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_TipoDocumentosMouseEntered
+        EnterMouse(Btn_TipoDocumentos, Lb_TipoDocs, "#ABBEC8", "#FFFFFF");
+    }//GEN-LAST:event_Btn_TipoDocumentosMouseEntered
 
-    private void Btn_LibroDiario5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario5MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_LibroDiario5MouseExited
+    private void Btn_TipoDocumentosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_TipoDocumentosMouseExited
+        LeftMouse(Btn_TipoDocumentos, Lb_TipoDocs, "#89A3B2", "#F2F4D1");
+    }//GEN-LAST:event_Btn_TipoDocumentosMouseExited
 
-    private void Btn_LibroDiario6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario6MouseClicked
+    private void Btn_TipoCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_TipoCuentasMouseClicked
+        String loginfo = " Usuario : " + Modelo_Usuario.getNombres() + " Mostrando lista de tipos de cuentas";
+        String Log = Funciones.Registro_Log(loginfo);
+        Funciones.escribirEnArchivo(Log);
+
         Modelo_TipoCuenta test = new Modelo_TipoCuenta();
         test.Get_TipoCuentas();
 
 
-    }//GEN-LAST:event_Btn_LibroDiario6MouseClicked
+    }//GEN-LAST:event_Btn_TipoCuentasMouseClicked
 
-    private void Btn_LibroDiario6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario6MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_LibroDiario6MouseEntered
+    private void Btn_TipoCuentasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_TipoCuentasMouseEntered
+        EnterMouse(Btn_TipoCuentas, Lb_TipoCuentas, "#ABBEC8", "#FFFFFF");
+    }//GEN-LAST:event_Btn_TipoCuentasMouseEntered
 
-    private void Btn_LibroDiario6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario6MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_LibroDiario6MouseExited
+    private void Btn_TipoCuentasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_TipoCuentasMouseExited
+        LeftMouse(Btn_TipoCuentas, Lb_TipoCuentas, "#89A3B2", "#F2F4D1");
+    }//GEN-LAST:event_Btn_TipoCuentasMouseExited
 
-    private void Btn_LibroDiario2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario2MouseClicked
+    private void Btn_Libro_DiarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_Libro_DiarioMouseClicked
+        String loginfo = " Usuario : " + Modelo_Usuario.getNombres() + " Mostrando registros del libro diario...";
+        String Log = Funciones.Registro_Log(loginfo);
+        Funciones.escribirEnArchivo(Log);
+
         Modelo_LibroDiario get = new Modelo_LibroDiario();
-        
+
         try {
             get.Get_LibroDiario();
         } catch (SQLException ex) {
-            Logger.getLogger(Panel_Admin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Panel_Contador.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
-    }//GEN-LAST:event_Btn_LibroDiario2MouseClicked
+    }//GEN-LAST:event_Btn_Libro_DiarioMouseClicked
+
+    private void Btn_LibroMayorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroMayorMouseClicked
+        String loginfo = " Usuario : " + Modelo_Usuario.getNombres() + " Mostrando registro de libro mayor...aun no esta lista :) ..";
+        String Log = Funciones.Registro_Log(loginfo);
+        Funciones.escribirEnArchivo(Log);
+
+    }//GEN-LAST:event_Btn_LibroMayorMouseClicked
+
+    private void Btn_EstadosFinancierosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_EstadosFinancierosMouseClicked
+        String loginfo = " Usuario : " + Modelo_Usuario.getNombres() + " Mostrando Vista de estados Financieros...";
+        String Log = Funciones.Registro_Log(loginfo);
+        Funciones.escribirEnArchivo(Log);
+
+    }//GEN-LAST:event_Btn_EstadosFinancierosMouseClicked
 
     public static void main(String args[]) {
 
@@ -532,24 +568,24 @@ public class Panel_Contador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Btn_EXIT3;
-    private javax.swing.JPanel Btn_LibroDiario;
-    private javax.swing.JPanel Btn_LibroDiario1;
-    private javax.swing.JPanel Btn_LibroDiario2;
-    private javax.swing.JPanel Btn_LibroDiario3;
-    private javax.swing.JPanel Btn_LibroDiario4;
-    private javax.swing.JPanel Btn_LibroDiario5;
-    private javax.swing.JPanel Btn_LibroDiario6;
+    private javax.swing.JPanel Btn_EstadosFinancieros;
+    private javax.swing.JPanel Btn_LibroMayor;
+    private javax.swing.JPanel Btn_Libro_Diario;
     private javax.swing.JPanel Btn_Regresar1;
+    private javax.swing.JPanel Btn_TipoCuentas;
+    private javax.swing.JPanel Btn_TipoDocumentos;
+    private javax.swing.JPanel Btn_VerCatalogo;
+    private javax.swing.JPanel Btn_VerRegistros;
     private javax.swing.JDesktopPane Desk;
     private javax.swing.JLabel Lb_Bienvenida;
-    private javax.swing.JLabel Lb_Inventario;
-    private javax.swing.JLabel Lb_Inventario1;
-    private javax.swing.JLabel Lb_Inventario2;
-    private javax.swing.JLabel Lb_Inventario3;
-    private javax.swing.JLabel Lb_Inventario4;
-    private javax.swing.JLabel Lb_Inventario5;
-    private javax.swing.JLabel Lb_Inventario6;
-    private javax.swing.JLabel Lb_Ordenar1;
+    private javax.swing.JLabel Lb_EstadosFinancieros;
+    private javax.swing.JLabel Lb_LibroDiario;
+    private javax.swing.JLabel Lb_LibroMayor;
+    private javax.swing.JLabel Lb_Regresar;
+    private javax.swing.JLabel Lb_TipoCuentas;
+    private javax.swing.JLabel Lb_TipoDocs;
+    private javax.swing.JLabel Lb_VerCatalogo;
+    private javax.swing.JLabel Lb_VerRegistros;
     private javax.swing.JLabel Lb_X3;
     private javax.swing.JPanel Panel_bg;
     private javax.swing.JPanel jPanel1;

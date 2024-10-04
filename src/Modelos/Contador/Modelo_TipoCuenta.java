@@ -101,18 +101,27 @@ public class Modelo_TipoCuenta {
             ResultSet consulta = pstm.executeQuery(); // Ejecutamos la consulta
 
             ArrayList<Modelo_TipoCuenta> TipoCuentas_Listado = new ArrayList<>();
-            
+
             while (consulta.next()) {
                 Modelo_TipoCuenta TipoCuenta = new Modelo_TipoCuenta();
 
                 TipoCuenta.setId_TipoCuenta(consulta.getInt("id_Tipo_cuenta"));
                 TipoCuenta.setTipoCuenta(consulta.getString("Tipo_cuenta"));
-                
-                System.out.println("id_Tipo_cuenta: " + consulta.getInt("id_Tipo_cuenta") + "   tipo cuenta: " + consulta.getString("Tipo_cuenta"));
 
+                if (consulta.isFirst()) {
+                    System.out.println("\n\n+----------------+----------------------------+");
+                    System.out.println("| id_Tipo_cuenta | Tipo de Cuenta             |");
+                    System.out.println("+----------------+----------------------------+");
+                }
+
+                System.out.println(String.format("| %-14d | %-26s |",
+                        consulta.getInt("id_Tipo_cuenta"),
+                        consulta.getString("Tipo_cuenta")));
 
                 TipoCuentas_Listado.add(TipoCuenta);
             }
+
+            System.out.println("+----------------+----------------------------+");
 
             conexionDB.close();
             return TipoCuentas_Listado;

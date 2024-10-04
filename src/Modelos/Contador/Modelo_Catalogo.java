@@ -132,13 +132,22 @@ public class Modelo_Catalogo {
                 Cuenta.setTipoCuenta(consulta.getString("Tipo_cuenta"));
                 Cuenta.setid_TipoCuenta(consulta.getInt("Tipo_cuenta_id"));
 
-                System.out.println("ID Cuenta: " + Cuenta.getId_Cuenta()
-                        + ", Nombre: " + Cuenta.getNombreCuenta()
-                        + ", Tipo: " + Cuenta.getTipoCuenta()
-                        + ", Tipo Cuenta ID: " + Cuenta.getid_TipoCuenta());
+                if (consulta.isFirst()) {
+                    System.out.println("\n\n+------------+--------------------------+--------------------+----------------+");
+                    System.out.println("| ID Cuenta  | Nombre de la Cuenta      | Tipo de Cuenta     | Tipo Cuenta ID |");
+                    System.out.println("+------------+--------------------------+--------------------+----------------+");
+                }
+
+                System.out.println(String.format("| %-10d | %-24s | %-18s | %-14d |",
+                        consulta.getInt("id_Cuenta"),
+                        consulta.getString("Nombre_cuenta"),
+                        consulta.getString("Tipo_cuenta"),
+                        consulta.getInt("Tipo_cuenta_id")));
 
                 Catalogo.add(Cuenta);
             }
+
+            System.out.println("+------------+--------------------------+--------------------+----------------+\n");
 
             conexionDB.close();
             return Catalogo;

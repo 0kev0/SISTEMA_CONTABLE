@@ -6,8 +6,9 @@ import static Funciones.Funciones.LeftMouse;
 import static Funciones.Funciones.VaciarCampos;
 import static Funciones.Funciones.validarCampos;
 import Log_Iin.Usuario.Modelo_Usuario;
-import Vista_Panel_Admin.Panel_Admin;
+import Vista_Panel_Auxiliar.Panel_Auxiliar;
 import Vista_Panel_Contador.Panel_Contador;
+import Vista_Panel_Gerente.Panel_Gerente;
 import javax.swing.JOptionPane;
 
 public class log_in1 extends javax.swing.JFrame {
@@ -352,7 +353,8 @@ public class log_in1 extends javax.swing.JFrame {
     private void Btn_ReservarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ReservarMouseClicked
         String User = TxbCorreo.getText();
         String PASS = TxbContraseña.getText();
-        String loginfo = Funciones.obtenerFechaHoraActual();
+        String loginfo = "";
+        String Log = "";
 
         if (validarCampos(jp_Main)) {
 
@@ -361,55 +363,52 @@ public class log_in1 extends javax.swing.JFrame {
 
             if (USER.getNombres() != null) {
 
-                System.out.println("\tINICIO SATISFACTORIO");
-
                 Funciones.showMessageDialog("BIENVENIDO", "Bienvenido\n " + USER.getApellidos() + " " + USER.getNombres());
 
                 int rol = USER.getId_Rol();
 
-                System.out.println("rol " + USER.getId_Rol());
                 switch (rol) {
                     case 1 -> {
                         int id = USER.getId();
 
                         //ADMIN
-                        loginfo += " LOG in: " + USER.getNombres() + ", " + USER.getApellidos() + " Rol: " + USER.getRol();
-                        String Log = Funciones.Registro_Log(loginfo);
-                        Funciones.escribirEnArchivo( Log);
+                        loginfo += " LOG in de nombre: " + USER.getNombres() + ", apellido: " + USER.getApellidos() + " Rol: " + USER.getRol();
+                        Log = Funciones.Registro_Log(loginfo);
+                        Funciones.escribirEnArchivo(Log);
 
-                        Panel_Contador Contador = new Panel_Contador();
+                        Panel_Contador Contador = new Panel_Contador(USER);
                         Contador.setVisible(true);
                         dispose();
                     }
                     case 2 -> {
                         //CONTADOR
-                        loginfo += " LOG in: " + USER.getNombres() + ", " + USER.getApellidos() + " Rol: " + USER.getRol();
-                        String Log = Funciones.Registro_Log(loginfo);
-                        Funciones.escribirEnArchivo( Log);
+                        loginfo += " LOG in de nombre: " + USER.getNombres() + ", apellido: " + USER.getApellidos() + " Rol: " + USER.getRol();
+                        Log = Funciones.Registro_Log(loginfo);
+                        Funciones.escribirEnArchivo(Log);
 
-                        Panel_Admin admin = new Panel_Admin();
-                        admin.setVisible(true);
+                        Panel_Contador Contador = new Panel_Contador(USER);
+                        Contador.setVisible(true);
                         dispose();
                     }
                     case 3 -> {
                         //Auxiliar
-                        loginfo += " LOG in: " + USER.getNombres() + ", " + USER.getApellidos() + " Rol: " + USER.getRol();
-                        String Log = Funciones.Registro_Log(loginfo);
+                        loginfo += " LOG in de nombre: " + USER.getNombres() + ", apellido: " + USER.getApellidos() + " Rol: " + USER.getRol();
+                        Log = Funciones.Registro_Log(loginfo);
                         Funciones.escribirEnArchivo(Log);
 
-                        Panel_Admin admin = new Panel_Admin();
-                        admin.setVisible(true);
+                        Panel_Auxiliar Auxiliar  = new Panel_Auxiliar(USER);
+                        Auxiliar.setVisible(true);
                         dispose();
                     }
 
                     case 4 -> {
                         //Gerente
-                        loginfo += " LOG in: " + USER.getNombres() + ", " + USER.getApellidos() + " Rol: " + USER.getRol();
-                        String Log = Funciones.Registro_Log(loginfo);
-                        Funciones.escribirEnArchivo( Log);
+                        loginfo += " LOG in de nombre: " + USER.getNombres() + ", apellido: " + USER.getApellidos() + " Rol: " + USER.getRol();
+                        Log = Funciones.Registro_Log(loginfo);
+                        Funciones.escribirEnArchivo(Log);
 
-                        Panel_Admin admin = new Panel_Admin();
-                        admin.setVisible(true);
+                        Panel_Gerente Gerente = new Panel_Gerente(USER);
+                        Gerente.setVisible(true);
                         dispose();
                     }
 
@@ -420,8 +419,8 @@ public class log_in1 extends javax.swing.JFrame {
             } else {
                 //Gerente
                 loginfo += " Intento fallido de LOG in por : " + TxbCorreo.getText();
-                String Log = Funciones.Registro_Log(loginfo);
-                Funciones.escribirEnArchivo( Log);
+                 Log = Funciones.Registro_Log(loginfo);
+                Funciones.escribirEnArchivo(Log);
                 JOptionPane.showMessageDialog(rootPane, "CREDENCIALES INCORRECTAS\n INTENTE NUEVAMENTE ");
                 VaciarCampos(jp_Main);
             }
