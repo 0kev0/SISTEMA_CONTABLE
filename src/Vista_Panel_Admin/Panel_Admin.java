@@ -1,10 +1,14 @@
 package Vista_Panel_Admin;
 
+import Funciones.Funciones;
 import static Funciones.Funciones.EnterMouse;
 import static Funciones.Funciones.LeftMouse;
 import Log_Iin.Usuario.log_in1;
+import Modelos.Contador.Modelo_LibroDiario;
 import java.awt.Color;
-
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Panel_Admin extends javax.swing.JFrame {
 
@@ -12,7 +16,6 @@ public class Panel_Admin extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(250, 250, 250));
 
         initComponents();
-
 
     }
 
@@ -144,6 +147,9 @@ public class Panel_Admin extends javax.swing.JFrame {
         Btn_LibroDiario2.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
         Btn_LibroDiario2.setPreferredSize(new java.awt.Dimension(180, 60));
         Btn_LibroDiario2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_LibroDiario2MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 Btn_LibroDiario2MouseEntered(evt);
             }
@@ -333,6 +339,10 @@ public class Panel_Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_Btn_LibroDiarioMouseExited
 
     private void Btn_Regresar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_Regresar1MouseClicked
+        String loginfo = " Cerro sesion el usuario ***";
+        String Log = Funciones.Registro_Log(loginfo);
+        Funciones.escribirEnArchivo(Log);
+
         log_in1 gest = new log_in1();
         dispose();
         gest.setVisible(true);
@@ -345,6 +355,18 @@ public class Panel_Admin extends javax.swing.JFrame {
     private void Btn_Regresar1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_Regresar1MouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_Btn_Regresar1MouseExited
+
+    private void Btn_LibroDiario2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_LibroDiario2MouseClicked
+
+        Modelo_LibroDiario get = new Modelo_LibroDiario();
+        
+        try {
+            get.Get_LibroDiario();
+        } catch (SQLException ex) {
+            Logger.getLogger(Panel_Admin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_Btn_LibroDiario2MouseClicked
 
     public static void main(String args[]) {
 

@@ -100,7 +100,7 @@ public class Modelo_PeriodoContable {
         this.claseConectar = new ClaseConexion();
     }
 
-    public ArrayList<Modelo_PeriodoContable> Get_PeriodosContables(int Grado) {
+    public ArrayList<Modelo_PeriodoContable> Get_PeriodosContables() {
         try {
             conexionDB = claseConectar.iniciarConexion(); // Iniciamos una conexión
             String sql = """
@@ -108,7 +108,6 @@ public class Modelo_PeriodoContable {
 	FROM public."Tbl_PeriodosContables";""";
 
             pstm = conexionDB.prepareStatement(sql);
-            pstm.setInt(1, Grado);
 
             ResultSet consulta = pstm.executeQuery(); // Ejecutamos la consulta
 

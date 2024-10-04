@@ -64,8 +64,8 @@ public class Funciones {
 
     }
 
-    public static void escribirEnArchivo(String RutaArchivo, String texto) {
-        File archivo = new File(RutaArchivo);
+    public static void escribirEnArchivo(String texto) {
+        File archivo = new File("/home/kev/Documents/GIT_HUB/PORYECTO SIS/SISTEMA_CONTABLE/src/RegistroLogs/log.txt");
         boolean archivoExiste = archivo.exists(); 
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {

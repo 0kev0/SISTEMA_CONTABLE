@@ -12,10 +12,14 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/kev/Documents/GIT_HUB/PORYECTO%20SIS/SISTEMA_CONTABLE/src/Modelos/Contador/Modelo_LibroDiario.java</file>
+            <file>file:/home/kev/Documents/GIT_HUB/PORYECTO%20SIS/SISTEMA_CONTABLE/src/Modelos/Contador/Modelo_PeriodoContable.java</file>
+            <file>file:/home/kev/Documents/GIT_HUB/PORYECTO%20SIS/SISTEMA_CONTABLE/src/Vista_Panel_Admin/Opciones/Vista_CatalogoTest.java</file>
             <file>file:/home/kev/Documents/GIT_HUB/PORYECTO%20SIS/SISTEMA_CONTABLE/src/Vista_Panel_Contador/Panel_Contador.java</file>
-            <file>file:/home/kev/Documents/GIT_HUB/PORYECTO%20SIS/SISTEMA_CONTABLE/src/Modelos/Contador/Modelo_Catalogo.java</file>
-            <file>file:/home/kev/Documents/GIT_HUB/PORYECTO%20SIS/SISTEMA_CONTABLE/src/Vista_Panel_Admin/Opciones/Gestion_CatalogoTest.java</file>
+            <file>file:/home/kev/Documents/GIT_HUB/PORYECTO%20SIS/SISTEMA_CONTABLE/src/Funciones/Funciones.java</file>
+            <file>file:/home/kev/Documents/GIT_HUB/PORYECTO%20SIS/SISTEMA_CONTABLE/src/Vista_Panel_Admin/Panel_Admin.java</file>
             <file>file:/home/kev/Documents/GIT_HUB/PORYECTO%20SIS/SISTEMA_CONTABLE/src/Log_Iin/Usuario/log_in1.java</file>
+            <file>file:/home/kev/Documents/GIT_HUB/PORYECTO%20SIS/SISTEMA_CONTABLE/src/RegistroLogs/log.txt</file>
         </group>
     </open-files>
 </project-private>
