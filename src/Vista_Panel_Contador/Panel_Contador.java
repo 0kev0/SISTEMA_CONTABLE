@@ -13,6 +13,8 @@ import Modelos.Contador.Modelo_LibroDiario;
 import Modelos.Contador.Modelo_TipoCuenta;
 import Modelos.Contador.Modelo_TipoDocumento;
 import Vista_Panel_Admin.Opciones.Gestion_CatalogoTest;
+import Vista_Panel_Admin.Opciones.Gestion_LibroDiario;
+import Vista_Panel_Admin.Opciones.Gestion_LibroMayor;
 import Vista_Panel_Admin.Opciones.Vista_CatalogoTest;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -537,6 +539,15 @@ public class Panel_Contador extends javax.swing.JFrame {
 
         try {
             get.Get_LibroDiario();
+
+            Gestion_LibroDiario gest = new Gestion_LibroDiario();
+            gest.setResizable(false);
+            gest.setBounds(0, 0, Desk.getWidth(), Desk.getHeight());
+            gest.setVisible(true);
+            CentrarFrames(Desk, gest);
+            Desk.add(gest);
+            gest.show();
+
         } catch (SQLException ex) {
             Logger.getLogger(Panel_Contador.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -548,6 +559,19 @@ public class Panel_Contador extends javax.swing.JFrame {
         String loginfo = " Usuario : " + Modelo_Usuario.getNombres() + " Mostrando registro de libro mayor...aun no esta lista :) ..";
         String Log = Funciones.Registro_Log(loginfo);
         Funciones.escribirEnArchivo(Log);
+
+        try {
+            Gestion_LibroMayor gest = new Gestion_LibroMayor();
+            gest.setResizable(false);
+            gest.setBounds(0, 0, Desk.getWidth(), Desk.getHeight());
+            gest.setVisible(true);
+            CentrarFrames(Desk, gest);
+            Desk.add(gest);
+            gest.show();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Panel_Contador.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_Btn_LibroMayorMouseClicked
 

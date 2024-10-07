@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author kev
  */
-public class Modelo_LibroDiario {
+public class Modelo_LibroMayor {
 
     private Connection conexionDB;
     private Statement statement;
@@ -34,6 +34,9 @@ public class Modelo_LibroDiario {
     private Double Saldo;
     private int id_Tipo_doc;
     private int id_Tipo_saldo;
+
+    private ArrayList<Modelo_LibroMayor> deudores;
+    private ArrayList<Modelo_LibroMayor> acreedores;
 
     public Connection getConexionDB() {
         return conexionDB;
@@ -131,7 +134,7 @@ public class Modelo_LibroDiario {
         this.id_Tipo_saldo = id_Tipo_saldo;
     }
 
-    public Modelo_LibroDiario(Connection conexionDB, Statement statement, ClaseConexion claseConectar, PreparedStatement pstm, int id_Libro_diario, Date Fecha, String Nombre_cuenta, String Tipo_documento, String Tipo_saldo, Double Saldo, int id_Tipo_doc, int id_Tipo_saldo) {
+    public Modelo_LibroMayor(Connection conexionDB, Statement statement, ClaseConexion claseConectar, PreparedStatement pstm, int id_Libro_diario, Date Fecha, String Nombre_cuenta, String Tipo_documento, String Tipo_saldo, Double Saldo, int id_Tipo_doc, int id_Tipo_saldo) {
         this.conexionDB = conexionDB;
         this.statement = statement;
         this.claseConectar = new ClaseConexion();
@@ -146,11 +149,24 @@ public class Modelo_LibroDiario {
         this.id_Tipo_saldo = id_Tipo_saldo;
     }
 
-    public Modelo_LibroDiario() {
+    public Modelo_LibroMayor() {
         this.claseConectar = new ClaseConexion();
     }
 
-    public Map<Integer, ArrayList<Modelo_LibroDiario>> Get_LibroDiario() throws SQLException {
+    public Modelo_LibroMayor(ArrayList<Modelo_LibroMayor> deudores, ArrayList<Modelo_LibroMayor> acreedores) {
+        this.deudores = deudores;
+        this.acreedores = acreedores;
+    }
+
+    public ArrayList<Modelo_LibroMayor> getDeudores() {
+        return deudores;
+    }
+
+    public ArrayList<Modelo_LibroMayor> getAcreedores() {
+        return acreedores;
+    }
+
+    public ArrayList<Modelo_LibroMayor> Get_LibroMayor() throws SQLException {
 
         conexionDB = claseConectar.iniciarConexion(); // Iniciamos la conexión
         String sql = """
@@ -166,65 +182,85 @@ public class Modelo_LibroDiario {
 
         ResultSet consulta = pstm.executeQuery();
 
-        Map<Integer, ArrayList<Modelo_LibroDiario>> periodosPorPartida = new HashMap<>();
+        ArrayList<Modelo_LibroMayor> periodosPorPartida = new ArrayList<>();
 
         while (consulta.next()) {
-            Modelo_LibroDiario Periodo = new Modelo_LibroDiario();
+            if (consulta.getString("Tipo_saldo").equals("Deudor")) {
+                Modelo_LibroMayor PartidasDebe = new Modelo_LibroMayor();
 
-            Periodo.setFecha(consulta.getDate("Fecha"));
-            Periodo.setNombre_cuenta(consulta.getString("Nombre_cuenta"));
-            Periodo.setTipo_documento(consulta.getString("Tipo_documento"));
-            Periodo.setTipo_saldo(consulta.getString("Tipo_saldo"));
-            Periodo.setSaldo(consulta.getDouble("Monto"));
-
-            int NumeroPartida = consulta.getInt("LibroDiario_id");
-
-            periodosPorPartida.putIfAbsent(NumeroPartida, new ArrayList<>());
-
-            periodosPorPartida.get(NumeroPartida).add(Periodo);
-        }
-
-        for (Map.Entry<Integer, ArrayList<Modelo_LibroDiario>> entrada : periodosPorPartida.entrySet()) {
-            int partidaId = entrada.getKey();
-            ArrayList<Modelo_LibroDiario> periodos = entrada.getValue();
-
-            System.out.println("\nPartida número : " + partidaId);
-            System.out.println("+----------------------------------------------------------------+");
-            System.out.printf("| %-13s | %-24s | %-8s | %-8s |\n", "Fecha", "Cuenta", "Debe", "Haber");
-            System.out.println("+----------------------------------------------------------------+");
-
-            double totalDebe = 0;
-            double totalHaber = 0;
-
-            for (Modelo_LibroDiario periodo : periodos) {
-                String fecha = periodo.getFecha().toString();
-                String nombreCuenta = periodo.getNombre_cuenta();
-                String tipoSaldo = periodo.getTipo_saldo();
-                double saldo = periodo.getSaldo();
-
-                String debe = "";
-                String haber = "";
-
-                if (tipoSaldo.equalsIgnoreCase("Deudor")) {
-                    debe = String.format("%.2f", saldo);
-                    totalDebe += saldo;
-                } else if (tipoSaldo.equalsIgnoreCase("Acreedor")) {
-                    haber = String.format("%.2f", saldo);
-                    totalHaber += saldo;
-                }
-
-                System.out.printf("| %-13s | %-24s | %-8s | %-8s |\n", fecha, nombreCuenta, debe, haber);
+                PartidasDebe.setFecha(consulta.getDate("Fecha"));
+                PartidasDebe.setId_Libro_diario(consulta.getInt("LibroDiario_id"));
+                PartidasDebe.setSaldo(consulta.getDouble("Monto"));
             }
 
-            System.out.println("+----------------------------------------------------------------+");
-            System.out.printf("| %-13s | %-24s | %-8s | %-8s |\n", "SUBTOTALES ", "", String.format("%.2f", totalDebe), String.format("%.2f", totalHaber));
-            System.out.println("+----------------------------------------------------------------+\n");
+            Modelo_LibroMayor PartidasHaber = new Modelo_LibroMayor();
+
+            PartidasHaber.setFecha(consulta.getDate("Fecha"));
+            PartidasHaber.setId_Libro_diario(consulta.getInt("LibroDiario_id"));
+            PartidasHaber.setSaldo(consulta.getDouble("Monto"));
+
         }
 
         conexionDB.close();
         return periodosPorPartida;
     }
-    
-  
+
+    public Modelo_LibroMayor Get_LibroMayor_() throws SQLException {
+
+        conexionDB = claseConectar.iniciarConexion();
+        //modificar para que vaya por cuenta
+        String sql = """
+SELECT TBL_P."Fecha", TBL_LD."id_Libro_diario", TBL_C."Nombre_cuenta", TBL_TS."Tipo_saldo", TBL_TD."Tipo_documento",
+               TBL_P."LibroDiario_id", TBL_P."Monto", TBL_P."id_Partida",TBL_TC."Tipo_cuenta"
+    FROM public."Tbl_LibroDiario" AS TBL_LD
+    INNER JOIN "Tbl_Partida" AS TBL_P ON TBL_P."id_Partida" = TBL_LD."Partida_id"
+    INNER JOIN "Tbl_Catalogo" AS TBL_C ON TBL_C."id_Cuenta" = TBL_P."Cuenta_id"
+    INNER JOIN "Tbl_TipoSaldo" AS TBL_TS ON TBL_TS."id_Tipo_saldo" = TBL_P."Tipo_saldo_id"
+    INNER JOIN "Tbl_TipoDocumento" AS TBL_TD ON TBL_TD."id_TipoDoc" = TBL_P."Tipo_documento_id"
+    INNER JOIN "Tbl_TipoCuenta" AS TBL_TC ON TBL_TC."id_Tipo_cuenta" = TBL_C."Tipo_cuenta_id"
+    ORDER BY TBL_LD."id_Libro_diario" ASC ;
+    	""";
+
+        pstm = conexionDB.prepareStatement(sql);
+        ResultSet consulta = pstm.executeQuery();
+
+        ArrayList<Modelo_LibroMayor> deudores = new ArrayList<>();
+        ArrayList<Modelo_LibroMayor> acreedores = new ArrayList<>();
+
+        while (consulta.next()) {
+            if (consulta.getString("Tipo_saldo").equals("Deudor")) {
+                Modelo_LibroMayor partidaDebe = new Modelo_LibroMayor();
+                partidaDebe.setFecha(consulta.getDate("Fecha"));
+                partidaDebe.setId_Libro_diario(consulta.getInt("LibroDiario_id"));
+                partidaDebe.setSaldo(consulta.getDouble("Monto"));
+
+                Modelo_LibroMayor partidaHaber = new Modelo_LibroMayor();
+                partidaHaber.setFecha(null);
+                partidaHaber.setId_Libro_diario(0);
+                partidaHaber.setSaldo(0.0);
+
+                acreedores.add(partidaHaber);
+                deudores.add(partidaDebe);
+                
+            } else {
+                Modelo_LibroMayor partidaHaber = new Modelo_LibroMayor();
+                partidaHaber.setFecha(consulta.getDate("Fecha"));
+                partidaHaber.setId_Libro_diario(consulta.getInt("LibroDiario_id"));
+                partidaHaber.setSaldo(consulta.getDouble("Monto"));
+
+                Modelo_LibroMayor partidaDebe = new Modelo_LibroMayor();
+                partidaDebe.setFecha(null);
+                partidaDebe.setId_Libro_diario(0);
+                partidaDebe.setSaldo(0.0);
+                
+                acreedores.add(partidaHaber);
+                deudores.add(partidaDebe);
+            }
+        }
+
+        conexionDB.close();
+
+        return new Modelo_LibroMayor(deudores, acreedores);
+    }
 
 }

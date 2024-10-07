@@ -3,10 +3,12 @@ package Funciones;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.font.TextAttribute;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -30,8 +32,11 @@ import javax.swing.Timer;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 public class Funciones {
+
+    private static Font originalFont;
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -59,24 +64,24 @@ public class Funciones {
         String Log_Info = Hora + LogData;
 
         System.out.println(Log_Info);
-        
+
         return Log_Info;
 
     }
 
     public static void escribirEnArchivo(String texto) {
         File archivo = new File("/home/kev/Documents/GIT_HUB/PORYECTO SIS/SISTEMA_CONTABLE/src/RegistroLogs/log.txt");
-        boolean archivoExiste = archivo.exists(); 
+        boolean archivoExiste = archivo.exists();
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {
             if (archivoExiste) {
                 bw.write(texto);
-                bw.newLine(); 
+                bw.newLine();
             } else {
                 bw.write(texto);
                 bw.newLine();
             }
-           // System.out.println("El log se ha guardado correctamente.");
+            // System.out.println("El log se ha guardado correctamente.");
         } catch (IOException e) {
             System.out.println("Ocurrió un error al escribir en el archivo: " + e.getMessage());
         }
@@ -99,14 +104,30 @@ public class Funciones {
         lable.setForeground(Color.decode(color2));
     }
 
-    public static void EnterMouse(JPanel panel, JLabel lable, String color1, String color2) throws NumberFormatException {
+    public static void EnterMouse(JPanel panel, JLabel label, String color1, String color2) throws NumberFormatException {
+        // Cambiar colores del panel y el JLabel
         panel.setBackground(Color.decode(color1));
-        lable.setForeground(Color.decode(color2));
+        label.setForeground(Color.decode(color2));
+
+        // Almacenar la fuente original del JLabel si aún no está guardada
+        if (originalFont == null) {
+            originalFont = label.getFont();
+        }
+
+        // Crear una fuente negrita con las mismas características de la fuente original
+        Font currentFont = label.getFont(); // Obtenemos la fuente actual
+        Map attributes = currentFont.getAttributes(); // Mantenemos los atributos actuales (tamaño, estilo)
+        attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD); // Aplicamos negrita
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON); // Aplicamos subrayado
+        label.setFont(currentFont.deriveFont(attributes)); // Aplicamos la nueva fuente con los atributos modificados
     }
 
-    public static void LeftMouse(JPanel panel, JLabel lable, String color1, String color2) throws NumberFormatException {
+    public static void LeftMouse(JPanel panel, JLabel label, String color1, String color2) throws NumberFormatException {
+        // Cambiar colores del panel y el JLabel
         panel.setBackground(Color.decode(color1));
-        lable.setForeground(Color.decode(color2));
+        label.setForeground(Color.decode(color2));
+        label.setFont(new Font("Segoe UI Variable", Font.BOLD, 18));
+
     }
 
     public static void ClickTxbFecha(JTextField Textbox) throws NumberFormatException {
