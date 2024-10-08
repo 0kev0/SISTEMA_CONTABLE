@@ -30,7 +30,8 @@ import javax.swing.table.JTableHeader;
  *
  * @author kev
  */
-public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
+
+public final class Gestion_LibroMayor extends javax.swing.JInternalFrame {
 
     private Modelo_LibroMayor Objeto_LibroDiario = new Modelo_LibroMayor();
     private Map<Integer, ArrayList<Modelo_LibroDiario>> List_LibroDiario;
@@ -38,20 +39,23 @@ public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
     private static final Modelo_TipoCuenta Objeto_TipoCuenta = new Modelo_TipoCuenta();
     private static List<Modelo_TipoCuenta> List_TipoCuenta;
 
-    //el modelo de tabla para manipular la tabla
+    private static final Modelo_Catalogo Objeto_Cuentas = new Modelo_Catalogo();
+    private static List<Modelo_Catalogo> List_Cuentas;
+
     private DefaultTableModel modeloTabla = new DefaultTableModel();
 
     public Gestion_LibroMayor() throws SQLException {
         initComponents();
         clearScreen();
 
-        //Get_Cb_Grados(Cb_TipoCuentas);
+        Get_Cb_TipodeCuentas(Cb_TipoCuentas);
+        Get_Cb_CuentasDeMayor(Cb_CuentasMayor);
         DiseñoTabla(Tbl_LibroDiario);
-        Get_Tbl_Catalogo(Tbl_LibroDiario);
+        Get_Tbl_LibroMayor(Tbl_LibroDiario);
 
     }
 
-    public static void Get_Cb_Grados(JComboBox ComboBox) {
+    public static void Get_Cb_TipodeCuentas(JComboBox ComboBox) {
 
         DefaultComboBoxModel ModeloComboBox = new DefaultComboBoxModel();
 
@@ -60,6 +64,22 @@ public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
 
         for (Modelo_TipoCuenta item : List_TipoCuenta) {
             ModeloComboBox.addElement(item.getNombreTipoCuenta());
+        }
+
+        ComboBox.setModel(ModeloComboBox);
+    }
+
+    public void Get_Cb_CuentasDeMayor(JComboBox ComboBox) {
+
+        DefaultComboBoxModel ModeloComboBox = new DefaultComboBoxModel();
+        int idCuenta = Cb_TipoCuentas.getSelectedIndex() + 1;
+        System.out.println(">" + idCuenta);
+
+        List_Cuentas = Objeto_Cuentas.Get_CatalogoFiltrado(idCuenta);
+        System.out.println("hay " + List_Cuentas.size());
+
+        for (Modelo_Catalogo item : List_Cuentas) {
+            ModeloComboBox.addElement(item.getId_Cuenta() + " ) " + item.getNombreCuenta());
         }
 
         ComboBox.setModel(ModeloComboBox);
@@ -89,7 +109,7 @@ public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
 
     }
 
-    public void Get_Tbl_Catalogo(JTable tabla) throws SQLException {
+    public void Get_Tbl_LibroMayor(JTable tabla) throws SQLException {
         modeloTabla = (DefaultTableModel) tabla.getModel();
         modeloTabla.setNumRows(0);
 
@@ -154,7 +174,7 @@ public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         System.out.println("modelo " + modeloTabla.getRowCount() + " tabla " + Tbl_LibroDiario.getRowCount());
-        //Esto renderiza el texto en el centro 
+
         for (int i = 0; i < Tbl_LibroDiario.getColumnCount(); i++) {
             tabla.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
@@ -162,7 +182,6 @@ public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
 
-        //aca pone las columnas que quieras que el texto aparezca a la izquierda
         JTableHeader header = tabla.getTableHeader();
         header.setPreferredSize(new Dimension(60, 45));
 
@@ -176,11 +195,13 @@ public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
         jp_Main = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tbl_LibroDiario = new javax.swing.JTable();
+        Lb_CuentaMayor = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         Lb_Bienvenida = new javax.swing.JLabel();
         Lb_CantidadCuentas = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         Cb_TipoCuentas = new javax.swing.JComboBox<>();
+        Cb_CuentasMayor = new javax.swing.JComboBox<>();
 
         jPanel3.setBackground(new java.awt.Color(242, 244, 209));
 
@@ -217,21 +238,30 @@ public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
             Tbl_LibroDiario.getColumnModel().getColumn(5).setPreferredWidth(70);
         }
 
+        Lb_CuentaMayor.setBackground(new java.awt.Color(94, 96, 115));
+        Lb_CuentaMayor.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        Lb_CuentaMayor.setForeground(new java.awt.Color(94, 96, 115));
+        Lb_CuentaMayor.setText("Numero de cuentas :");
+
         javax.swing.GroupLayout jp_MainLayout = new javax.swing.GroupLayout(jp_Main);
         jp_Main.setLayout(jp_MainLayout);
         jp_MainLayout.setHorizontalGroup(
             jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jp_MainLayout.createSequentialGroup()
-                .addGap(153, 153, 153)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 817, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addGap(154, 154, 154)
+                .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Lb_CuentaMayor, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 817, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
         jp_MainLayout.setVerticalGroup(
             jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jp_MainLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_MainLayout.createSequentialGroup()
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addComponent(Lb_CuentaMayor)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGap(50, 50, 50))
         );
 
         jPanel5.setBackground(new java.awt.Color(94, 96, 115));
@@ -287,6 +317,15 @@ public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
             }
         });
 
+        Cb_CuentasMayor.setBackground(new java.awt.Color(137, 163, 178));
+        Cb_CuentasMayor.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
+        Cb_CuentasMayor.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)), "Cuentas : ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 15), new java.awt.Color(242, 244, 209))); // NOI18N
+        Cb_CuentasMayor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Cb_CuentasMayorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -297,6 +336,8 @@ public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(Cb_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Cb_CuentasMayor, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -304,7 +345,9 @@ public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(Cb_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Cb_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Cb_CuentasMayor, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
                 .addComponent(jp_Main, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -326,9 +369,11 @@ public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Cb_TipoCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cb_TipoCuentasActionPerformed
+        Get_Cb_CuentasDeMayor(Cb_CuentasMayor);
+
 //        if ("Todos".equals(Cb_TipoCuentas.getSelectedItem().toString())) {
 //            try {
-//                Get_Tbl_Catalogo(Tbl_LibroDiario);
+//                Get_Tbl_LibroMayor(Tbl_LibroDiario);
 //            } catch (SQLException ex) {
 //                Logger.getLogger(Gestion_LibroDiario.class.getName()).log(Level.SEVERE, null, ex);
 //            }
@@ -339,11 +384,17 @@ public class Gestion_LibroMayor extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_Cb_TipoCuentasActionPerformed
 
+    private void Cb_CuentasMayorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cb_CuentasMayorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Cb_CuentasMayorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Cb_CuentasMayor;
     private javax.swing.JComboBox<String> Cb_TipoCuentas;
     private javax.swing.JLabel Lb_Bienvenida;
     private javax.swing.JLabel Lb_CantidadCuentas;
+    private javax.swing.JLabel Lb_CuentaMayor;
     private javax.swing.JTable Tbl_LibroDiario;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;

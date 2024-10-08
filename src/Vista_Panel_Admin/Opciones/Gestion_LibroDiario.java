@@ -1,6 +1,9 @@
 package Vista_Panel_Admin.Opciones;
 
 import Customizacion.TablaCusomizada;
+import Funciones.Funciones;
+import static Funciones.Funciones.EnterMouse;
+import static Funciones.Funciones.LeftMouse;
 import static Funciones.Funciones.clearScreen;
 import Modelos.Contador.Modelo_Catalogo;
 import Modelos.Contador.Modelo_LibroDiario;
@@ -29,7 +32,7 @@ import javax.swing.table.JTableHeader;
  *
  * @author kev
  */
-public class Gestion_LibroDiario extends javax.swing.JInternalFrame {
+public final class Gestion_LibroDiario extends javax.swing.JInternalFrame {
 
     private final Modelo_LibroDiario Objeto_LibroDiario = new Modelo_LibroDiario();
     private Map<Integer, ArrayList<Modelo_LibroDiario>> List_LibroDiario;
@@ -44,13 +47,13 @@ public class Gestion_LibroDiario extends javax.swing.JInternalFrame {
         initComponents();
         clearScreen();
 
-        //Get_Cb_Grados(Cb_TipoCuentas);
+        Get_Cb_TipoCuenta(Cb_TipoCuentas);
         DiseñoTabla(Tbl_LibroDiario);
         Get_Tbl_Catalogo(Tbl_LibroDiario);
 
     }
 
-    public static void Get_Cb_Grados(JComboBox ComboBox) {
+    public static void Get_Cb_TipoCuenta(JComboBox ComboBox) {
 
         DefaultComboBoxModel ModeloComboBox = new DefaultComboBoxModel();
 
@@ -58,7 +61,7 @@ public class Gestion_LibroDiario extends javax.swing.JInternalFrame {
         System.out.println("hay " + List_TipoCuenta.size());
 
         for (Modelo_TipoCuenta item : List_TipoCuenta) {
-            ModeloComboBox.addElement(item.getNombreTipoCuenta());
+            ModeloComboBox.addElement(item.getId_TipoCuenta() + " ) " + item.getNombreTipoCuenta());
         }
 
         ComboBox.setModel(ModeloComboBox);
@@ -206,6 +209,8 @@ public class Gestion_LibroDiario extends javax.swing.JInternalFrame {
         Lb_CantidadCuentas = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         Cb_TipoCuentas = new javax.swing.JComboBox<>();
+        Btn_TipoCuentas = new Customizacion.Custom_Buttons();
+        Lb_TipoCuentas = new javax.swing.JLabel();
 
         jPanel3.setBackground(new java.awt.Color(242, 244, 209));
 
@@ -245,17 +250,17 @@ public class Gestion_LibroDiario extends javax.swing.JInternalFrame {
         jp_Main.setLayout(jp_MainLayout);
         jp_MainLayout.setHorizontalGroup(
             jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_MainLayout.createSequentialGroup()
-                .addContainerGap(230, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(208, 208, 208))
+            .addGroup(jp_MainLayout.createSequentialGroup()
+                .addGap(221, 221, 221)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 727, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jp_MainLayout.setVerticalGroup(
             jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jp_MainLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(50, 50, 50)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(94, 96, 115));
@@ -311,6 +316,28 @@ public class Gestion_LibroDiario extends javax.swing.JInternalFrame {
             }
         });
 
+        Btn_TipoCuentas.setBackground(new java.awt.Color(137, 163, 178));
+        Btn_TipoCuentas.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
+        Btn_TipoCuentas.setPreferredSize(new java.awt.Dimension(180, 60));
+        Btn_TipoCuentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_TipoCuentasMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Btn_TipoCuentasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Btn_TipoCuentasMouseExited(evt);
+            }
+        });
+        Btn_TipoCuentas.setLayout(new java.awt.GridBagLayout());
+
+        Lb_TipoCuentas.setBackground(new java.awt.Color(7, 3, 26));
+        Lb_TipoCuentas.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        Lb_TipoCuentas.setForeground(new java.awt.Color(242, 244, 209));
+        Lb_TipoCuentas.setText("Agregar partida");
+        Btn_TipoCuentas.add(Lb_TipoCuentas, new java.awt.GridBagConstraints());
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -321,15 +348,19 @@ public class Gestion_LibroDiario extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(Cb_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(638, 638, 638)
+                .addComponent(Btn_TipoCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                .addGap(35, 35, 35))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(Cb_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Btn_TipoCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Cb_TipoCuentas))
+                .addGap(34, 34, 34)
                 .addComponent(jp_Main, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -363,11 +394,32 @@ public class Gestion_LibroDiario extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_Cb_TipoCuentasActionPerformed
 
+    private void Btn_TipoCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_TipoCuentasMouseClicked
+
+        Gestion_InsertPartida test = new Gestion_InsertPartida();
+        test.setVisible(true);
+        
+              //  Gestion_CatalogoTest gest = new Gestion_CatalogoTest();
+
+
+
+    }//GEN-LAST:event_Btn_TipoCuentasMouseClicked
+
+    private void Btn_TipoCuentasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_TipoCuentasMouseEntered
+        EnterMouse(Btn_TipoCuentas, Lb_TipoCuentas, "#ABBEC8", "#FFFFFF");
+    }//GEN-LAST:event_Btn_TipoCuentasMouseEntered
+
+    private void Btn_TipoCuentasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_TipoCuentasMouseExited
+        LeftMouse(Btn_TipoCuentas, Lb_TipoCuentas, "#89A3B2", "#F2F4D1");
+    }//GEN-LAST:event_Btn_TipoCuentasMouseExited
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Btn_TipoCuentas;
     private javax.swing.JComboBox<String> Cb_TipoCuentas;
     private javax.swing.JLabel Lb_Bienvenida;
     private javax.swing.JLabel Lb_CantidadCuentas;
+    private javax.swing.JLabel Lb_TipoCuentas;
     private javax.swing.JTable Tbl_LibroDiario;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;

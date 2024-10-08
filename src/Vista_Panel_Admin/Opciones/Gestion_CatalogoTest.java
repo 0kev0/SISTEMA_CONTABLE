@@ -176,7 +176,7 @@ public class Gestion_CatalogoTest extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(Tbl_Catalogo);
         if (Tbl_Catalogo.getColumnModel().getColumnCount() > 0) {
-            Tbl_Catalogo.getColumnModel().getColumn(0).setPreferredWidth(80);
+            Tbl_Catalogo.getColumnModel().getColumn(0).setPreferredWidth(40);
             Tbl_Catalogo.getColumnModel().getColumn(1).setPreferredWidth(80);
             Tbl_Catalogo.getColumnModel().getColumn(2).setPreferredWidth(400);
         }

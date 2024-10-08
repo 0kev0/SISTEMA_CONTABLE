@@ -275,6 +275,13 @@ public class Funciones {
         return resultado;
     }
 
+    public static String eliminarNumeros(String cadena) {
+        // Eliminar números y el carácter ")"
+        String cadenaSinNumerosYParentesis = cadena.replaceAll("[0-9\\)]", "");
+
+        return cadenaSinNumerosYParentesis;
+    }
+
     public static void ValidNIE(JTextField textbox, JLabel error) {
         textbox.addKeyListener(new KeyAdapter() {
             @Override
@@ -334,40 +341,44 @@ public class Funciones {
         });
     }
 
-    public static void ValidarNota(JTextField textbox, JLabel error) {
-        textbox.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
+public static void ValidarSaldo(JTextField textbox, JLabel error) {
+    textbox.addKeyListener(new KeyAdapter() {
+        @Override
+        public void keyTyped(KeyEvent e) {
+            char c = e.getKeyChar();
 
-                if (!(Character.isDigit(c) || c == '.' || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
-                    showError("***Formato erróneo, solo números enteros o fraccionarios***");
+            // Permitir dígitos, punto decimal, retroceso y eliminación
+            if (!(Character.isDigit(c) || c == '.' || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
+                showError("***Formato erróneo, solo números enteros o fraccionarios***");
+                e.consume();
+            } else {
+                // Validar que solo haya un punto decimal
+                String text = textbox.getText() + c;
+                if (text.indexOf('.') != text.lastIndexOf('.')) {
+                    showError("***Formato erróneo, solo un punto decimal permitido***");
                     e.consume();
                 } else {
                     try {
-                        double nota = Double.parseDouble(textbox.getText());
-                        if (nota < 0 || nota > 10) {
-                            showError("***La nota debe estar entre 0 y 10***");
-                            e.consume();
-                        }
                     } catch (NumberFormatException ex) {
                         showError("***Formato erróneo, ingresa un número válido***");
                         e.consume();
                     }
                 }
             }
+        }
 
-            private void showError(String errorMessage) {
-                error.setText(errorMessage);
-                error.setForeground(Color.RED);
-                System.out.println(errorMessage);
-                textbox.setText("");
-                Timer timer = new Timer(1000, e -> error.setForeground(Color.decode("#172A38")));
-                timer.setRepeats(false);
-                timer.start();
-            }
-        });
-    }
+        private void showError(String errorMessage) {
+            error.setText(errorMessage);
+            error.setForeground(Color.RED);
+            System.out.println(errorMessage);
+            textbox.setText("");
+            Timer timer = new Timer(1000, e -> error.setForeground(Color.decode("#172A38")));
+            timer.setRepeats(false);
+            timer.start();
+        }
+    });
+}
+
 
     public static void ValidNumeroTel(JTextField textbox, JLabel error) {
         textbox.addKeyListener(new KeyAdapter() {

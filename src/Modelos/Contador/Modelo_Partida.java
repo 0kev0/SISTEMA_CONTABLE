@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author kev
  */
-public class Modelo_Transacciones {
+public class Modelo_Partida {
 
     private Connection conexionDB;
     private Statement statement;
@@ -147,7 +147,7 @@ public class Modelo_Transacciones {
         this.id_Partida = id_Partida;
     }
 
-    public Modelo_Transacciones(Connection conexionDB, Statement statement, ClaseConexion claseConectar, PreparedStatement pstm,
+    public Modelo_Partida(Connection conexionDB, Statement statement, ClaseConexion claseConectar, PreparedStatement pstm,
             int id_transaccion, int id_Cuenta, String NombreCuenta, String TipoSaldo, String TipoDocumento, Date Fecha, Double Monto,
             int id_TipoDocumento, int id_TipoSaldo, int id_Partida) {
         this.conexionDB = conexionDB;
@@ -167,11 +167,11 @@ public class Modelo_Transacciones {
         this.id_Partida = id_Partida;
     }
 
-    public Modelo_Transacciones() {
+    public Modelo_Partida() {
         this.claseConectar = new ClaseConexion();
     }
 
-    public ArrayList<Modelo_Transacciones> Get_Transacciones() {
+    public ArrayList<Modelo_Partida> Get_Transacciones() {
         try {
             conexionDB = claseConectar.iniciarConexion(); // Iniciamos una conexión
             String sql = """
@@ -187,10 +187,10 @@ public class Modelo_Transacciones {
 
             ResultSet consulta = pstm.executeQuery(); // Ejecutamos la consulta
 
-            ArrayList<Modelo_Transacciones> Transaccion = new ArrayList<>();
+            ArrayList<Modelo_Partida> Transaccion = new ArrayList<>();
 
             while (consulta.next()) {
-                Modelo_Transacciones movimiento=  new Modelo_Transacciones();
+                Modelo_Partida movimiento=  new Modelo_Partida();
 
                 movimiento.setId_Cuenta(consulta.getInt("id_Transaccion"));
                 movimiento.setNombreCuenta(consulta.getString("Nombre_cuenta"));
@@ -207,7 +207,7 @@ public class Modelo_Transacciones {
             return Transaccion;
 
         } catch (SQLException ex) {
-            Logger.getLogger(Modelo_Transacciones.class.getName()).log(Level.SEVERE, "Error al obtener el listado", ex);
+            Logger.getLogger(Modelo_Partida.class.getName()).log(Level.SEVERE, "Error al obtener el listado", ex);
         }
         return null;
     }

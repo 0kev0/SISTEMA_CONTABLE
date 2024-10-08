@@ -363,7 +363,7 @@ public class log_in1 extends javax.swing.JFrame {
 
             if (USER.getNombres() != null) {
 
-                Funciones.showMessageDialog("BIENVENIDO", "Bienvenido\n " + USER.getApellidos() + " " + USER.getNombres());
+              //  Funciones.showMessageDialog("BIENVENIDO", "Bienvenido\n " + USER.getApellidos() + " " + USER.getNombres());
 
                 int rol = USER.getId_Rol();
 

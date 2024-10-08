@@ -171,6 +171,7 @@ public class Modelo_LibroDiario {
         while (consulta.next()) {
             Modelo_LibroDiario Periodo = new Modelo_LibroDiario();
 
+            Periodo.setId_Libro_diario(consulta.getInt("LibroDiario_id"));
             Periodo.setFecha(consulta.getDate("Fecha"));
             Periodo.setNombre_cuenta(consulta.getString("Nombre_cuenta"));
             Periodo.setTipo_documento(consulta.getString("Tipo_documento"));
@@ -224,7 +225,5 @@ public class Modelo_LibroDiario {
         conexionDB.close();
         return periodosPorPartida;
     }
-    
-  
 
 }
