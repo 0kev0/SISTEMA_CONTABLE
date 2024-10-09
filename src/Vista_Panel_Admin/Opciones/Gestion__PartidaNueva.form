@@ -166,10 +166,7 @@
                               <Component id="Cb_TipoCuentas" alignment="3" max="32767" attributes="0"/>
                               <Component id="Cb_TipoSaldo" alignment="3" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="Btn_AgregarPartida2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="-7" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="Btn_AgregarPartida2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="Lb_Error" min="-2" max="-2" attributes="0"/>

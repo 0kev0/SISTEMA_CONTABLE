@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.System.out;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -57,6 +58,10 @@ public class Funciones {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         return ahora.format(formato);
+    }
+
+    public static Date obtenerFechaActual() {
+        return new Date(); // Retorna la fecha y hora actual
     }
 
     public static String Registro_Log(String LogData) {
@@ -171,7 +176,7 @@ public class Funciones {
         return mesActual;
     }
 
-    public static String obtenerFechaActual() {
+    public static String obtenerFechaActual_() {
         // Obtener la fecha y hora actual
         Date fecha = new Date();
 
@@ -341,44 +346,43 @@ public class Funciones {
         });
     }
 
-public static void ValidarSaldo(JTextField textbox, JLabel error) {
-    textbox.addKeyListener(new KeyAdapter() {
-        @Override
-        public void keyTyped(KeyEvent e) {
-            char c = e.getKeyChar();
+    public static void ValidarSaldo(JTextField textbox, JLabel error) {
+        textbox.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
 
-            // Permitir dígitos, punto decimal, retroceso y eliminación
-            if (!(Character.isDigit(c) || c == '.' || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
-                showError("***Formato erróneo, solo números enteros o fraccionarios***");
-                e.consume();
-            } else {
-                // Validar que solo haya un punto decimal
-                String text = textbox.getText() + c;
-                if (text.indexOf('.') != text.lastIndexOf('.')) {
-                    showError("***Formato erróneo, solo un punto decimal permitido***");
+                // Permitir dígitos, punto decimal, retroceso y eliminación
+                if (!(Character.isDigit(c) || c == '.' || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
+                    showError("***Formato erróneo, solo números enteros o fraccionarios***");
                     e.consume();
                 } else {
-                    try {
-                    } catch (NumberFormatException ex) {
-                        showError("***Formato erróneo, ingresa un número válido***");
+                    // Validar que solo haya un punto decimal
+                    String text = textbox.getText() + c;
+                    if (text.indexOf('.') != text.lastIndexOf('.')) {
+                        showError("***Formato erróneo, solo un punto decimal permitido***");
                         e.consume();
+                    } else {
+                        try {
+                        } catch (NumberFormatException ex) {
+                            showError("***Formato erróneo, ingresa un número válido***");
+                            e.consume();
+                        }
                     }
                 }
             }
-        }
 
-        private void showError(String errorMessage) {
-            error.setText(errorMessage);
-            error.setForeground(Color.RED);
-            System.out.println(errorMessage);
-            textbox.setText("");
-            Timer timer = new Timer(1000, e -> error.setForeground(Color.decode("#172A38")));
-            timer.setRepeats(false);
-            timer.start();
-        }
-    });
-}
-
+            private void showError(String errorMessage) {
+                error.setText(errorMessage);
+                error.setForeground(Color.RED);
+                System.out.println(errorMessage);
+                textbox.setText("");
+                Timer timer = new Timer(1000, e -> error.setForeground(Color.decode("#172A38")));
+                timer.setRepeats(false);
+                timer.start();
+            }
+        });
+    }
 
     public static void ValidNumeroTel(JTextField textbox, JLabel error) {
         textbox.addKeyListener(new KeyAdapter() {

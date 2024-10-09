@@ -13,9 +13,13 @@ import static Vista_Panel_Admin.Opciones.Gestion_PartidaNueva.Get_Cb_TipoCuenta;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -442,18 +446,71 @@ public final class Gestion_InsertPartida extends javax.swing.JFrame {
         Double SubtotalDebe = Double.valueOf(modeloTabla.getValueAt(LastRow, 2).toString());
         Double SubtotalHaber = Double.valueOf(modeloTabla.getValueAt(LastRow, 3).toString());
 
+        ValidarSaldos(SubtotalDebe, SubtotalHaber);
+
+        Date fecha = Funciones.obtenerFechaActual();
+        int Cant_partidas = modeloTabla.getRowCount() - 2;
+
+        System.out.println("cantidad de par " + Cant_partidas);
+
+        Modelo_Partida partida = new Modelo_Partida();
+
+        ArrayList<Modelo_Partida> ListId;
+
+        for (int i = 0; i < Cant_partidas; i++) {
+            partida.InsertarLibroDiario();
+        }
+        
+        ListId = partida.Get_idPartidaActual(Cant_partidas);
+        ArrayList<Modelo_Partida> ListPartidas = new ArrayList<>();
+
+        for (int i = 0; i < Cant_partidas; i++) {
+            int codigo = Integer.parseInt(modeloTabla.getValueAt(i, 0).toString());
+            int TipoSaldo = 0;
+            Double Monto = 0.0;
+
+            if (!modeloTabla.getValueAt(i, 2).toString().equals("")) {
+                Monto = Double.valueOf(modeloTabla.getValueAt(i, 2).toString());
+                TipoSaldo = 1;
+                System.out.println("saldo dudor " + Monto);
+
+            }
+            if ((!modeloTabla.getValueAt(i, 3).toString().equals(""))) {
+
+                Monto = Double.valueOf(modeloTabla.getValueAt(i, 3).toString());
+                TipoSaldo = 2;
+                System.out.println("saldo acreedor " + Monto);
+            }
+
+            System.out.println("id de partida id>" + ListId.get(i).getId_Partida());
+
+            Modelo_Partida diario = new Modelo_Partida();
+            diario.setId_Cuenta(codigo);
+            diario.setId_TipoSaldo(TipoSaldo);
+            diario.setId_TipoDocumento(0);
+            diario.setMonto(Monto);
+            diario.setFecha(fecha);
+            diario.setId_Partida(ListId.get(i).getId_Partida());
+
+            ListPartidas.add(diario);
+        }
+
+        try {
+            partida.insertarPartidas(ListPartidas);
+        } catch (SQLException ex) {
+            Logger.getLogger(Gestion_InsertPartida.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_Btn_AgregarPartidaMouseClicked
+
+    private void ValidarSaldos(Double SubtotalDebe, Double SubtotalHaber) {
         if (SubtotalDebe.equals(SubtotalHaber)) {
             System.out.println("Todo bien");
         } else {
             System.out.println("mal");
         }
-       
-        Modelo_Partida partida = new Modelo_Partida();
-        partida.setId_Cuenta(WIDTH);
-        Modelo_LibroDiario diario =new Modelo_LibroDiario();
-       
-
-    }//GEN-LAST:event_Btn_AgregarPartidaMouseClicked
+    }
 
     private void Btn_AgregarPartidaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_AgregarPartidaMouseEntered
         EnterMouse(Btn_AgregarPartida, Lb_TipoCuentas, "#ABBEC8", "#FFFFFF");
@@ -518,7 +575,6 @@ public final class Gestion_InsertPartida extends javax.swing.JFrame {
             }
 
         }
-
 
         modeloTabla.addRow(new Object[]{"", "", "", ""});
         modeloTabla.addRow(new Object[]{"", "Sub-Total:", SubtotalDebe, SubtotalHaber});
