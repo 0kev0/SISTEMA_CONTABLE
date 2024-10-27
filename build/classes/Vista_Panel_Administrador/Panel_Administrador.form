@@ -169,7 +169,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="d1" green="f4" red="f2" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="SISTEMA CONTABLE CONTADOR (demo)"/>
+                <Property name="text" type="java.lang.String" value="SISTEMA CONTABLE admin (demo)"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -224,7 +224,7 @@
                                   <Component id="Btn_LibroMayor" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Btn_EstadosFinancieros" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Btn_VerRegistros" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="Btn_Regresar1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="Btn_Regresar" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Btn_VerCatalogo" min="-2" pref="240" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -253,7 +253,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="Btn_VerRegistros" min="-2" pref="60" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="Btn_Regresar1" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="Btn_Regresar" min="-2" pref="60" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -451,7 +451,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="Btn_Regresar1">
+            <Container class="javax.swing.JPanel" name="Btn_Regresar">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5" green="5" red="98" type="rgb"/>
@@ -471,9 +471,9 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Btn_Regresar1MouseClicked"/>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Btn_Regresar1MouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Btn_Regresar1MouseExited"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Btn_RegresarMouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Btn_RegresarMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Btn_RegresarMouseExited"/>
               </Events>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">

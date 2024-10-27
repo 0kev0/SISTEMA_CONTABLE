@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -212,60 +213,71 @@ public class Modelo_Partida {
         return null;
     }
 
-    public void insertarPartidas(ArrayList<Modelo_Partida> partidas) throws SQLException {
-        conexionDB = claseConectar.iniciarConexion(); // Iniciamos una conexión
+    public void insertarPartidas(ArrayList<Modelo_Partida> partidas, String Concepto) throws SQLException {
+        // Iniciamos una conexión
+        conexionDB = claseConectar.iniciarConexion();
 
-        String sql = """
-        INSERT INTO public."Tbl_Partida"("Cuenta_id", "Tipo_saldo_id", "Tipo_documento_id", "Monto", "Fecha", "LibroDiario_id")
-        VALUES (?, ?, ?, ?, ?, ?);
-    """;
-        pstm = conexionDB.prepareCall(sql);
+        String sqlInsert = """
+    INSERT INTO public."Tbl_Partida"("Cuenta_id", "Tipo_saldo_id", "Tipo_documento_id", "Monto", "Fecha", "LibroDiario_id")
+    VALUES (?, ?, ?, ?, ?, ?)
+    RETURNING "id_Partida"  -- Esto devolverá el ID generado
+""";
+
+        pstm = conexionDB.prepareStatement(sqlInsert);
+
+        List<Integer> id_Partidas = new ArrayList<>(); // Lista para almacenar los IDs de Partida insertadas
+
+        int id_LibroDiario = partidas.get(0).getId_Partida();//id da libro diario en comun
 
         for (Modelo_Partida partida : partidas) {
+            System.out.println("\nInsertando partida:");
             pstm.setInt(1, partida.getId_Cuenta());
-            pstm.setInt(2, partida.getId_TipoSaldo()); // Asegúrate de tener este método en Modelo_Partida
-            pstm.setInt(3, partida.getId_TipoDocumento()); // Asegúrate de tener este método en Modelo_Partida
+            pstm.setInt(2, partida.getId_TipoSaldo());
+            pstm.setInt(3, partida.getId_TipoDocumento());
             pstm.setDouble(4, partida.getMonto());
-            pstm.setDate(5, new java.sql.Date(partida.getFecha().getTime())); // Convertir java.util.Date a java.sql.Date
-            pstm.setInt(6, partida.getId_Partida()); // Asegúrate de tener este método en Modelo_Partida
+            pstm.setDate(5, new java.sql.Date(partida.getFecha().getTime()));
+            pstm.setInt(6, id_LibroDiario);
 
-            System.out.println("Insertando partida:");
-            System.out.println("Cuenta ID: " + partida.getId_Cuenta());
-            System.out.println("Tipo Saldo ID: " + partida.getId_TipoSaldo());
-            System.out.println("Tipo Documento ID: " + partida.getId_TipoDocumento());
-            System.out.println("Monto: " + partida.getMonto());
-            System.out.println("Fecha: " + partida.getFecha().getTime());
-            System.out.println("Libro Diario ID: " + partida.getId_Partida() + " con id tra " + partida.getId_transaccion());
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                int idInsertado = rs.getInt("id_Partida"); //  ID insertado
+                id_Partidas.add(idInsertado);
+                System.out.println("ID de Partida insertado: " + idInsertado + " hay " + id_Partidas.size());
 
-            int respuesta = pstm.executeUpdate();
+            }
 
-            System.out.println(">>" + respuesta);
         }
 
-        String sql2 = """
-UPDATE public."Tbl_LibroDiario"
-SET  "Partida_id"=?
-WHERE "id_Libro_diario"=?;
-    """;
-        pstm = conexionDB.prepareCall(sql2);
+        Set_idPartidasToLibroDiario(id_Partidas, id_LibroDiario, Concepto);
 
-        for (Modelo_Partida partida : partidas) {
-            pstm.setInt(1, partida.getId_Partida());
-            pstm.setInt(2, partida.getId_transaccion()); // Asegúrate de tener este método en Modelo_Partida
-            pstm.setInt(3, partida.getId_TipoDocumento()); // Asegúrate de tener este método en Modelo_Partida
-            pstm.setDouble(4, partida.getMonto());
-            pstm.setDate(5, new java.sql.Date(partida.getFecha().getTime())); // Convertir java.util.Date a java.sql.Date
-            pstm.setInt(6, partida.getId_Partida()); // Asegúrate de tener este método en Modelo_Partida
+        conexionDB.close();
 
-            System.out.println("Insertando partida:");
-            System.out.println("id libro diario : " + partida.getId_Cuenta());
-            System.out.println("partida ID: " + partida.getId_Partida());
+    }
+
+    private void Set_idPartidasToLibroDiario(List<Integer> id_Partidas, int id_LibroDiario, String Concepto) throws SQLException {
+        // Actualizar en Tbl_LibroDiario los id de las partidas
+        String sqlUpdate = """
+                                       UPDATE public."Tbl_LibroDiario"
+                                       SET "Partida_id" = ? , "Concepto" = ?
+                                       WHERE "id_Libro_diario" = ?;
+                                   """;
+
+        System.out.println("\n//////update a tbl_librodiario ");
+        pstm = conexionDB.prepareStatement(sqlUpdate);
+
+        for (int i = 0; i < id_Partidas.size(); i++) {
+            System.out.println("\nActualizando Tbl_LibroDiario:");
+
+            pstm.setInt(1, id_Partidas.get(i)); // ID de Partida
+            pstm.setString(2, Concepto); // ID de LibroDiario
+            pstm.setInt(3, id_LibroDiario); // ID de LibroDiario
+
+            System.out.println("id partida " + id_Partidas.get(i) + " insertado en librodiario id " + id_LibroDiario);
 
             int respuesta = pstm.executeUpdate();
-
-            System.out.println(">>" + respuesta);
+            System.out.println((respuesta == 1) ? "***UPDATE EXITOSO***" : "***UPDATE FALLIDO***");
+            id_LibroDiario--;
         }
-
     }
 
     public ArrayList<Modelo_Partida> Get_idPartidaActual(int numeroDeseado) {
@@ -299,10 +311,10 @@ WHERE "id_Libro_diario"=?;
         }
         return null;
     }
-    
-        public ArrayList<Modelo_Partida> Get_idTransaccionActual(int numeroDeseado) {
+
+    public ArrayList<Modelo_Partida> Get_idTransaccionActual(int numeroDeseado) {
         try {
-            conexionDB = claseConectar.iniciarConeion(); // Iniciamos una conexión
+            conexionDB = claseConectar.iniciarConexion(); // Iniciamos una conexión
             String sql = """
             SELECT "id_Libro_diario","Partida_id" FROM public."tbl_" 
                                     ORDER BY "id_Libro_diario" DESC 

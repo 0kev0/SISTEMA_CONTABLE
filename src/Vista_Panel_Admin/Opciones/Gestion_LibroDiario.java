@@ -104,7 +104,7 @@ public final class Gestion_LibroDiario extends javax.swing.JInternalFrame {
         String SaldoDebe = "";
         String SaldoHaber = "";
 
-        ImageIcon iconoEditar = new ImageIcon(getClass().getResource("/Imagenes/Edit_.png"));
+        //     ImageIcon iconoEditar = new ImageIcon(getClass().getResource("/Imagenes/Edit_.png"));
         int cantCuentas = 0;
 
         for (Map.Entry<Integer, ArrayList<Modelo_LibroDiario>> Entrada : List_LibroDiario.entrySet()) {
@@ -149,13 +149,15 @@ public final class Gestion_LibroDiario extends javax.swing.JInternalFrame {
 
                 if (num == periodos.size()) {
                     modeloTabla.addRow(new Object[]{
-                        "", "", "",
+                        "", "",  "\t\t\t\t" + item.getConcepto(),
                         SubTotal_Debe,
                         SubTotal_Haber});
                     modeloTabla.addRow(new Object[]{
                         "", "", "",
                         "",
                         ""});
+
+
                 }
 
             }
@@ -398,10 +400,8 @@ public final class Gestion_LibroDiario extends javax.swing.JInternalFrame {
 
         Gestion_InsertPartida test = new Gestion_InsertPartida();
         test.setVisible(true);
-        
-              //  Gestion_CatalogoTest gest = new Gestion_CatalogoTest();
 
-
+        //  Gestion_CatalogoTest gest = new Gestion_CatalogoTest();
 
     }//GEN-LAST:event_Btn_TipoCuentasMouseClicked
 

@@ -124,7 +124,7 @@ public class Panel_Gerente extends javax.swing.JFrame {
 
         Lb_Bienvenida.setFont(new java.awt.Font("Sylfaen", 1, 48)); // NOI18N
         Lb_Bienvenida.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_Bienvenida.setText("SISTEMA CONTABLE CONTADOR (demo)");
+        Lb_Bienvenida.setText("SISTEMA CONTABLE Gerente (demo)");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);

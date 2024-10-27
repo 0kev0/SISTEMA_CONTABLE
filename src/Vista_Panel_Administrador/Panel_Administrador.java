@@ -14,6 +14,7 @@ import Modelos.Contador.Modelo_LibroDiario;
 import Modelos.Contador.Modelo_TipoCuenta;
 import Modelos.Contador.Modelo_TipoDocumento;
 import Vista_Panel_Admin.Opciones.Gestion_CatalogoTest;
+import Vista_Panel_Admin.Opciones.Gestion_EstadoFiananciero;
 import Vista_Panel_Admin.Opciones.Vista_CatalogoTest;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -22,7 +23,6 @@ import java.util.logging.Logger;
 public class Panel_Administrador extends javax.swing.JFrame {
 
     public Panel_Administrador() {
-        getContentPane().setBackground(new Color(250, 250, 250));
         initComponents();
     }
 
@@ -55,7 +55,7 @@ public class Panel_Administrador extends javax.swing.JFrame {
         Lb_EstadosFinancieros = new javax.swing.JLabel();
         Btn_VerRegistros = new Customizacion.Custom_Buttons();
         Lb_VerRegistros = new javax.swing.JLabel();
-        Btn_Regresar1 = new javax.swing.JPanel();
+        Btn_Regresar = new javax.swing.JPanel();
         Lb_Regresar = new javax.swing.JLabel();
         Btn_VerCatalogo = new Customizacion.Custom_Buttons();
         Lb_VerCatalogo = new javax.swing.JLabel();
@@ -124,7 +124,7 @@ public class Panel_Administrador extends javax.swing.JFrame {
 
         Lb_Bienvenida.setFont(new java.awt.Font("Sylfaen", 1, 48)); // NOI18N
         Lb_Bienvenida.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_Bienvenida.setText("SISTEMA CONTABLE CONTADOR (demo)");
+        Lb_Bienvenida.setText("SISTEMA CONTABLE admin (demo)");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -251,28 +251,28 @@ public class Panel_Administrador extends javax.swing.JFrame {
         Lb_VerRegistros.setText("Ver Registros");
         Btn_VerRegistros.add(Lb_VerRegistros, new java.awt.GridBagConstraints());
 
-        Btn_Regresar1.setBackground(new java.awt.Color(152, 5, 5));
-        Btn_Regresar1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 10, 0, new java.awt.Color(247, 17, 17)));
-        Btn_Regresar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Btn_Regresar1.setMinimumSize(new java.awt.Dimension(160, 92));
-        Btn_Regresar1.addMouseListener(new java.awt.event.MouseAdapter() {
+        Btn_Regresar.setBackground(new java.awt.Color(152, 5, 5));
+        Btn_Regresar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 10, 0, new java.awt.Color(247, 17, 17)));
+        Btn_Regresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Btn_Regresar.setMinimumSize(new java.awt.Dimension(160, 92));
+        Btn_Regresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Btn_Regresar1MouseClicked(evt);
+                Btn_RegresarMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Btn_Regresar1MouseEntered(evt);
+                Btn_RegresarMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Btn_Regresar1MouseExited(evt);
+                Btn_RegresarMouseExited(evt);
             }
         });
-        Btn_Regresar1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        Btn_Regresar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Lb_Regresar.setFont(new java.awt.Font("Segoe UI Black", 1, 20)); // NOI18N
         Lb_Regresar.setForeground(new java.awt.Color(255, 255, 255));
         Lb_Regresar.setText("Regresar");
         Lb_Regresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Btn_Regresar1.add(Lb_Regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 130, 30));
+        Btn_Regresar.add(Lb_Regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 130, 30));
 
         Btn_VerCatalogo.setBackground(new java.awt.Color(137, 163, 178));
         Btn_VerCatalogo.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)));
@@ -354,7 +354,7 @@ public class Panel_Administrador extends javax.swing.JFrame {
                             .addComponent(Btn_LibroMayor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Btn_EstadosFinancieros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Btn_VerRegistros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Btn_Regresar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_Regresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Btn_VerCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(Btn_TipoDocumentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Btn_TipoCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -378,7 +378,7 @@ public class Panel_Administrador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Btn_VerRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Btn_Regresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Btn_Regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
 
@@ -399,7 +399,7 @@ public class Panel_Administrador extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Btn_Regresar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_Regresar1MouseClicked
+    private void Btn_RegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_RegresarMouseClicked
         String loginfo = " Cerro sesion el usuario " + Modelo_Usuario.getNombres() + " ***";
         String Log = Funciones.Registro_Log(loginfo);
         Funciones.escribirEnArchivo(Log);
@@ -407,17 +407,17 @@ public class Panel_Administrador extends javax.swing.JFrame {
         log_in1 gest = new log_in1();
         dispose();
         gest.setVisible(true);
-    }//GEN-LAST:event_Btn_Regresar1MouseClicked
+    }//GEN-LAST:event_Btn_RegresarMouseClicked
 
-    private void Btn_Regresar1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_Regresar1MouseEntered
-        EnterMouse(Btn_Regresar1, Lb_Regresar, "#F71111", "#FFFFFF");
-    }//GEN-LAST:event_Btn_Regresar1MouseEntered
+    private void Btn_RegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_RegresarMouseEntered
+        EnterMouse(Btn_Regresar, Lb_Regresar, "#F71111", "#FFFFFF");
+    }//GEN-LAST:event_Btn_RegresarMouseEntered
 
-    private void Btn_Regresar1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_Regresar1MouseExited
+    private void Btn_RegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_RegresarMouseExited
         // TODO add your handling code here:980505
-        LeftMouse(Btn_Regresar1, Lb_Regresar, "#980505", "#F2F4D1");
+        LeftMouse(Btn_Regresar, Lb_Regresar, "#980505", "#F2F4D1");
 
-    }//GEN-LAST:event_Btn_Regresar1MouseExited
+    }//GEN-LAST:event_Btn_RegresarMouseExited
 
     private void Btn_VerRegistrosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_VerRegistrosMouseEntered
         EnterMouse(Btn_VerRegistros, Lb_VerRegistros, "#ABBEC8", "#FFFFFF");
@@ -557,6 +557,20 @@ public class Panel_Administrador extends javax.swing.JFrame {
         String Log = Funciones.Registro_Log(loginfo);
         Funciones.escribirEnArchivo(Log);
 
+        Gestion_EstadoFiananciero gest;
+        try {
+            gest = new Gestion_EstadoFiananciero();
+            gest.setResizable(false);
+            gest.setBounds(0, 0, Desk.getWidth(), Desk.getHeight());
+            gest.setVisible(true);
+            CentrarFrames(Desk, gest);
+            Desk.add(gest);
+            gest.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(Panel_Administrador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_Btn_EstadosFinancierosMouseClicked
 
     public static void main(String args[]) {
@@ -572,7 +586,7 @@ public class Panel_Administrador extends javax.swing.JFrame {
     private javax.swing.JPanel Btn_EstadosFinancieros;
     private javax.swing.JPanel Btn_LibroMayor;
     private javax.swing.JPanel Btn_Libro_Diario;
-    private javax.swing.JPanel Btn_Regresar1;
+    private javax.swing.JPanel Btn_Regresar;
     private javax.swing.JPanel Btn_TipoCuentas;
     private javax.swing.JPanel Btn_TipoDocumentos;
     private javax.swing.JPanel Btn_VerCatalogo;
