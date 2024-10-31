@@ -1,16 +1,13 @@
 package Modelos.Contador;
 
 import Conexion.ClaseConexion;
-import static Funciones.Funciones.TiemSql;
+import Funciones.Funciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -137,74 +134,128 @@ public class Modelo_EstadoFinanciero {
         this.claseConectar = new ClaseConexion();
     }
 
-    public Map<String, ArrayList<Modelo_EstadoFinanciero>> Get_EstadoFinanciero() throws SQLException {
+    public ArrayList<Modelo_EstadoFinanciero> Get_EstadoFinanciero() throws SQLException {
 
         conexionDB = claseConectar.iniciarConexion(); // Iniciamos la conexión
         String sql = """
-SELECT "id_Libro_diario",TBL_TC."id_Tipo_cuenta",TBL_TC."Tipo_cuenta",TBL_C."id_Cuenta",TBL_C."Nombre_cuenta",TBL_TS."Tipo_saldo",TBL_P."Monto"
-FROM public."Tbl_LibroDiario" AS TBL_LD
-INNER JOIN "Tbl_Partida" AS TBL_P ON TBL_P."id_Partida" = TBL_LD."Partida_id"
-INNER JOIN "Tbl_Catalogo" AS TBL_C ON TBL_C."id_Cuenta" = TBL_P."Cuenta_id"
-INNER JOIN "Tbl_TipoSaldo" AS TBL_TS ON TBL_TS."id_Tipo_saldo" = TBL_P."Tipo_saldo_id"
-INNER JOIN "Tbl_TipoCuenta" AS TBL_TC ON TBL_TC."id_Tipo_cuenta" = TBL_C."Tipo_cuenta_id"
-ORDER BY TBL_TC."id_Tipo_cuenta" ASC;""";
+SELECT TBL_P."Fecha", TBL_TC."id_Tipo_cuenta", TBL_TC."Tipo_cuenta", 
+           TBL_C."id_Cuenta", TBL_C."Nombre_cuenta", TBL_TS."Tipo_saldo", 
+           SUM(TBL_P."Monto") AS Total_Monto
+    FROM public."Tbl_LibroDiario" AS TBL_LD
+    INNER JOIN "Tbl_Partida" AS TBL_P ON TBL_P."id_Partida" = TBL_LD."Partida_id"
+    INNER JOIN "Tbl_Catalogo" AS TBL_C ON TBL_C."id_Cuenta" = TBL_P."Cuenta_id"
+    INNER JOIN "Tbl_TipoSaldo" AS TBL_TS ON TBL_TS."id_Tipo_saldo" = TBL_P."Tipo_saldo_id"
+    INNER JOIN "Tbl_TipoCuenta" AS TBL_TC ON TBL_TC."id_Tipo_cuenta" = TBL_C."Tipo_cuenta_id"
+    WHERE EXTRACT(MONTH FROM TBL_P."Fecha") = ?
+    GROUP BY TBL_TC."id_Tipo_cuenta", TBL_TC."Tipo_cuenta", 
+             TBL_C."id_Cuenta", TBL_C."Nombre_cuenta", 
+             TBL_TS."Tipo_saldo", TBL_P."Fecha"
+    ORDER BY TBL_TC."id_Tipo_cuenta", TBL_C."Nombre_cuenta" ASC;""";
+
+        int mes = Funciones.Get_MES_Actual();
 
         pstm = conexionDB.prepareStatement(sql);
+        pstm.setInt(1, mes);
 
         ResultSet consulta = pstm.executeQuery();
 
-        Map<String, ArrayList<Modelo_EstadoFinanciero>> periodosPorPartida = new HashMap<>();
+        ArrayList<Modelo_EstadoFinanciero> periodosPorPartida = new ArrayList<>();
 
         while (consulta.next()) {
-            Modelo_EstadoFinanciero Cuenta = new Modelo_EstadoFinanciero();
-            //   System.out.println("numero de libro diario" + consulta.getInt("id_Libro_diario"));
-            Cuenta.setNombre_cuenta(consulta.getString("Nombre_cuenta"));
-            if (Cuenta.setTipo_saldo(consulta.getString("Tipo_saldo").equals("Deudor"))) {
-                
+            System.out.println("Agregando cuenta ");
+            String nombreCuenta = consulta.getString("Nombre_cuenta");
+            double monto = consulta.getDouble("Total_Monto");
+
+            // Buscar si la cuenta ya existe en el ArrayList
+            boolean cuentaExistente = false;
+            for (Modelo_EstadoFinanciero cuenta : periodosPorPartida) {
+                if (cuenta.getNombre_cuenta().equals(nombreCuenta)) {
+                    // Si existe, restamos el monto
+                    cuenta.setSaldo(cuenta.getSaldo() - monto);
+                    cuentaExistente = true;
+                    break; // Salimos del bucle ya que encontramos la cuenta
+                }
             }
-            Cuenta.setSaldo(consulta.getDouble("Monto"));
 
-            String TipoCuenta = consulta.getInt("id_Libro_diario") + consulta.getString("Tipo_cuenta");
-
-            periodosPorPartida.putIfAbsent(TipoCuenta, new ArrayList<>());
-
-            periodosPorPartida.get(TipoCuenta).add(Cuenta);
+            // Si la cuenta no existe, la añadimos
+            if (!cuentaExistente) {
+                Modelo_EstadoFinanciero nuevaCuenta = new Modelo_EstadoFinanciero();
+                nuevaCuenta.setNombre_cuenta(nombreCuenta);
+                nuevaCuenta.setSaldo(monto);
+                nuevaCuenta.setTipo_saldo(consulta.getString("Tipo_saldo"));
+                periodosPorPartida.add(nuevaCuenta);
+            }
         }
 
-        for (Map.Entry<String, ArrayList<Modelo_EstadoFinanciero>> entrada : periodosPorPartida.entrySet()) {
-            String TipoCuenta = entrada.getKey();
-            ArrayList<Modelo_EstadoFinanciero> periodos = entrada.getValue();
+// Filtrar cuentas con saldo positivo
+        periodosPorPartida.removeIf(cuenta -> cuenta.getSaldo() < 0);
 
-            System.out.println("\t tipo cuenta: " + TipoCuenta);
-            System.out.println("+----------------------------------------------------------------+");
-            System.out.printf("| %-13s | %-24s | %-8s |\n", "Cuenta", "Debe", "Haber");
-            System.out.println("+----------------------------------------------------------------+");
+// Imprimir las cuentas finales
+        for (Modelo_EstadoFinanciero cuenta : periodosPorPartida) {
+            System.out.println("Cuenta: " + cuenta.getNombre_cuenta() + " tipo saldo: " + cuenta.getTipo_saldo() + ", Saldo: " + cuenta.getSaldo());
+        }
 
-            double totalDebe = 0;
-            double totalHaber = 0;
+        conexionDB.close();
+        return periodosPorPartida;
+    }
 
-            for (Modelo_EstadoFinanciero periodo : periodos) {
-                String nombreCuenta = periodo.getNombre_cuenta();
-                String tipoSaldo = periodo.getTipo_saldo();
-                double saldo = periodo.getSaldo();
+    public ArrayList<Modelo_EstadoFinanciero> Get_EstadoFinanciero_MES(int mes) throws SQLException {
 
-                String debe = "";
-                String haber = "";
+        conexionDB = claseConectar.iniciarConexion(); // Iniciamos la conexión
+        String sql = """
+SELECT TBL_P."Fecha", TBL_TC."id_Tipo_cuenta", TBL_TC."Tipo_cuenta", 
+           TBL_C."id_Cuenta", TBL_C."Nombre_cuenta", TBL_TS."Tipo_saldo", 
+           SUM(TBL_P."Monto") AS Total_Monto
+    FROM public."Tbl_LibroDiario" AS TBL_LD
+    INNER JOIN "Tbl_Partida" AS TBL_P ON TBL_P."id_Partida" = TBL_LD."Partida_id"
+    INNER JOIN "Tbl_Catalogo" AS TBL_C ON TBL_C."id_Cuenta" = TBL_P."Cuenta_id"
+    INNER JOIN "Tbl_TipoSaldo" AS TBL_TS ON TBL_TS."id_Tipo_saldo" = TBL_P."Tipo_saldo_id"
+    INNER JOIN "Tbl_TipoCuenta" AS TBL_TC ON TBL_TC."id_Tipo_cuenta" = TBL_C."Tipo_cuenta_id"
+    WHERE EXTRACT(MONTH FROM TBL_P."Fecha") = ?
+    GROUP BY TBL_TC."id_Tipo_cuenta", TBL_TC."Tipo_cuenta", 
+             TBL_C."id_Cuenta", TBL_C."Nombre_cuenta", 
+             TBL_TS."Tipo_saldo", TBL_P."Fecha"
+    ORDER BY TBL_TC."id_Tipo_cuenta", TBL_C."Nombre_cuenta" ASC;""";
 
-                if (tipoSaldo.equalsIgnoreCase("Deudor")) {
-                    debe = String.format("%.2f", saldo);
-                    totalDebe += saldo;
-                } else if (tipoSaldo.equalsIgnoreCase("Acreedor")) {
-                    haber = String.format("%.2f", saldo);
-                    totalHaber += saldo;
+        pstm = conexionDB.prepareStatement(sql);
+        pstm.setInt(1, mes);
+
+        ResultSet consulta = pstm.executeQuery();
+
+        ArrayList<Modelo_EstadoFinanciero> periodosPorPartida = new ArrayList<>();
+
+        while (consulta.next()) {
+            System.out.println("Agregando cuenta ");
+            String nombreCuenta = consulta.getString("Nombre_cuenta");
+            double monto = consulta.getDouble("Total_Monto");
+
+            // Buscar si la cuenta ya existe en el ArrayList
+            boolean cuentaExistente = false;
+            for (Modelo_EstadoFinanciero cuenta : periodosPorPartida) {
+                if (cuenta.getNombre_cuenta().equals(nombreCuenta)) {
+                    // Si existe, restamos el monto
+                    cuenta.setSaldo(cuenta.getSaldo() - monto);
+                    cuentaExistente = true;
+                    break; // Salimos del bucle ya que encontramos la cuenta
                 }
-
-                System.out.printf("| %-13s | %-24s | %-8s |\n", nombreCuenta, debe, haber);
             }
 
-            System.out.println("+----------------------------------------------------------------+");
-            System.out.printf("| %-13s | %-24s | %-8s | %-8s |\n", "SUBTOTALES ", "", String.format("%.2f", totalDebe), String.format("%.2f", totalHaber));
-            System.out.println("+----------------------------------------------------------------+\n");
+            // Si la cuenta no existe, la añadimos
+            if (!cuentaExistente) {
+                Modelo_EstadoFinanciero nuevaCuenta = new Modelo_EstadoFinanciero();
+                nuevaCuenta.setNombre_cuenta(nombreCuenta);
+                nuevaCuenta.setSaldo(monto);
+                nuevaCuenta.setTipo_saldo(consulta.getString("Tipo_saldo"));
+                periodosPorPartida.add(nuevaCuenta);
+            }
+        }
+
+// Filtrar cuentas con saldo positivo
+        periodosPorPartida.removeIf(cuenta -> cuenta.getSaldo() < 0);
+
+// Imprimir las cuentas finales
+        for (Modelo_EstadoFinanciero cuenta : periodosPorPartida) {
+            System.out.println("Cuenta: " + cuenta.getNombre_cuenta() + " tipo saldo: " + cuenta.getTipo_saldo() + ", Saldo: " + cuenta.getSaldo());
         }
 
         conexionDB.close();

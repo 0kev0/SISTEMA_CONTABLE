@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -28,11 +30,10 @@ import javax.swing.table.JTableHeader;
  *
  * @author kev
  */
-public class Gestion_EstadoFiananciero extends javax.swing.JInternalFrame {
+public class Balance_General extends javax.swing.JInternalFrame {
 
     private final Modelo_EstadoFinanciero Objeto_EstadoResultado = new Modelo_EstadoFinanciero();
-    private Map<String, ArrayList<Modelo_EstadoFinanciero>> List_EstadoResultado;
-
+    private ArrayList<Modelo_EstadoFinanciero> List_EstadoResultado;
 
     private static final Modelo_TipoCuenta Objeto_TipoCuenta = new Modelo_TipoCuenta();
     private static List<Modelo_TipoCuenta> List_TipoCuenta;
@@ -40,14 +41,14 @@ public class Gestion_EstadoFiananciero extends javax.swing.JInternalFrame {
     //el modelo de tabla para manipular la tabla
     private DefaultTableModel modeloTabla = new DefaultTableModel();
 
-    public Gestion_EstadoFiananciero() throws SQLException {
+    public Balance_General() throws SQLException {
         initComponents();
         clearScreen();
 
         Get_Cb_Grados(Cb_TipoCuentas);
         DiseñoTabla(Tbl_EstadoResultado);
         Get_Tbl_Catalogo(Tbl_EstadoResultado);
-        
+
         Modelo_EstadoFinanciero g = new Modelo_EstadoFinanciero();
         g.Get_EstadoFinanciero();
 
@@ -67,30 +68,6 @@ public class Gestion_EstadoFiananciero extends javax.swing.JInternalFrame {
         ComboBox.setModel(ModeloComboBox);
     }
 
-    public void Get_Tbl_CatalogoFiltrada(JTable tabla) {
-        int id_TipoCuenta = Cb_TipoCuentas.getSelectedIndex()+1;
-        modeloTabla.setNumRows(0);
-
-        System.out.println("buscando por year: " + id_TipoCuenta);
-        List_EstadoResultado = Objeto_EstadoResultado.Get_CatalogoFiltrado(id_TipoCuenta);
-        System.out.println("Hay " + List_TipoCuenta.size() + " registros en la lista.");
-
-        int cantCuentas = 0;
-        for (Modelo_Catalogo item : List_EstadoResultado) {//aca recorres los objetos de la lista *aveces ocupa que cambies el tipo de obj
-
-            modeloTabla.addRow(new Object[]{
-                item.getId_Cuenta(),
-                item.getTipoCuenta(),
-                item.getNombreCuenta(),});
-            cantCuentas++;
-        }
-
-        tabla.setModel(modeloTabla);
-
-        Lb_CantidadCuentas.setText("Numero de cuentas : " + cantCuentas);
-
-    }
-
     //etse metodo llena las tablas, este mismo vas a utilizar en todos, con la diferencia de la cantidad de columnas y los gets del item
     public void Get_Tbl_Catalogo(JTable tabla) throws SQLException {
         modeloTabla = (DefaultTableModel) tabla.getModel();
@@ -101,20 +78,30 @@ public class Gestion_EstadoFiananciero extends javax.swing.JInternalFrame {
         List_EstadoResultado = Objeto_EstadoResultado.Get_EstadoFinanciero();//aca con el objeto manipulas la db y llenas una lista del objeto 
         System.out.println("hay " + List_EstadoResultado.size());
 
-        ImageIcon iconoEditar = new ImageIcon(getClass().getResource("/Imagenes/Edit_.png"));
-        int cantCuentas = 0;
-        for (Modelo_Catalogo item : List_EstadoResultado) {//aca recorres los objetos de la lista *aveces ocupa que cambies el tipo de obj
+        for (Modelo_EstadoFinanciero item : List_EstadoResultado) {
 
-            modeloTabla.addRow(new Object[]{
-                item.getId_Cuenta(),
-                item.getTipoCuenta(),
-                item.getNombreCuenta(),});
-            cantCuentas++;
+            String SaldoDebe = "";
+            String SaldoHaber = "";
+            
+            if (item.getTipo_saldo().equals("Deudor")) {
+                SaldoDebe = "$ " +  Double.toString(item.getSaldo() );
+
+                System.out.println("debe");
+            }
+
+            if (item.getTipo_saldo().equals("Acreedor")) {
+                SaldoHaber = "$ " + Double.toString(item.getSaldo());
+                System.out.println("haber");
+
+            }
+
+            modeloTabla.addRow(new Object[]{item.getId_CodigoCuenta(), item.getNombre_cuenta(), SaldoDebe, SaldoHaber});
+
         }
 
         tabla.setModel(modeloTabla);
 
-        Lb_CantidadCuentas.setText("Numero de cuentas : " + cantCuentas);
+        Lb_CantidadCuentas.setText("Numero de cuentas : " + List_EstadoResultado);
     }
 
     public void DiseñoTabla(JTable tabla) {
@@ -158,11 +145,12 @@ public class Gestion_EstadoFiananciero extends javax.swing.JInternalFrame {
         Lb_CantidadCuentas3 = new javax.swing.JLabel();
         Lb_CantidadCuentas1 = new javax.swing.JLabel();
         Lb_CantidadCuentas2 = new javax.swing.JLabel();
+        Cb_TipoCuentas = new javax.swing.JComboBox<>();
+        Lb_CantidadCuentas4 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         Lb_Bienvenida = new javax.swing.JLabel();
         Lb_CantidadCuentas = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        Cb_TipoCuentas = new javax.swing.JComboBox<>();
 
         jPanel3.setBackground(new java.awt.Color(242, 244, 209));
 
@@ -206,35 +194,56 @@ public class Gestion_EstadoFiananciero extends javax.swing.JInternalFrame {
         Lb_CantidadCuentas2.setForeground(new java.awt.Color(0, 0, 0));
         Lb_CantidadCuentas2.setText("Nombre Empresa");
 
+        Cb_TipoCuentas.setBackground(new java.awt.Color(137, 163, 178));
+        Cb_TipoCuentas.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
+        Cb_TipoCuentas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)), "Filtro tipo cuenta:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 15), new java.awt.Color(242, 244, 209))); // NOI18N
+        Cb_TipoCuentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Cb_TipoCuentasActionPerformed(evt);
+            }
+        });
+
+        Lb_CantidadCuentas4.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        Lb_CantidadCuentas4.setForeground(new java.awt.Color(0, 0, 0));
+        Lb_CantidadCuentas4.setText("Saldos");
+
         javax.swing.GroupLayout jp_MainLayout = new javax.swing.GroupLayout(jp_Main);
         jp_Main.setLayout(jp_MainLayout);
         jp_MainLayout.setHorizontalGroup(
             jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jp_MainLayout.createSequentialGroup()
-                .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jp_MainLayout.createSequentialGroup()
-                        .addGap(218, 218, 218)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jp_MainLayout.createSequentialGroup()
-                        .addGap(415, 415, 415)
-                        .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Lb_CantidadCuentas1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Lb_CantidadCuentas3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Lb_CantidadCuentas2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jp_MainLayout.createSequentialGroup()
+                            .addGap(218, 218, 218)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jp_MainLayout.createSequentialGroup()
+                            .addGap(24, 24, 24)
+                            .addComponent(Cb_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(171, 171, 171)
+                            .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Lb_CantidadCuentas1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Lb_CantidadCuentas3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Lb_CantidadCuentas2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(Lb_CantidadCuentas4, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(220, Short.MAX_VALUE))
         );
         jp_MainLayout.setVerticalGroup(
             jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_MainLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Lb_CantidadCuentas2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Lb_CantidadCuentas1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Lb_CantidadCuentas1)
+                    .addComponent(Cb_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Lb_CantidadCuentas3)
+                .addGap(49, 49, 49)
+                .addComponent(Lb_CantidadCuentas4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(94, 96, 115));
@@ -281,15 +290,6 @@ public class Gestion_EstadoFiananciero extends javax.swing.JInternalFrame {
             .addGap(0, 40, Short.MAX_VALUE)
         );
 
-        Cb_TipoCuentas.setBackground(new java.awt.Color(137, 163, 178));
-        Cb_TipoCuentas.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
-        Cb_TipoCuentas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)), "Filtro tipo cuenta:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 15), new java.awt.Color(242, 244, 209))); // NOI18N
-        Cb_TipoCuentas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Cb_TipoCuentasActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -297,20 +297,14 @@ public class Gestion_EstadoFiananciero extends javax.swing.JInternalFrame {
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jp_Main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(Cb_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(Cb_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addGap(18, 18, 18)
                 .addComponent(jp_Main, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -329,12 +323,16 @@ public class Gestion_EstadoFiananciero extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Cb_TipoCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cb_TipoCuentasActionPerformed
-        if ("Todos".equals(Cb_TipoCuentas.getSelectedItem().toString())) {
-            Get_Tbl_Catalogo(Tbl_EstadoResultado);
-        } else {
-
-            Get_Tbl_CatalogoFiltrada(Tbl_EstadoResultado);
-        }
+//        if ("Todos".equals(Cb_TipoCuentas.getSelectedItem().toString())) {
+//            try {
+//                Get_Tbl_Catalogo(Tbl_EstadoResultado);
+//            } catch (SQLException ex) {
+//                Logger.getLogger(Balance_General.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } else {
+//
+//            Get_Tbl_CatalogoFiltrada(Tbl_EstadoResultado);
+//        }
 
     }//GEN-LAST:event_Cb_TipoCuentasActionPerformed
 
@@ -346,6 +344,7 @@ public class Gestion_EstadoFiananciero extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Lb_CantidadCuentas1;
     private javax.swing.JLabel Lb_CantidadCuentas2;
     private javax.swing.JLabel Lb_CantidadCuentas3;
+    private javax.swing.JLabel Lb_CantidadCuentas4;
     private javax.swing.JTable Tbl_EstadoResultado;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;

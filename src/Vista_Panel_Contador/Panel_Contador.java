@@ -13,7 +13,7 @@ import Modelos.Contador.Modelo_LibroDiario;
 import Modelos.Contador.Modelo_TipoCuenta;
 import Modelos.Contador.Modelo_TipoDocumento;
 import Vista_Panel_Admin.Opciones.Gestion_CatalogoTest;
-import Vista_Panel_Admin.Opciones.Gestion_EstadoFiananciero;
+import Vista_Panel_Admin.Opciones.Balance_General;
 import Vista_Panel_Admin.Opciones.Gestion_LibroDiario;
 import Vista_Panel_Admin.Opciones.Gestion_LibroMayor;
 import Vista_Panel_Admin.Opciones.Vista_CatalogoTest;
@@ -582,9 +582,9 @@ public class Panel_Contador extends javax.swing.JFrame {
         String Log = Funciones.Registro_Log(loginfo);
         Funciones.escribirEnArchivo(Log);
 
-        Gestion_EstadoFiananciero gest;
+        Balance_General gest;
         try {
-            gest = new Gestion_EstadoFiananciero();
+            gest = new Balance_General();
             gest.setResizable(false);
             gest.setBounds(0, 0, Desk.getWidth(), Desk.getHeight());
             gest.setVisible(true);
