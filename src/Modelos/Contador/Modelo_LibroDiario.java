@@ -1,7 +1,6 @@
 package Modelos.Contador;
 
 import Conexion.ClaseConexion;
-import static Funciones.Funciones.TiemSql;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -174,6 +173,106 @@ public class Modelo_LibroDiario {
                          ORDER BY TBL_LD."id_Libro_diario" DESC;""";
         
         pstm = conexionDB.prepareStatement(sql);
+        
+        ResultSet consulta = pstm.executeQuery();
+        
+        Map<Integer, ArrayList<Modelo_LibroDiario>> periodosPorPartida = new HashMap<>();
+        
+        while (consulta.next()) {
+            Modelo_LibroDiario Periodo = new Modelo_LibroDiario();
+            System.out.println("numero de libro diario" + consulta.getInt("LibroDiario_id"));
+            Periodo.setId_Libro_diario(consulta.getInt("LibroDiario_id"));
+            Periodo.setFecha(consulta.getDate("Fecha"));
+            Periodo.setNombre_cuenta(consulta.getString("Nombre_cuenta"));
+            Periodo.setTipo_documento(consulta.getString("Tipo_documento"));
+            Periodo.setTipo_saldo(consulta.getString("Tipo_saldo"));
+            Periodo.setSaldo(consulta.getDouble("Monto"));
+            Periodo.setConcepto(consulta.getString("Concepto"));
+            
+            int NumeroPartida = consulta.getInt("LibroDiario_id");
+            
+            periodosPorPartida.putIfAbsent(NumeroPartida, new ArrayList<>());
+            
+            periodosPorPartida.get(NumeroPartida).add(Periodo);
+        }
+        
+        for (Map.Entry<Integer, ArrayList<Modelo_LibroDiario>> entrada : periodosPorPartida.entrySet()) {
+            int partidaId = entrada.getKey();
+            ArrayList<Modelo_LibroDiario> periodos = entrada.getValue();
+            
+            System.out.println("\nPartida número : " + partidaId);
+            System.out.println("+----------------------------------------------------------------+");
+            System.out.printf("| %-13s | %-24s | %-8s | %-8s |\n", "Fecha", "Cuenta", "Debe", "Haber");
+            System.out.println("+----------------------------------------------------------------+");
+            
+            double totalDebe = 0;
+            double totalHaber = 0;
+            
+            for (Modelo_LibroDiario periodo : periodos) {
+                String fecha = periodo.getFecha().toString();
+                String nombreCuenta = periodo.getNombre_cuenta();
+                String tipoSaldo = periodo.getTipo_saldo();
+                double saldo = periodo.getSaldo();
+                
+                String debe = "";
+                String haber = "";
+                
+                if (tipoSaldo.equalsIgnoreCase("Deudor")) {
+                    debe = String.format("%.2f", saldo);
+                    totalDebe += saldo;
+                } else if (tipoSaldo.equalsIgnoreCase("Acreedor")) {
+                    haber = String.format("%.2f", saldo);
+                    totalHaber += saldo;
+                }
+                
+                System.out.printf("| %-13s | %-24s | %-8s | %-8s |\n", fecha, nombreCuenta, debe, haber);
+            }
+            
+            System.out.println("+----------------------------------------------------------------+");
+            System.out.printf("| %-13s | %-24s | %-8s | %-8s |\n", "SUBTOTALES ", "", String.format("%.2f", totalDebe), String.format("%.2f", totalHaber));
+            System.out.println("+----------------------------------------------------------------+\n");
+        }
+        
+        conexionDB.close();
+        return periodosPorPartida;
+    }
+    
+     public Map<Integer, ArrayList<Modelo_LibroDiario>> Get_LibroDiario_filtroFecha(int mes, int year) throws SQLException {
+        
+        conexionDB = claseConectar.iniciarConexion(); // Iniciamos la conexión
+        String sql = """
+SELECT 
+            TBL_P."Fecha", 
+            EXTRACT(MONTH FROM TBL_P."Fecha") AS "Mes", 
+            EXTRACT(YEAR FROM TBL_P."Fecha") AS "Año", 
+            TBL_LD."id_Libro_diario", 
+            TBL_C."Nombre_cuenta", 
+            TBL_LD."Concepto", 
+            TBL_TS."Tipo_saldo", 
+            TBL_TD."Tipo_documento",
+            TBL_P."LibroDiario_id", 
+            TBL_P."Monto", 
+            TBL_P."id_Partida"
+        FROM 
+            public."Tbl_LibroDiario" AS TBL_LD
+        INNER JOIN 
+            "Tbl_Partida" AS TBL_P ON TBL_P."id_Partida" = TBL_LD."Partida_id"
+        INNER JOIN 
+            "Tbl_Catalogo" AS TBL_C ON TBL_C."id_Cuenta" = TBL_P."Cuenta_id"
+        INNER JOIN 
+            "Tbl_TipoSaldo" AS TBL_TS ON TBL_TS."id_Tipo_saldo" = TBL_P."Tipo_saldo_id"
+        INNER JOIN 
+            "Tbl_TipoDocumento" AS TBL_TD ON TBL_TD."id_TipoDoc" = TBL_P."Tipo_documento_id"
+        WHERE 
+            EXTRACT(MONTH FROM TBL_P."Fecha") = ? 
+            AND EXTRACT(YEAR FROM TBL_P."Fecha") = ?
+        ORDER BY 
+            TBL_LD."id_Libro_diario" DESC;""";
+        
+        pstm = conexionDB.prepareStatement(sql);
+        pstm.setInt(1, mes);
+        pstm.setInt(2,year);
+
         
         ResultSet consulta = pstm.executeQuery();
         

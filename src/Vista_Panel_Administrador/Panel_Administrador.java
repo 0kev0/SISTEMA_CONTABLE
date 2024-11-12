@@ -229,7 +229,7 @@ public class Panel_Administrador extends javax.swing.JFrame {
         Lb_EstadosFinancieros.setBackground(new java.awt.Color(7, 3, 26));
         Lb_EstadosFinancieros.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
         Lb_EstadosFinancieros.setForeground(new java.awt.Color(242, 244, 209));
-        Lb_EstadosFinancieros.setText("Estados Financieros");
+        Lb_EstadosFinancieros.setText("Balance general");
         Btn_EstadosFinancieros.add(Lb_EstadosFinancieros, new java.awt.GridBagConstraints());
 
         Btn_VerRegistros.setBackground(new java.awt.Color(137, 163, 178));

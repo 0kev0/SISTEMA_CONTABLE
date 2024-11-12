@@ -3,7 +3,7 @@ package Vista_Panel_Admin.Opciones;
 import Customizacion.TablaCusomizada;
 import static Funciones.Funciones.clearScreen;
 import Modelos.Contador.Modelo_Catalogo;
-import Modelos.Contador.Modelo_EstadoFinanciero;
+import Modelos.Contador.Modelo_BalanceGeneral;
 import Modelos.Contador.Modelo_LibroDiario;
 import Modelos.Contador.Modelo_TipoCuenta;
 import static Vista_Panel_Admin.Opciones.Vista_CatalogoTest.Get_Cb_Grados;
@@ -30,10 +30,10 @@ import javax.swing.table.JTableHeader;
  *
  * @author kev
  */
-public class Balance_General extends javax.swing.JInternalFrame {
+public final class Balance_General extends javax.swing.JInternalFrame {
 
-    private final Modelo_EstadoFinanciero Objeto_EstadoResultado = new Modelo_EstadoFinanciero();
-    private ArrayList<Modelo_EstadoFinanciero> List_EstadoResultado;
+    private final Modelo_BalanceGeneral Objeto_EstadoResultado = new Modelo_BalanceGeneral();
+    private ArrayList<Modelo_BalanceGeneral> List_EstadoResultado;
 
     private static final Modelo_TipoCuenta Objeto_TipoCuenta = new Modelo_TipoCuenta();
     private static List<Modelo_TipoCuenta> List_TipoCuenta;
@@ -45,11 +45,11 @@ public class Balance_General extends javax.swing.JInternalFrame {
         initComponents();
         clearScreen();
 
-        Get_Cb_Grados(Cb_TipoCuentas);
+       // Get_Cb_Grados(Cb_Mes);
         DiseñoTabla(Tbl_EstadoResultado);
-        Get_Tbl_Catalogo(Tbl_EstadoResultado);
+        Get_Tbl_BalanceGeneral(Tbl_EstadoResultado);
 
-        Modelo_EstadoFinanciero g = new Modelo_EstadoFinanciero();
+        Modelo_BalanceGeneral g = new Modelo_BalanceGeneral();
         g.Get_EstadoFinanciero();
 
     }
@@ -69,7 +69,7 @@ public class Balance_General extends javax.swing.JInternalFrame {
     }
 
     //etse metodo llena las tablas, este mismo vas a utilizar en todos, con la diferencia de la cantidad de columnas y los gets del item
-    public void Get_Tbl_Catalogo(JTable tabla) throws SQLException {
+    public void Get_Tbl_BalanceGeneral(JTable tabla) throws SQLException {
         modeloTabla = (DefaultTableModel) tabla.getModel();
         modeloTabla.setNumRows(0);
 
@@ -78,7 +78,45 @@ public class Balance_General extends javax.swing.JInternalFrame {
         List_EstadoResultado = Objeto_EstadoResultado.Get_EstadoFinanciero();//aca con el objeto manipulas la db y llenas una lista del objeto 
         System.out.println("hay " + List_EstadoResultado.size());
 
-        for (Modelo_EstadoFinanciero item : List_EstadoResultado) {
+        for (Modelo_BalanceGeneral item : List_EstadoResultado) {
+
+            String SaldoDebe = "";
+            String SaldoHaber = "";
+            
+            if (item.getTipo_saldo().equals("Deudor")) {
+                SaldoDebe = "$ " +  Double.toString(item.getSaldo() );
+
+                System.out.println("debe");
+            }
+
+            if (item.getTipo_saldo().equals("Acreedor")) {
+                SaldoHaber = "$ " + Double.toString(item.getSaldo());
+                System.out.println("haber");
+
+            }
+
+            modeloTabla.addRow(new Object[]{item.getId_CodigoCuenta(), item.getNombre_cuenta(), SaldoDebe, SaldoHaber});
+
+        }
+
+        tabla.setModel(modeloTabla);
+
+        Lb_CantidadCuentas.setText("Numero de cuentas : " + List_EstadoResultado);
+    }
+    
+        public void Get_Tbl_BalanceGeneral_FiltroMes(JTable tabla) throws SQLException {
+        modeloTabla = (DefaultTableModel) tabla.getModel();
+        modeloTabla.setNumRows(0);
+        
+                int mes = Cb_Mes.getSelectedIndex() + 1;
+        int year = Funciones.Funciones.Get_Year_Actual();
+
+        double Utilidades = 0;
+
+        List_EstadoResultado = Objeto_EstadoResultado.Get_EstadoFinanciero_MES(mes, year);//aca con el objeto manipulas la db y llenas una lista del objeto 
+        System.out.println("hay " + List_EstadoResultado.size());
+
+        for (Modelo_BalanceGeneral item : List_EstadoResultado) {
 
             String SaldoDebe = "";
             String SaldoHaber = "";
@@ -145,8 +183,8 @@ public class Balance_General extends javax.swing.JInternalFrame {
         Lb_CantidadCuentas3 = new javax.swing.JLabel();
         Lb_CantidadCuentas1 = new javax.swing.JLabel();
         Lb_CantidadCuentas2 = new javax.swing.JLabel();
-        Cb_TipoCuentas = new javax.swing.JComboBox<>();
         Lb_CantidadCuentas4 = new javax.swing.JLabel();
+        Cb_Mes = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         Lb_Bienvenida = new javax.swing.JLabel();
         Lb_CantidadCuentas = new javax.swing.JLabel();
@@ -194,56 +232,61 @@ public class Balance_General extends javax.swing.JInternalFrame {
         Lb_CantidadCuentas2.setForeground(new java.awt.Color(0, 0, 0));
         Lb_CantidadCuentas2.setText("Nombre Empresa");
 
-        Cb_TipoCuentas.setBackground(new java.awt.Color(137, 163, 178));
-        Cb_TipoCuentas.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
-        Cb_TipoCuentas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)), "Filtro tipo cuenta:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 15), new java.awt.Color(242, 244, 209))); // NOI18N
-        Cb_TipoCuentas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Cb_TipoCuentasActionPerformed(evt);
-            }
-        });
-
         Lb_CantidadCuentas4.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         Lb_CantidadCuentas4.setForeground(new java.awt.Color(0, 0, 0));
         Lb_CantidadCuentas4.setText("Saldos");
+
+        Cb_Mes.setBackground(new java.awt.Color(137, 163, 178));
+        Cb_Mes.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
+        Cb_Mes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Dicicembre" }));
+        Cb_Mes.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)), "Mes periodo contable:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 15), new java.awt.Color(242, 244, 209))); // NOI18N
+        Cb_Mes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Cb_MesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jp_MainLayout = new javax.swing.GroupLayout(jp_Main);
         jp_Main.setLayout(jp_MainLayout);
         jp_MainLayout.setHorizontalGroup(
             jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jp_MainLayout.createSequentialGroup()
-                .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jp_MainLayout.createSequentialGroup()
-                            .addGap(218, 218, 218)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jp_MainLayout.createSequentialGroup()
-                            .addGap(24, 24, 24)
-                            .addComponent(Cb_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(171, 171, 171)
-                            .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(Lb_CantidadCuentas1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Lb_CantidadCuentas3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Lb_CantidadCuentas2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(Lb_CantidadCuentas4, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jp_MainLayout.createSequentialGroup()
+                        .addGap(218, 218, 218)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jp_MainLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(Cb_Mes, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jp_MainLayout.createSequentialGroup()
+                                .addGap(198, 198, 198)
+                                .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Lb_CantidadCuentas1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Lb_CantidadCuentas3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Lb_CantidadCuentas2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jp_MainLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Lb_CantidadCuentas4, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(220, Short.MAX_VALUE))
         );
         jp_MainLayout.setVerticalGroup(
             jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_MainLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addComponent(Lb_CantidadCuentas2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Lb_CantidadCuentas1)
-                    .addComponent(Cb_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Lb_CantidadCuentas3)
-                .addGap(49, 49, 49)
-                .addComponent(Lb_CantidadCuentas4)
+                .addComponent(Lb_CantidadCuentas1)
+                .addGap(18, 18, 18)
+                .addGroup(jp_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jp_MainLayout.createSequentialGroup()
+                        .addComponent(Lb_CantidadCuentas3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Lb_CantidadCuentas4))
+                    .addComponent(Cb_Mes, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGap(51, 51, 51))
         );
 
         jPanel5.setBackground(new java.awt.Color(94, 96, 115));
@@ -261,9 +304,9 @@ public class Balance_General extends javax.swing.JInternalFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(257, 257, 257)
+                .addGap(121, 121, 121)
                 .addComponent(Lb_Bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Lb_CantidadCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
@@ -322,23 +365,23 @@ public class Balance_General extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Cb_TipoCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cb_TipoCuentasActionPerformed
-//        if ("Todos".equals(Cb_TipoCuentas.getSelectedItem().toString())) {
-//            try {
-//                Get_Tbl_Catalogo(Tbl_EstadoResultado);
-//            } catch (SQLException ex) {
-//                Logger.getLogger(Balance_General.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        } else {
-//
-//            Get_Tbl_CatalogoFiltrada(Tbl_EstadoResultado);
-//        }
-
-    }//GEN-LAST:event_Cb_TipoCuentasActionPerformed
+    private void Cb_MesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cb_MesActionPerformed
+int opcion = Cb_Mes.getSelectedIndex();
+        try {
+    if (opcion == 0) {
+        Get_Tbl_BalanceGeneral(Tbl_EstadoResultado);
+    } else {
+        Get_Tbl_BalanceGeneral_FiltroMes(Tbl_EstadoResultado);
+    }
+} catch (SQLException ex) {
+    Logger.getLogger(Balance_General.class.getName()).log(Level.SEVERE, null, ex);
+}
+        
+    }//GEN-LAST:event_Cb_MesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> Cb_TipoCuentas;
+    private javax.swing.JComboBox<String> Cb_Mes;
     private javax.swing.JLabel Lb_Bienvenida;
     private javax.swing.JLabel Lb_CantidadCuentas;
     private javax.swing.JLabel Lb_CantidadCuentas1;

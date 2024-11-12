@@ -154,11 +154,14 @@ public class Modelo_LibroMayor {
     }
 
     public Modelo_LibroMayor(ArrayList<Modelo_LibroMayor> deudores, ArrayList<Modelo_LibroMayor> acreedores) {
+                this.claseConectar = new ClaseConexion();
+
         this.deudores = deudores;
         this.acreedores = acreedores;
     }
 
     public ArrayList<Modelo_LibroMayor> getDeudores() {
+        
         return deudores;
     }
 
@@ -170,13 +173,82 @@ public class Modelo_LibroMayor {
 
         conexionDB = claseConectar.iniciarConexion(); // Iniciamos la conexión
         String sql = """
-    SELECT TBL_P."Fecha" ,TBL_LD."id_Libro_diario",TBL_C."Nombre_cuenta",TBL_TS."Tipo_saldo",TBL_TD."Tipo_documento"
-        ,TBL_P."LibroDiario_id",TBL_P."Monto",TBL_P."id_Partida"
-        FROM public."Tbl_LibroDiario" AS TBL_LD
-        INNER JOIN "Tbl_Partida" AS TBL_P ON TBL_P."id_Partida" = TBL_LD."Partida_id"
-        INNER JOIN "Tbl_Catalogo" AS TBL_C ON TBL_C."id_Cuenta" = TBL_P."Cuenta_id"
-        INNER JOIN "Tbl_TipoSaldo" AS TBL_TS ON TBL_TS."id_Tipo_saldo" = TBL_P."Tipo_saldo_id"
-        INNER JOIN "Tbl_TipoDocumento" AS TBL_TD ON TBL_TD."id_TipoDoc" = TBL_P."Tipo_documento_id";""";
+SELECT 
+        TBL_P."Fecha", 
+        TBL_LD."id_Libro_diario", 
+        TBL_C."Nombre_cuenta", 
+        TBL_TS."Tipo_saldo", 
+        TBL_TD."Tipo_documento",
+        TBL_P."LibroDiario_id", 
+        TBL_P."Monto", 
+        TBL_P."id_Partida"
+    FROM 
+        public."Tbl_LibroDiario" AS TBL_LD
+    INNER JOIN 
+        "Tbl_Partida" AS TBL_P ON TBL_P."id_Partida" = TBL_LD."Partida_id"
+    INNER JOIN 
+        "Tbl_Catalogo" AS TBL_C ON TBL_C."id_Cuenta" = TBL_P."Cuenta_id"
+    INNER JOIN 
+        "Tbl_TipoSaldo" AS TBL_TS ON TBL_TS."id_Tipo_saldo" = TBL_P."Tipo_saldo_id"
+    INNER JOIN 
+        "Tbl_TipoDocumento" AS TBL_TD ON TBL_TD."id_TipoDoc" = TBL_P."Tipo_documento_id"
+    ORDER BY 
+        TBL_C."Nombre_cuenta"; """;
+
+        pstm = conexionDB.prepareStatement(sql);
+
+        ResultSet consulta = pstm.executeQuery();
+
+        ArrayList<Modelo_LibroMayor> periodosPorPartida = new ArrayList<>();
+
+        while (consulta.next()) {
+            if (consulta.getString("Tipo_saldo").equals("Deudor")) {
+                Modelo_LibroMayor PartidasDebe = new Modelo_LibroMayor();
+
+                PartidasDebe.setFecha(consulta.getDate("Fecha"));
+                PartidasDebe.setId_Libro_diario(consulta.getInt("LibroDiario_id"));
+                PartidasDebe.setSaldo(consulta.getDouble("Monto"));
+            }
+
+            Modelo_LibroMayor PartidasHaber = new Modelo_LibroMayor();
+
+            PartidasHaber.setFecha(consulta.getDate("Fecha"));
+            PartidasHaber.setId_Libro_diario(consulta.getInt("LibroDiario_id"));
+            PartidasHaber.setSaldo(consulta.getDouble("Monto"));
+
+        }
+
+        conexionDB.close();
+        return periodosPorPartida;
+    }
+    
+    public ArrayList<Modelo_LibroMayor> Get_LibroMayor_filtrada_Cuenta(String NombreCuenta) throws SQLException {
+
+        conexionDB = claseConectar.iniciarConexion(); // Iniciamos la conexión
+        String sql = """
+SELECT 
+    TBL_P."Fecha", 
+    TBL_LD."id_Libro_diario", 
+    TBL_C."Nombre_cuenta", 
+    TBL_TS."Tipo_saldo", 
+    TBL_TD."Tipo_documento",
+    TBL_P."LibroDiario_id", 
+    TBL_P."Monto", 
+    TBL_P."id_Partida"
+FROM 
+    public."Tbl_LibroDiario" AS TBL_LD
+INNER JOIN 
+    "Tbl_Partida" AS TBL_P ON TBL_P."id_Partida" = TBL_LD."Partida_id"
+INNER JOIN 
+    "Tbl_Catalogo" AS TBL_C ON TBL_C."id_Cuenta" = TBL_P."Cuenta_id"
+INNER JOIN 
+    "Tbl_TipoSaldo" AS TBL_TS ON TBL_TS."id_Tipo_saldo" = TBL_P."Tipo_saldo_id"
+INNER JOIN 
+    "Tbl_TipoDocumento" AS TBL_TD ON TBL_TD."id_TipoDoc" = TBL_P."Tipo_documento_id"
+WHERE 
+    TBL_C."Nombre_cuenta" = ?  
+ORDER BY 
+    TBL_C."Nombre_cuenta";  """;
 
         pstm = conexionDB.prepareStatement(sql);
 
@@ -207,7 +279,7 @@ public class Modelo_LibroMayor {
 
     public Modelo_LibroMayor Get_LibroMayor_() throws SQLException {
 
-        conexionDB = claseConectar.iniciarConexion();
+        conexionDB = claseConectar.iniciarConexion(); // Iniciamos la conexión
         //modificar para que vaya por cuenta
         String sql = """
 SELECT TBL_P."Fecha", TBL_LD."id_Libro_diario", TBL_C."Nombre_cuenta", TBL_TS."Tipo_saldo", TBL_TD."Tipo_documento",
@@ -262,5 +334,143 @@ SELECT TBL_P."Fecha", TBL_LD."id_Libro_diario", TBL_C."Nombre_cuenta", TBL_TS."T
 
         return new Modelo_LibroMayor(deudores, acreedores);
     }
+    
+    
+    
+    public Modelo_LibroMayor Get_LibroMayor_Filtrado(int mes, int year) throws SQLException {
+        conexionDB = claseConectar.iniciarConexion();
+    
+    String sql = """
+    SELECT TBL_P."Fecha", TBL_LD."id_Libro_diario", TBL_C."Nombre_cuenta", 
+           TBL_TS."Tipo_saldo", TBL_TD."Tipo_documento", 
+           TBL_P."LibroDiario_id", TBL_P."Monto", TBL_P."id_Partida", 
+           TBL_TC."Tipo_cuenta"
+    FROM public."Tbl_LibroDiario" AS TBL_LD
+    INNER JOIN "Tbl_Partida" AS TBL_P ON TBL_P."id_Partida" = TBL_LD."Partida_id"
+    INNER JOIN "Tbl_Catalogo" AS TBL_C ON TBL_C."id_Cuenta" = TBL_P."Cuenta_id"
+    INNER JOIN "Tbl_TipoSaldo" AS TBL_TS ON TBL_TS."id_Tipo_saldo" = TBL_P."Tipo_saldo_id"
+    INNER JOIN "Tbl_TipoDocumento" AS TBL_TD ON TBL_TD."id_TipoDoc" = TBL_P."Tipo_documento_id"
+    INNER JOIN "Tbl_TipoCuenta" AS TBL_TC ON TBL_TC."id_Tipo_cuenta" = TBL_C."Tipo_cuenta_id"
+    WHERE EXTRACT(MONTH FROM TBL_P."Fecha") = ? 
+    AND EXTRACT(YEAR FROM TBL_P."Fecha") = ?
+    ORDER BY TBL_LD."id_Libro_diario" ASC;
+    """;
+
+        pstm = conexionDB.prepareStatement(sql);
+    pstm.setInt(1, mes);   // Establece el mes
+    pstm.setInt(2, year);  // Establece el año
+    ResultSet consulta = pstm.executeQuery();
+
+    ArrayList<Modelo_LibroMayor> deudores = new ArrayList<>();
+    ArrayList<Modelo_LibroMayor> acreedores = new ArrayList<>();
+
+    while (consulta.next()) {
+        if (consulta.getString("Tipo_saldo").equals("Deudor")) {
+            Modelo_LibroMayor partidaDebe = new Modelo_LibroMayor();
+            partidaDebe.setFecha(consulta.getDate("Fecha"));
+            partidaDebe.setId_Libro_diario(consulta.getInt("LibroDiario_id"));
+            partidaDebe.setSaldo(consulta.getDouble("Monto"));
+
+            Modelo_LibroMayor partidaHaber = new Modelo_LibroMayor();
+            partidaHaber.setFecha(null);
+            partidaHaber.setId_Libro_diario(0);
+            partidaHaber.setSaldo(0.0);
+
+            acreedores.add(partidaHaber);
+            deudores.add(partidaDebe);
+        } else {
+            Modelo_LibroMayor partidaHaber = new Modelo_LibroMayor();
+            partidaHaber.setFecha(consulta.getDate("Fecha"));
+            partidaHaber.setId_Libro_diario(consulta.getInt("LibroDiario_id"));
+            partidaHaber.setSaldo(consulta.getDouble("Monto"));
+
+            Modelo_LibroMayor partidaDebe = new Modelo_LibroMayor();
+            partidaDebe.setFecha(null);
+            partidaDebe.setId_Libro_diario(0);
+            partidaDebe.setSaldo(0.0);
+            
+            acreedores.add(partidaHaber);
+            deudores.add(partidaDebe);
+        }
+    }
+
+    conexionDB.close();
+
+    return new Modelo_LibroMayor(deudores, acreedores);
+}
+    
+    public Modelo_LibroMayor Get_LibroMayor_Filtrado_cuenta(String cuenta) throws SQLException {
+        conexionDB = claseConectar.iniciarConexion();
+    
+        System.out.println("buscando cuenta " +cuenta);
+    String sql = """
+SELECT 
+        TBL_P."Fecha", 
+        TBL_LD."id_Libro_diario", 
+        TBL_C."Nombre_cuenta", 
+        TBL_TS."Tipo_saldo", 
+        TBL_TD."Tipo_documento",
+        TBL_P."LibroDiario_id", 
+        TBL_P."Monto", 
+        TBL_P."id_Partida"
+    FROM 
+        public."Tbl_LibroDiario" AS TBL_LD
+    INNER JOIN 
+        "Tbl_Partida" AS TBL_P ON TBL_P."id_Partida" = TBL_LD."Partida_id"
+    INNER JOIN 
+        "Tbl_Catalogo" AS TBL_C ON TBL_C."id_Cuenta" = TBL_P."Cuenta_id"
+    INNER JOIN 
+        "Tbl_TipoSaldo" AS TBL_TS ON TBL_TS."id_Tipo_saldo" = TBL_P."Tipo_saldo_id"
+    INNER JOIN 
+        "Tbl_TipoDocumento" AS TBL_TD ON TBL_TD."id_TipoDoc" = TBL_P."Tipo_documento_id"
+    WHERE 
+        TBL_C."Nombre_cuenta" = ?  
+    ORDER BY 
+        TBL_C."Nombre_cuenta";  
+    """;
+
+        pstm = conexionDB.prepareStatement(sql);
+    pstm.setString(1, cuenta);   // Establece el mes
+    ResultSet consulta = pstm.executeQuery();
+
+    ArrayList<Modelo_LibroMayor> deudores = new ArrayList<>();
+    ArrayList<Modelo_LibroMayor> acreedores = new ArrayList<>();
+
+            System.out.println(">"+ pstm.toString());
+
+    while (consulta.next()) {
+        if (consulta.getString("Tipo_saldo").equals("Deudor")) {
+            Modelo_LibroMayor partidaDebe = new Modelo_LibroMayor();
+            partidaDebe.setFecha(consulta.getDate("Fecha"));
+            partidaDebe.setId_Libro_diario(consulta.getInt("LibroDiario_id"));
+            partidaDebe.setSaldo(consulta.getDouble("Monto"));
+
+            Modelo_LibroMayor partidaHaber = new Modelo_LibroMayor();
+            partidaHaber.setFecha(null);
+            partidaHaber.setId_Libro_diario(0);
+            partidaHaber.setSaldo(0.0);
+
+            acreedores.add(partidaHaber);
+            deudores.add(partidaDebe);
+        } else {
+            Modelo_LibroMayor partidaHaber = new Modelo_LibroMayor();
+            partidaHaber.setFecha(consulta.getDate("Fecha"));
+            partidaHaber.setId_Libro_diario(consulta.getInt("LibroDiario_id"));
+            partidaHaber.setSaldo(consulta.getDouble("Monto"));
+
+            Modelo_LibroMayor partidaDebe = new Modelo_LibroMayor();
+            partidaDebe.setFecha(null);
+            partidaDebe.setId_Libro_diario(0);
+            partidaDebe.setSaldo(0.0);
+            
+            acreedores.add(partidaHaber);
+            deudores.add(partidaDebe);
+        }
+    }
+
+    conexionDB.close();
+
+    return new Modelo_LibroMayor(deudores, acreedores);
+}
 
 }

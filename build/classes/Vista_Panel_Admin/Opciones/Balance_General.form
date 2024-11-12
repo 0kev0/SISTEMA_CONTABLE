@@ -68,24 +68,29 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="218" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane1" min="-2" pref="730" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                  <Component id="Cb_TipoCuentas" min="-2" pref="220" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="171" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="Lb_CantidadCuentas1" min="-2" pref="273" max="-2" attributes="0"/>
-                                      <Component id="Lb_CantidadCuentas3" min="-2" pref="273" max="-2" attributes="0"/>
-                                      <Component id="Lb_CantidadCuentas2" alignment="0" min="-2" pref="273" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="218" max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" min="-2" pref="730" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="Cb_Mes" min="-2" pref="220" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="198" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="Lb_CantidadCuentas1" min="-2" pref="273" max="-2" attributes="0"/>
+                                          <Component id="Lb_CantidadCuentas3" min="-2" pref="273" max="-2" attributes="0"/>
+                                          <Component id="Lb_CantidadCuentas2" alignment="0" min="-2" pref="273" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="Lb_CantidadCuentas4" min="-2" pref="273" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
-                          <Component id="Lb_CantidadCuentas4" alignment="1" min="-2" pref="273" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="220" max="32767" attributes="0"/>
                   </Group>
@@ -94,20 +99,22 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="37" max="32767" attributes="0"/>
                       <Component id="Lb_CantidadCuentas2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="Lb_CantidadCuentas1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Cb_TipoCuentas" alignment="3" min="-2" pref="47" max="-2" attributes="0"/>
+                      <Component id="Lb_CantidadCuentas1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="Lb_CantidadCuentas3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="Lb_CantidadCuentas4" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="Cb_Mes" min="-2" pref="57" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Lb_CantidadCuentas3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                      <Component id="Lb_CantidadCuentas4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="308" max="-2" attributes="0"/>
-                      <EmptySpace pref="51" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -202,7 +209,18 @@
                 <Property name="text" type="java.lang.String" value="Nombre Empresa"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="Cb_TipoCuentas">
+            <Component class="javax.swing.JLabel" name="Lb_CantidadCuentas4">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Sylfaen" size="18" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Saldos"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="Cb_Mes">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="b2" green="a3" red="89" type="rgb"/>
@@ -211,11 +229,24 @@
                   <Font name="Monospaced" size="18" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="0"/>
+                  <StringArray count="12">
+                    <StringItem index="0" value="Todos"/>
+                    <StringItem index="1" value="Enero"/>
+                    <StringItem index="2" value="Febrero"/>
+                    <StringItem index="3" value="Marzo"/>
+                    <StringItem index="4" value="Abril"/>
+                    <StringItem index="5" value="Mayo"/>
+                    <StringItem index="6" value="Junio"/>
+                    <StringItem index="7" value="Agosto"/>
+                    <StringItem index="8" value="Septiembre"/>
+                    <StringItem index="9" value="Octubre"/>
+                    <StringItem index="10" value="Noviembre"/>
+                    <StringItem index="11" value="Dicicembre"/>
+                  </StringArray>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Filtro tipo cuenta:">
+                    <TitledBorder title="Mes periodo contable:">
                       <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                         <MatteColorBorder bottom="3" left="3" right="3" top="3">
                           <Color PropertyName="color" blue="b2" green="93" red="5e" type="rgb"/>
@@ -227,22 +258,11 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Cb_TipoCuentasActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Cb_MesActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
-            </Component>
-            <Component class="javax.swing.JLabel" name="Lb_CantidadCuentas4">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Sylfaen" size="18" style="1"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="0" red="0" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Saldos"/>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -257,9 +277,9 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="257" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
                       <Component id="Lb_Bienvenida" min="-2" pref="519" max="-2" attributes="0"/>
-                      <EmptySpace pref="93" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="Lb_CantidadCuentas" min="-2" pref="273" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>

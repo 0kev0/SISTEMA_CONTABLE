@@ -1,14 +1,11 @@
 package Vista_Panel_Admin.Opciones;
 
 import Customizacion.TablaCusomizada;
-import Funciones.Funciones;
 import static Funciones.Funciones.EnterMouse;
 import static Funciones.Funciones.LeftMouse;
 import static Funciones.Funciones.clearScreen;
-import Modelos.Contador.Modelo_Catalogo;
 import Modelos.Contador.Modelo_LibroDiario;
 import Modelos.Contador.Modelo_TipoCuenta;
-import static Vista_Panel_Admin.Opciones.Vista_CatalogoTest.Get_Cb_Grados;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,7 +16,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -67,27 +63,82 @@ public final class Gestion_LibroDiario extends javax.swing.JInternalFrame {
         ComboBox.setModel(ModeloComboBox);
     }
 
-    public void Get_Tbl_CatalogoFiltrada(JTable tabla) {
-//        int id_TipoCuenta = Cb_TipoCuentas.getSelectedIndex()+1;
-//        modeloTabla.setNumRows(0);
-//
-//        System.out.println("buscando por year: " + id_TipoCuenta);
-//        List_LibroDiario = Objeto_LibroDiario.Get_CatalogoFiltrado(id_TipoCuenta);
-//        System.out.println("Hay " + List_TipoCuenta.size() + " registros en la lista.");
-//
-//        int cantCuentas = 0;
-//        for (Modelo_LibroDiario item : List_LibroDiario) {//aca recorres los objetos de la lista *aveces ocupa que cambies el tipo de obj
-//
-//            modeloTabla.addRow(new Object[]{
-//                item.getId_Cuenta(),
-//                item.getTipoCuenta(),
-//                item.getNombreCuenta(),});
-//            cantCuentas++;
-//        }
-//
-//        tabla.setModel(modeloTabla);
-//
-//        Lb_CantidadCuentas.setText("Numero de cuentas : " + cantCuentas);
+    public void Get_Tbl_CatalogoFiltrada(JTable tabla) throws SQLException {
+        System.out.println("Filtrada por mes");
+        int id_TipoCuenta = Cb_TipoCuentas.getSelectedIndex() + 1;
+        modeloTabla.setNumRows(0);
+
+        int mes = Cb_Mes.getSelectedIndex() ;
+        int year = Funciones.Funciones.Get_Year_Actual();
+
+        System.out.println("buscando por year: " + id_TipoCuenta);
+        List_LibroDiario = Objeto_LibroDiario.Get_LibroDiario_filtroFecha(mes, year);
+        System.out.println("hay " + List_LibroDiario.size());
+
+        String SaldoDebe = "";
+        String SaldoHaber = "";
+
+        //     ImageIcon iconoEditar = new ImageIcon(getClass().getResource("/Imagenes/Edit_.png"));
+        int cantCuentas = 0;
+
+        for (Map.Entry<Integer, ArrayList<Modelo_LibroDiario>> Entrada : List_LibroDiario.entrySet()) {
+            int partidaId = Entrada.getKey();
+            int num = 0;
+            Double SubTotal_Debe = 0.0;
+            Double SubTotal_Haber = 0.0;
+
+            ArrayList<Modelo_LibroDiario> periodos = Entrada.getValue();
+            for (Modelo_LibroDiario item : periodos) {
+
+                if (item.getTipo_saldo().equals("Deudor")) {
+                    SaldoDebe = Double.toString(item.getSaldo());
+                    SubTotal_Debe += item.getSaldo();
+
+                    System.out.println("debe");
+                }
+                if (item.getTipo_saldo().equals("Acreedor")) {
+                    SaldoHaber = Double.toString(item.getSaldo());
+                    SubTotal_Haber += item.getSaldo();
+                    System.out.println("haber");
+
+                }
+
+                if (num == 0) {
+                    modeloTabla.addRow(new Object[]{
+                        item.getFecha(), "",
+                        "Partida #" + item.getId_Libro_diario()});
+
+                }
+
+                modeloTabla.addRow(new Object[]{
+                    "", 0000,
+                    item.getNombre_cuenta(),
+                    SaldoDebe, SaldoHaber});
+                cantCuentas++;
+
+                SaldoDebe = "";
+                SaldoHaber = "";
+
+                num++;
+
+                if (num == periodos.size()) {
+                    modeloTabla.addRow(new Object[]{
+                        "", "", "\t\t\t\t" + item.getConcepto(),
+                        SubTotal_Debe,
+                        SubTotal_Haber});
+                    modeloTabla.addRow(new Object[]{
+                        "", "", "",
+                        "",
+                        ""});
+
+                }
+
+            }
+        }
+
+        tabla.setModel(modeloTabla);
+
+        Lb_CantidadCuentas.setText("Numero de cuentas : " + cantCuentas);
 
     }
 
@@ -149,14 +200,13 @@ public final class Gestion_LibroDiario extends javax.swing.JInternalFrame {
 
                 if (num == periodos.size()) {
                     modeloTabla.addRow(new Object[]{
-                        "", "",  "\t\t\t\t" + item.getConcepto(),
+                        "", "", "\t\t\t\t" + item.getConcepto(),
                         SubTotal_Debe,
                         SubTotal_Haber});
                     modeloTabla.addRow(new Object[]{
                         "", "", "",
                         "",
                         ""});
-
 
                 }
 
@@ -213,6 +263,7 @@ public final class Gestion_LibroDiario extends javax.swing.JInternalFrame {
         Cb_TipoCuentas = new javax.swing.JComboBox<>();
         Btn_TipoCuentas = new Customizacion.Custom_Buttons();
         Lb_TipoCuentas = new javax.swing.JLabel();
+        Cb_Mes = new javax.swing.JComboBox<>();
 
         jPanel3.setBackground(new java.awt.Color(242, 244, 209));
 
@@ -280,20 +331,20 @@ public final class Gestion_LibroDiario extends javax.swing.JInternalFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(Lb_Bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(130, 130, 130)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Lb_CantidadCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(7, 7, 7)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(Lb_Bienvenida)
                     .addComponent(Lb_CantidadCuentas))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jPanel6.setBackground(new java.awt.Color(94, 96, 115));
@@ -340,6 +391,16 @@ public final class Gestion_LibroDiario extends javax.swing.JInternalFrame {
         Lb_TipoCuentas.setText("Agregar partida");
         Btn_TipoCuentas.add(Lb_TipoCuentas, new java.awt.GridBagConstraints());
 
+        Cb_Mes.setBackground(new java.awt.Color(137, 163, 178));
+        Cb_Mes.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
+        Cb_Mes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Dicicembre" }));
+        Cb_Mes.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(94, 147, 178)), "Mes periodo contable:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 15), new java.awt.Color(242, 244, 209))); // NOI18N
+        Cb_Mes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Cb_MesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -350,7 +411,9 @@ public final class Gestion_LibroDiario extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(Cb_TipoCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(638, 638, 638)
+                .addGap(18, 18, 18)
+                .addComponent(Cb_Mes, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(400, 400, 400)
                 .addComponent(Btn_TipoCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                 .addGap(35, 35, 35))
         );
@@ -361,7 +424,9 @@ public final class Gestion_LibroDiario extends javax.swing.JInternalFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Btn_TipoCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Cb_TipoCuentas))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Cb_TipoCuentas)
+                        .addComponent(Cb_Mes)))
                 .addGap(34, 34, 34)
                 .addComponent(jp_Main, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -413,9 +478,25 @@ public final class Gestion_LibroDiario extends javax.swing.JInternalFrame {
         LeftMouse(Btn_TipoCuentas, Lb_TipoCuentas, "#89A3B2", "#F2F4D1");
     }//GEN-LAST:event_Btn_TipoCuentasMouseExited
 
+    private void Cb_MesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cb_MesActionPerformed
+        
+        int opcion = Cb_Mes.getSelectedIndex();
+        try {
+            if (opcion == 0) {
+                Get_Tbl_Catalogo(Tbl_LibroDiario);
+            } else {
+                Get_Tbl_CatalogoFiltrada(Tbl_LibroDiario);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Balance_General.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_Cb_MesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Btn_TipoCuentas;
+    private javax.swing.JComboBox<String> Cb_Mes;
     private javax.swing.JComboBox<String> Cb_TipoCuentas;
     private javax.swing.JLabel Lb_Bienvenida;
     private javax.swing.JLabel Lb_CantidadCuentas;
