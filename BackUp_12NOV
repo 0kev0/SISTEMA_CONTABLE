@@ -5,7 +5,7 @@
 -- Dumped from database version 17.0 (Ubuntu 17.0-1.pgdg24.04+1)
 -- Dumped by pg_dump version 17.0 (Ubuntu 17.0-1.pgdg24.04+1)
 
--- Started on 2024-10-03 18:55:20 CST
+-- Started on 2024-11-12 08:21:34 CST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -237,7 +237,8 @@ ALTER SEQUENCE public."Tbl_EstadoResultado_id_Estado_resultado_seq" OWNED BY pub
 
 CREATE TABLE public."Tbl_LibroDiario" (
     "id_Libro_diario" integer NOT NULL,
-    "Partida_id" integer
+    "Partida_id" integer,
+    "Concepto" character varying(300)
 );
 
 
@@ -768,8 +769,26 @@ INSERT INTO public."Tbl_Catalogo" VALUES (25, 'Gastos de Mantenimiento', 5);
 -- Data for Name: Tbl_LibroDiario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."Tbl_LibroDiario" VALUES (1, 2);
-INSERT INTO public."Tbl_LibroDiario" VALUES (2, 3);
+INSERT INTO public."Tbl_LibroDiario" VALUES (109, 119, NULL);
+INSERT INTO public."Tbl_LibroDiario" VALUES (108, 120, NULL);
+INSERT INTO public."Tbl_LibroDiario" VALUES (111, 121, NULL);
+INSERT INTO public."Tbl_LibroDiario" VALUES (110, 122, NULL);
+INSERT INTO public."Tbl_LibroDiario" VALUES (115, 125, 'Concepto');
+INSERT INTO public."Tbl_LibroDiario" VALUES (114, 126, 'Concepto');
+INSERT INTO public."Tbl_LibroDiario" VALUES (117, 127, 'COMPRA DE EQUIPO DE COMPUTO');
+INSERT INTO public."Tbl_LibroDiario" VALUES (116, 128, 'COMPRA DE EQUIPO DE COMPUTO');
+INSERT INTO public."Tbl_LibroDiario" VALUES (119, 129, 'Concepto');
+INSERT INTO public."Tbl_LibroDiario" VALUES (118, 130, 'Concepto');
+INSERT INTO public."Tbl_LibroDiario" VALUES (121, 131, 'Concepto');
+INSERT INTO public."Tbl_LibroDiario" VALUES (120, 132, 'Concepto');
+INSERT INTO public."Tbl_LibroDiario" VALUES (123, 133, 'Concepto');
+INSERT INTO public."Tbl_LibroDiario" VALUES (122, 134, 'Concepto');
+INSERT INTO public."Tbl_LibroDiario" VALUES (126, 135, 'venta');
+INSERT INTO public."Tbl_LibroDiario" VALUES (125, 136, 'venta');
+INSERT INTO public."Tbl_LibroDiario" VALUES (124, 137, 'venta');
+INSERT INTO public."Tbl_LibroDiario" VALUES (129, 138, 'compra');
+INSERT INTO public."Tbl_LibroDiario" VALUES (128, 139, 'compra');
+INSERT INTO public."Tbl_LibroDiario" VALUES (127, 140, 'compra');
 
 
 --
@@ -786,8 +805,26 @@ INSERT INTO public."Tbl_LibroDiario" VALUES (2, 3);
 -- Data for Name: Tbl_Partida; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."Tbl_Partida" VALUES (2, 1, 1, 1, 1000.00, '2024-10-03', 1);
-INSERT INTO public."Tbl_Partida" VALUES (3, 2, 2, 2, 500.00, '2024-10-03', 1);
+INSERT INTO public."Tbl_Partida" VALUES (119, 1, 1, 0, 175.00, '2024-10-09', 109);
+INSERT INTO public."Tbl_Partida" VALUES (120, 7, 2, 0, 175.00, '2024-10-09', 109);
+INSERT INTO public."Tbl_Partida" VALUES (121, 1, 1, 0, 200.00, '2024-10-09', 111);
+INSERT INTO public."Tbl_Partida" VALUES (122, 3, 2, 0, 200.00, '2024-10-09', 111);
+INSERT INTO public."Tbl_Partida" VALUES (125, 1, 1, 0, 100.00, '2024-10-10', 115);
+INSERT INTO public."Tbl_Partida" VALUES (126, 6, 2, 0, 100.00, '2024-10-10', 115);
+INSERT INTO public."Tbl_Partida" VALUES (127, 1, 1, 0, 100.00, '2024-10-11', 117);
+INSERT INTO public."Tbl_Partida" VALUES (128, 6, 2, 0, 100.00, '2024-10-11', 117);
+INSERT INTO public."Tbl_Partida" VALUES (129, 1, 1, 0, 100.00, '2024-10-11', 119);
+INSERT INTO public."Tbl_Partida" VALUES (130, 1, 2, 0, 100.00, '2024-10-11', 119);
+INSERT INTO public."Tbl_Partida" VALUES (131, 21, 1, 0, 10000.00, '2024-10-29', 121);
+INSERT INTO public."Tbl_Partida" VALUES (132, 11, 2, 0, 10000.00, '2024-10-29', 121);
+INSERT INTO public."Tbl_Partida" VALUES (133, 1, 1, 0, 100.00, '2024-11-08', 123);
+INSERT INTO public."Tbl_Partida" VALUES (134, 16, 2, 0, 100.00, '2024-11-08', 123);
+INSERT INTO public."Tbl_Partida" VALUES (135, 2, 1, 0, 100.00, '2024-11-11', 126);
+INSERT INTO public."Tbl_Partida" VALUES (136, 7, 2, 0, 150.00, '2024-11-11', 126);
+INSERT INTO public."Tbl_Partida" VALUES (137, 7, 1, 0, 50.00, '2024-11-11', 126);
+INSERT INTO public."Tbl_Partida" VALUES (138, 1, 2, 0, 100.00, '2024-11-12', 129);
+INSERT INTO public."Tbl_Partida" VALUES (139, 6, 1, 0, 50.00, '2024-11-12', 129);
+INSERT INTO public."Tbl_Partida" VALUES (140, 6, 1, 0, 50.00, '2024-11-12', 129);
 
 
 --
@@ -850,6 +887,7 @@ INSERT INTO public."Tbl_TipoDocumento" VALUES (12, 'Nota de Remisión');
 INSERT INTO public."Tbl_TipoDocumento" VALUES (13, 'Vale de Caja');
 INSERT INTO public."Tbl_TipoDocumento" VALUES (14, 'Nota de Ingreso');
 INSERT INTO public."Tbl_TipoDocumento" VALUES (15, 'Nota de Egreso');
+INSERT INTO public."Tbl_TipoDocumento" VALUES (0, 'Ninguno');
 
 
 --
@@ -923,7 +961,7 @@ SELECT pg_catalog.setval('public."Tbl_EstadoResultado_id_Estado_resultado_seq"',
 -- Name: Tbl_LibroDiario_id_partida_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Tbl_LibroDiario_id_partida_seq"', 2, true);
+SELECT pg_catalog.setval('public."Tbl_LibroDiario_id_partida_seq"', 129, true);
 
 
 --
@@ -986,7 +1024,7 @@ SELECT pg_catalog.setval('public."Tbl_TipoSaldo_id_Tipo_saldo_seq"', 2, true);
 -- Name: Tbl_Transacciones_id_Transaccion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Tbl_Transacciones_id_Transaccion_seq"', 3, true);
+SELECT pg_catalog.setval('public."Tbl_Transacciones_id_Transaccion_seq"', 140, true);
 
 
 --
@@ -1232,7 +1270,7 @@ ALTER TABLE ONLY public."Tbl_Partida"
     ADD CONSTRAINT "Tipo_saldo_id" FOREIGN KEY ("Tipo_saldo_id") REFERENCES public."Tbl_TipoSaldo"("id_Tipo_saldo");
 
 
--- Completed on 2024-10-03 18:55:20 CST
+-- Completed on 2024-11-12 08:21:34 CST
 
 --
 -- PostgreSQL database dump complete
