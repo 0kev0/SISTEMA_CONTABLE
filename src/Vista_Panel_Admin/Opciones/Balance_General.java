@@ -2,22 +2,17 @@ package Vista_Panel_Admin.Opciones;
 
 import Customizacion.TablaCusomizada;
 import static Funciones.Funciones.clearScreen;
-import Modelos.Contador.Modelo_Catalogo;
 import Modelos.Contador.Modelo_BalanceGeneral;
-import Modelos.Contador.Modelo_LibroDiario;
 import Modelos.Contador.Modelo_TipoCuenta;
-import static Vista_Panel_Admin.Opciones.Vista_CatalogoTest.Get_Cb_Grados;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -69,40 +64,41 @@ public final class Balance_General extends javax.swing.JInternalFrame {
     }
 
     //etse metodo llena las tablas, este mismo vas a utilizar en todos, con la diferencia de la cantidad de columnas y los gets del item
-    public void Get_Tbl_BalanceGeneral(JTable tabla) throws SQLException {
-        modeloTabla = (DefaultTableModel) tabla.getModel();
-        modeloTabla.setNumRows(0);
+public void Get_Tbl_BalanceGeneral(JTable tabla) throws SQLException {
+    modeloTabla = (DefaultTableModel) tabla.getModel();
+    modeloTabla.setNumRows(0);
 
-        double Utilidades = 0;
+    double totalDebe = 0; // Variable para acumular el total del debe
+    double totalHaber = 0; // Variable para acumular el total del haber
 
-        List_EstadoResultado = Objeto_EstadoResultado.Get_EstadoFinanciero();//aca con el objeto manipulas la db y llenas una lista del objeto 
-        System.out.println("hay " + List_EstadoResultado.size());
+    List_EstadoResultado = Objeto_EstadoResultado.Get_EstadoFinanciero(); // Llenar la lista desde la base de datos
+    System.out.println("hay " + List_EstadoResultado.size());
 
-        for (Modelo_BalanceGeneral item : List_EstadoResultado) {
+    for (Modelo_BalanceGeneral item : List_EstadoResultado) {
+        String SaldoDebe = "";
+        String SaldoHaber = "";
 
-            String SaldoDebe = "";
-            String SaldoHaber = "";
-            
-            if (item.getTipo_saldo().equals("Deudor")) {
-                SaldoDebe = "$ " +  Double.toString(item.getSaldo() );
-
-                System.out.println("debe");
-            }
-
-            if (item.getTipo_saldo().equals("Acreedor")) {
-                SaldoHaber = "$ " + Double.toString(item.getSaldo());
-                System.out.println("haber");
-
-            }
-
-            modeloTabla.addRow(new Object[]{item.getId_CodigoCuenta(), item.getNombre_cuenta(), SaldoDebe, SaldoHaber});
-
+        if (item.getTipo_saldo().equals("Deudor")) {
+            SaldoDebe = "$ " + Double.toString(item.getSaldo());
+            totalDebe += item.getSaldo(); // Acumular el total del debe
+            System.out.println("debe");
         }
 
-        tabla.setModel(modeloTabla);
+        if (item.getTipo_saldo().equals("Acreedor")) {
+            SaldoHaber = "$ " + Double.toString(item.getSaldo());
+            totalHaber += item.getSaldo(); // Acumular el total del haber
+            System.out.println("haber");
+        }
 
-        Lb_CantidadCuentas.setText("Numero de cuentas : " + List_EstadoResultado);
+        modeloTabla.addRow(new Object[]{item.getId_CodigoCuenta(), item.getNombre_cuenta(), SaldoDebe, SaldoHaber});
     }
+
+    // Agregar la fila de totales
+    modeloTabla.addRow(new Object[]{"Totales", "", "$ " + totalDebe, "$ " + totalHaber});
+
+    tabla.setModel(modeloTabla);
+    Lb_CantidadCuentas.setText("Numero de cuentas : " + List_EstadoResultado.size());
+}
     
         public void Get_Tbl_BalanceGeneral_FiltroMes(JTable tabla) throws SQLException {
         modeloTabla = (DefaultTableModel) tabla.getModel();
@@ -165,7 +161,10 @@ public final class Balance_General extends javax.swing.JInternalFrame {
         leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
 
         //aca pone las columnas que quieras que el texto aparezca a la izquierda
-        tabla.getColumnModel().getColumn(2).setCellRenderer(leftRenderer);
+        tabla.getColumnModel().getColumn(1).setCellRenderer(leftRenderer);        
+
+
+        
 
         JTableHeader header = tabla.getTableHeader();
         header.setPreferredSize(new Dimension(60, 45));
